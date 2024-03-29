@@ -1,0 +1,32 @@
+version: '3.0'
+networks:
+  isp-web-api-dev:
+    driver: bridge
+
+services: # handle two services (db and companyemployees)
+  postgres_image:
+    image: postgres:latest
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POST_GRES_DB: "ispDb"
+    restart: always # we are instructing Docker Compose to restart our service in case the container goes down for whatever reason
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+      - ./Scripts/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+      - isp-web-api-dev
+  isp-web-api:
+    depends_on: # we make db service the first to load
+      - "postgres_image"
+    image: localhost:50000/isp-web-api
+    ports:
+      - "8080:5000"
+    volumes:
+      - ${USERPROFILE}/.aspnet/http:/http/
+    networks:
+      - isp-web-api-dev
+volumes:
+  db_volume:

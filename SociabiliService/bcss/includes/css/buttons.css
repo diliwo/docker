@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+.button {
+	padding: 5px;
+	background-color: #dcdcdc;
+	border: 1px solid #aaa;
+	border-right: 1px solid #666;
+	border-bottom: 1px solid #666;
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+.button:hover {
+	background-color: #DFF4FF;
+	text-decoration: none !important;
+}
+
+.connection {
+	background-image: url('../images/connection.gif');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+.search {
+	background-image: url('../images/search.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+.save {
+	background-image: url('../images/save.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+.yes {
+	background-image: url('../images/yes.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+.no {
+	background-image: url('../images/no.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :   			UnemploymentDataV3.xsd
+         * Author :        			Groenveldt Choukri
+         * Owner :            	  	KSZ / CBSS
+         * Creation date :     		05/12/2016
+         * Status :                 Planned
+         * Description :            A service to consult the allowance for a people
+         * Current version :        0.1 (PID version 1.5)
+         * Revision History : 
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:v3="http://kszbcss.fgov.be/types/UnemploymentData/v3" xmlns:tns="http://kszbcss.fgov.be/intf/UnemploymentData/v3" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://kszbcss.fgov.be/intf/UnemploymentData/v3" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2015-12-05">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/UnemploymentData/v3" schemaLocation="../types/UnemploymentDataTypesV3.xsd"/>
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../types/common/CommonV3.xsd"/>
+	<!--========= xsd element ===========-->
+	<xsd:element name="consultPaidSumsRequest" type="v3:ConsultPaidSumsRequestType"/>
+	<xsd:element name="consultPaidSumsResponse" type="v3:ConsultPaidSumsResponseType"/>
+	<xsd:element name="consultPaidSumsFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultRightsRequest" type="v3:ConsultRightsRequestType"/>
+	<xsd:element name="consultRightsResponse" type="v3:ConsultRightsResponseType"/>
+	<xsd:element name="consultRightsFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultPaymentsRequest" type="v3:ConsultPaymentsRequestType"/>
+	<xsd:element name="consultPaymentsResponse" type="v3:ConsultPaymentsResponseType"/>
+	<xsd:element name="consultPaymentsFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultActivationPaidSumsRequest" type="v3:ConsultActivationPaidSumsRequestType"/>
+	<xsd:element name="consultActivationPaidSumsResponse" type="v3:ConsultActivationPaidSumsResponseType"/>
+	<xsd:element name="consultActivationPaidSumsFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultScheduledPaymentRequest" type="v3:ConsultScheduledPaymentRequestType"/>
+	<xsd:element name="consultScheduledPaymentResponse" type="v3:ConsultScheduledPaymentResponseType"/>
+	<xsd:element name="consultScheduledPaymentFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultScaleCodeHistoryRequest" type="v3:ConsultScaleCodeHistoryRequestType"/>
+	<xsd:element name="consultScaleCodeHistoryResponse" type="v3:ConsultScaleCodeHistoryResponseType"/>
+	<xsd:element name="consultScaleCodeHistoryFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultSanctionHistoryRequest" type="v3:ConsultSanctionHistoryRequestType"/>
+	<xsd:element name="consultSanctionHistoryResponse" type="v3:ConsultSanctionHistoryResponseType"/>
+	<xsd:element name="consultSanctionHistoryFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultExemptionHistoryRequest" type="v3:ConsultExemptionHistoryRequestType"/>
+	<xsd:element name="consultExemptionHistoryResponse" type="v3:ConsultExemptionHistoryResponseType"/>
+	<xsd:element name="consultExemptionHistoryFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultWorkDisabilityHistoryRequest" type="v3:ConsultWorkDisabilityHistoryRequestType"/>
+	<xsd:element name="consultWorkDisabilityHistoryResponse" type="v3:ConsultWorkDisabilityHistoryResponseType"/>
+	<xsd:element name="consultWorkDisabilityHistoryFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultNoEarningCapacityAndLawsuitMutualityRequest" type="v3:ConsultNoEarningCapacityAndLawsuitMutualityRequestType"/>
+	<xsd:element name="consultNoEarningCapacityAndLawsuitMutualityResponse" type="v3:ConsultNoEarningCapacityAndLawsuitMutualityResponseType"/>
+	<xsd:element name="consultNoEarningCapacityAndLawsuitMutualityFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultYoungAvailabilityDecisionHistoryRequest" type="v3:ConsultYoungAvailabilityDecisionHistoryRequestType"/>
+	<xsd:element name="consultYoungAvailabilityDecisionHistoryResponse" type="v3:ConsultYoungAvailabilityDecisionHistoryResponseType"/>
+	<xsd:element name="consultYoungAvailabilityDecisionHistoryFault" type="common:CBSSFaultType"/>
+</xsd:schema>

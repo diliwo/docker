@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :						TaxAssessmentDataTypesV2.xsd
+         * Author :								Cerberus Team
+         * Owner :								KSZ / CBSS
+         * Creation date :					2015-12-15
+         * Last revision date :				
+         * Status :								Concept
+         * Description :						Service for consulting the Tas Assessment Notice data at PFS Finance
+         * Current version :					0.1
+         * Revision History :				2015-12-15 Initial Version
+													2016-02-08 Correction in requestion ElementKeyType iso ElementType
+													2016-07-28 Update maxOccurs type : GroupType and ElementKeyType (50->100)
+============================================================================================================= -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kszbcss.fgov.be/types/TaxAssessmentData/v2" xmlns:common="http://kszbcss.fgov.be/types/common/v3" targetNamespace="http://kszbcss.fgov.be/types/TaxAssessmentData/v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2016-07-28">
+	<xs:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="CommonV3.xsd"/>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																									OPERATIONS																							===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultTaxAssessmentDataRequestType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xs:element name="legalContext" type="common:LegalContextType"/>
+			<xs:element name="criteria" type="tns:ConsultTaxAssessmentDataCriteriaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultTaxAssessmentDataResponseType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xs:element name="legalContext" type="common:LegalContextType"/>
+			<xs:element name="criteria" type="tns:ConsultTaxAssessmentDataCriteriaType"/>
+			<xs:element name="status" type="common:StatusType"/>
+			<xs:element name="ssinStatusData" type="tns:SsinStatusDataType" minOccurs="0"/>
+			<xs:element name="result" type="tns:ConsultTaxAssessmentDataResultType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																									CRITERIA																									===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultTaxAssessmentDataCriteriaType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="referenceYear" type="tns:ReferenceYearType"/>
+			<xs:element name="fiscalDataSelection" type="tns:FiscalDataSelectionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferenceYearType">
+		<xs:choice>
+			<xs:element name="year" type="tns:YearType"/>
+			<xs:element name="derivedYear" type="tns:DerivedYearType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="YearType">
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[1-4]{1}[0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DerivedYearType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MOST_RECENT"/>
+			<xs:enumeration value="MOST_RECENT_UNLIMITED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FiscalDataSelectionType">
+		<xs:sequence>
+			<xs:element name="elements" type="tns:ElementSelectionType"/>
+			<xs:element name="groups" type="tns:GroupSelectionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ElementSelectionType">
+		<xs:sequence>
+			<xs:element name="element" type="tns:ElementKeyType" minOccurs="0" maxOccurs="2000"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GroupSelectionType">
+		<xs:sequence>
+			<xs:element name="group" type="tns:GroupType" minOccurs="0" maxOccurs="100"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="GroupType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ElementKeyType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																							RESPONSE																										===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultTaxAssessmentDataResultType">
+		<xs:sequence>
+			<xs:element name="requestedFiscalPerson" type="tns:FiscalPersonType"/>
+			<xs:element name="relatedFiscalPerson" type="tns:FiscalPersonType" minOccurs="0"/>
+			<xs:element name="incomeYear" type="tns:YearType"/>
+			<xs:element name="taxAssessmentNumber" type="tns:TaxAssessmentNumberType"/>
+			<xs:element name="fiscalDataList" type="tns:FiscalDataList"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SsinStatusDataType">
+		<xs:sequence>
+			<xs:element name="requestedSsinStatus" type="tns:SsinStatusType"/>
+			<xs:element name="replacingSsin" type="common:SsinType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FiscalPersonType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType">
+				<xs:annotation>
+					<xs:documentation>The SSIN as provided by SPF Finances in their response. In case of replacements this could differ from the ssin used in the request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fiscalState" type="tns:FiscalStateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FiscalStateType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SINGULAR"/>
+			<xs:enumeration value="PRIMARY"/>
+			<xs:enumeration value="SECONDARY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SsinStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACTIVE"/>
+			<xs:enumeration value="REPLACED"/>
+			<xs:enumeration value="CANCELLED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TaxAssessmentNumberType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FiscalDataList">
+		<xs:sequence>
+			<xs:element name="fiscalData" type="tns:FiscalDataType" maxOccurs="1000"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FiscalDataType">
+		<xs:sequence>
+			<xs:element name="element" type="tns:ElementType"/>
+			<xs:choice>
+				<xs:element name="value" type="tns:ValueType"/>
+				<xs:element name="noValue" type="tns:NoValueType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ElementType">
+		<xs:simpleContent>
+			<xs:extension base="tns:ElementKeyType">
+				<xs:attribute name="communalInformation" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>Some information on a communal tax assessment notice will be common and thus equal for the primary and the secondary person. Then 'communalInformation' will be true. Else, when the information is not common and thus not equal, 'communalinformation' will be false.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ValueType">
+		<xs:simpleContent>
+			<xs:extension base="tns:ValueKeyType">
+				<xs:attribute name="type" type="tns:DataType" use="required">
+					<xs:annotation>
+						<xs:documentation>The type of the value included.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ValueKeyType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DataType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INTEGER"/>
+			<xs:enumeration value="BOOLEAN"/>
+			<xs:enumeration value="DATE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NoValueReasonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ELEMENT_NOT_PRESENT_IN_THE_TAX_ASSESSMENT_DATA"/>
+			<xs:enumeration value="ELEMENT_NOT_AVAILABLE_FOR_THIS_INCOME_YEAR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NoValueType">
+		<xs:attribute name="reason" type="tns:NoValueReasonType" use="required">
+			<xs:annotation>
+				<xs:documentation>Reason for which no information is present for the element.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

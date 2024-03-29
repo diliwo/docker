@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by BANQUE CARREFOUR DE LA SECURITE SOCIALE (BANQUE CARREFOUR DE LA SECURITE SOCIALE) -->
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Smals-MvM vzw (Smals-MvM vzw) -->
+<xs:schema targetNamespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/PensionRegister" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://www.ksz-bcss.fgov.be/XSD/SSDN/Common" xmlns:ns1="http://www.ksz-bcss.fgov.be/XSD/SSDN/Person" xmlns="http://www.ksz-bcss.fgov.be/XSD/SSDN/PensionRegister">
+	<xs:import namespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/Common" schemaLocation="../Common/NamespaceRoot.xsd"/>
+	<xs:include schemaLocation="OpenPK_ConsultRequest.xsd"/>
+	<xs:include schemaLocation="Penskad_CommonDataTypes.xsd"/>
+	<xs:import namespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/Person" schemaLocation="../Person/Citizen.xsd"/>
+	<xs:complexType name="type_Code">
+		<xs:annotation>
+			<xs:documentation>Type - contains the code and a description.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code">
+				<xs:annotation>
+					<xs:documentation>The code.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description">
+				<xs:annotation>
+					<xs:documentation>Description of the code.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="common:DescriptionType"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="type_Amount">
+		<xs:annotation>
+			<xs:documentation>Type - amount.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="10"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type_AmountPositive">
+		<xs:annotation>
+			<xs:documentation>Type - positivie amount.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="10"/>
+			<xs:fractionDigits value="2"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="type_Anomaly">
+		<xs:annotation>
+			<xs:documentation>Type - anomaly</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code">
+				<xs:annotation>
+					<xs:documentation>Code of the anomaly</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description of the anomaly</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RightType">
+		<xs:annotation>
+			<xs:documentation>Type - right type</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="PaymentInformationType">
+		<xs:annotation>
+			<xs:documentation>Type - payment type</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReferencePeriod" type="ReferencePeriodType"/>
+			<xs:element name="TotalAmounts">
+				<xs:annotation>
+					<xs:documentation>The totals for the requested period.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TotalGrossAmount" type="PosRealAmount"/>
+						<xs:element name="TotalPrecomptableAmount" type="PosRealAmount"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Index" type="type_Index">
+				<xs:annotation>
+					<xs:documentation>Index</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentHistory" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>History of amounts constituting the total amount for the requested period</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="GrossAmount"/>
+						<xs:element ref="PrecomptableAmount"/>
+						<xs:element ref="PrecomptePercentage"/>
+						<xs:element ref="MonthOfPayment"/>
+						<xs:element name="CreationDate" type="Date">
+							<xs:annotation>
+								<xs:documentation>R06 : Document Creation Date</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="IsHolidayAmount" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates if the payment is a holiday amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FiscalSituation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fiscal situation</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DependentSpouseCode" minOccurs="0"/>
+						<xs:element ref="TotalDependentChildren" minOccurs="0"/>
+						<xs:element ref="TotalDependentOthers" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SpecialRule" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Special rules concerning the payment</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="ExceptionCode"/>
+						<xs:element name="Description" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Description of the special rule.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Contributions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contributions and deductions</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ZIV-AMI">
+							<xs:annotation>
+								<xs:documentation>ZIV-AMI deduction</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="TotalAmiAmount" type="RealAmount"/>
+									<xs:element ref="AmiTaxCode"/>
+									<xs:element name="ZIV-AmiHistory" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>History of amounts constituting the total amount for the requested period</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element ref="AmiAmount"/>
+												<xs:element ref="MonthOfPayment"/>
+												<xs:element name="CreationDate" type="Date">
+													<xs:annotation>
+														<xs:documentation>R06 : Document Creation Date</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ContributionSolidarity">
+							<xs:annotation>
+								<xs:documentation>Solidarity contribution</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="TotalRsAmount" type="RealAmount">
+										<xs:annotation>
+											<xs:documentation>55 - 56 - amount</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element ref="SolidarityPercentage"/>
+									<xs:element name="SolidarityHistory" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>History of amounts constituting the total amount for the requested period.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element ref="SolidarityAmount"/>
+												<xs:element ref="MonthOfPayment"/>
+												<xs:element name="CreationDate" type="Date">
+													<xs:annotation>
+														<xs:documentation>R06 : Document Creation Date</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Anomaly" type="type_Anomaly" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Anomaly regarding the payment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_Index">
+		<xs:annotation>
+			<xs:documentation>Type - index type</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="Index"/>
+			<xs:element ref="IndexType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Penskad_OpenPK_ConsultReply">
+		<xs:annotation>
+			<xs:documentation>Answer on a Pension Consultation request</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="common:ResultSummary"/>
+				<xs:element name="Question" type="Penskad_OpenPK_ConsultRequestType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The initial question</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CitizenPK" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Datas of a person known in PK</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SocialSecurityUser" type="common:t_SSIN">
+								<xs:annotation>
+									<xs:documentation>SSIN of the person</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="InscriptionRegister" type="ns1:InscriptionRegisterType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>type of register the person is inscribed in</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="LegalData" type="ns1:LegalDataType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>the legal data of the person</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="origin" type="ns1:OriginType" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PensionItem" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Rights and payments for a certain paying institution</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="PayingInstitution">
+								<xs:annotation>
+									<xs:documentation>The paying nstitution of the pension</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DebtorInstitutionCompanyId"/>
+										<xs:element ref="DebtorInstitutionImmatriculation"/>
+										<xs:element name="InstitutionName" type="String">
+											<xs:annotation>
+												<xs:documentation>The description of the paying institution</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PayingInstitutionItem" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>The pension rights and demands belonging to a single paying institution for the requested period</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:choice>
+										<xs:element name="PensionDemand">
+											<xs:annotation>
+												<xs:documentation>Information about a pension demand</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="PensionDemandDate"/>
+													<xs:element ref="PensionDemandRefusalDate" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="RightWithoutPayments">
+											<xs:annotation>
+												<xs:documentation>Information about a right for which there is  no (yet) payment if the question was about Rights and Payments</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="RightInformation" type="RightInformationType">
+														<xs:annotation>
+															<xs:documentation>Right information</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="RightWithPayments">
+											<xs:annotation>
+												<xs:documentation>Information concerning a right with payments for the requested period if the question was about Rights and Payments</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="RightInformation" type="RightInformationType">
+														<xs:annotation>
+															<xs:documentation>Supplementary information.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="PaymentsInformation" type="PaymentInformationType" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>The payment information for a single reference period.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="RightOnly">
+											<xs:annotation>
+												<xs:documentation>Information about rights if the question was about Rights only</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="RightInformation" type="RightInformationType">
+														<xs:annotation>
+															<xs:documentation>Right information</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RightInformationType">
+		<xs:sequence>
+			<xs:element ref="AdvantageCode"/>
+			<xs:element ref="Periodicity"/>
+			<xs:element ref="PensionFileId"/>
+			<xs:element ref="PensionStartDate" minOccurs="0"/>
+			<xs:element ref="RightStartDate" minOccurs="0"/>
+			<xs:element ref="PensionType" minOccurs="0"/>
+			<xs:element ref="AdministrativeSituation" minOccurs="0"/>
+			<xs:element ref="EmployerType" minOccurs="0"/>
+			<xs:element ref="FamilyChargeType" minOccurs="0"/>
+			<xs:element ref="AdvantageType" minOccurs="0"/>
+			<xs:element ref="HouseholdCode" minOccurs="0"/>
+			<xs:element ref="RightOrigin" minOccurs="0"/>
+			<xs:element ref="RightCloseDate" minOccurs="0"/>
+			<xs:element name="Anomaly" type="type_Anomaly" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Anomaly concerning the right</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Pillar">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="First"/>
+					<xs:enumeration value="Second"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Origin">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="National"/>
+					<xs:enumeration value="Foreign"/>
+					<xs:enumeration value="SupraNational"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ReferencePeriodType">
+		<xs:sequence>
+			<xs:element ref="StartMonth"/>
+			<xs:element ref="EndMonth"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

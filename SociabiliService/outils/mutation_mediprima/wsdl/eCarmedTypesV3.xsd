@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://kszbcss.fgov.be/types/ECarmed/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rrn="http://www.ibz.rrn.fgov.be/XSD/xm25/rn25Schema" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:ns1="http://kszbcss.fgov.be/types/ECarmed/v1" xmlns:legalData="http://kszbcss.fgov.be/types/ecarmed/baselegaldata" targetNamespace="http://kszbcss.fgov.be/types/ECarmed/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2012-04-06">
+	<xs:import namespace="http://www.ibz.rrn.fgov.be/XSD/xm25/rn25Schema" schemaLocation="rn25_Release201104.xsd"/>
+	<xs:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="CommonV3.xsd"/>
+	<xs:import namespace="http://kszbcss.fgov.be/types/ecarmed/baselegaldata" schemaLocation="BaseLegalDataV1.xsd"/>
+	<xs:complexType name="AbstractRequestCustomerType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base complex type for all request messages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xs:element name="legalContext" type="LegalContextEcarmedType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AbstractRequestSupplierType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base complex type for all request messages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationSupplier" type="common:InformationSupplierType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AbstractResponseCustomerType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base complex type for all response messages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xs:element name="legalContext" type="LegalContextEcarmedType"/>
+			<!--<xs:element name="status" type="common:StatusType"/>-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AbstractResponseSupplierType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base complex type for all reponse messages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationSupplier" type="common:InformationSupplierType"/>
+			<!--<xs:element name="status" type="common:StatusType"/>-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeneficiaryType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType">
+				<xs:annotation>
+					<xs:documentation>Inss number of the beneficiary</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastName" type="StringMax100Type">
+				<xs:annotation>
+					<xs:documentation>Last Name of the beneficiary</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstName" type="StringMax100Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>First Name of the beneficiary</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="gender" type="GenderType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>prevu release 2 (budget?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birthDate" type="common:IncompleteDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>prevu release 2 (budget?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BySSINType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:choice>
+				<xs:element name="period" type="PeriodType"/>
+				<xs:element name="referenceDate" type="xs:date"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BySSINAgreementType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="agreementPeriod" type="PeriodType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CloseCarmedRequestType">
+		<xs:complexContent>
+			<xs:extension base="AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="eCarmedNumber" type="MedicalCardNumberType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- annulation d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="CloseCarmedResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="eCarmedNumber" type="MedicalCardNumberType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- suite a une annulation d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="CompanyListType">
+		<xs:sequence>
+			<xs:element name="cbeNumber" type="common:CbeNumberType" maxOccurs="100"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedDataType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="eCarmedNumber" type="MedicalCardNumberType"/>
+				<xs:element name="bySsin" type="BySSINType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedAtAgreementDateDataType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="eCarmedNumber" type="MedicalCardNumberType"/>
+				<xs:element name="bySsin" type="BySSINAgreementType"/>
+				<!--<xs:element name="ssin" type="common:SsinType"/>-->
+			</xs:choice>
+			<xs:element name="agreementDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedInterventionRequestType">
+		<xs:complexContent>
+			<xs:extension base="AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="endUser" type="EndUserType"/>
+					<xs:element name="selectionCriteria" type="ConsultCarmedDataType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- obtenir la ou les couvertures  financieres soin de sante  pour un prestataire -->
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedInterventionResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="endUser" type="EndUserType"/>
+					<xs:element name="selectionCriteria" type="ConsultCarmedDataType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+					<xs:element name="result" type="ECarmedAttributedListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- suite a la demande d'obtenir la ou les couvertures  financieres soin de sante  pour un prestataire -->
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedInterventionResultType">
+		<xs:sequence>
+			<xs:element name="eCarmedIdentifier" type="ECarmedIdentifierType"/>
+			<!--<xs:element name="eCarmedContent" type="ECarmedDataType"/>-->
+			<xs:element name="eCarmedContent" type="ECarmedContentCareType"/>
+			<xs:element name="agreementNbr" type="AgreementNbrType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedRequestType">
+		<xs:complexContent>
+			<xs:extension base="AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="selectionCriteria" type="ConsultCarmedDataType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- consultation d'une ou plus couvertures  financiere soin de sante -->
+		<!-- obtenir le CPAS gerant la ou les  couvertures  financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedAtAgreementDateRequestType">
+		<xs:complexContent>
+			<xs:extension base="AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="selectionCriteria" type="ConsultCarmedAtAgreementDateDataType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- consultation d'une ou plus couvertures  financiere soin de sante -->
+		<!-- obtenir le CPAS gerant la ou les  couvertures  financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="selectionCriteria" type="ConsultCarmedDataType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+					<xs:element name="result" type="ECarmedListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- suite a une consultation d'une ou plus couvertures  financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedAtAgreementDateResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="selectionCriteria" type="ConsultCarmedAtAgreementDateDataType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+					<xs:element name="result" type="ECarmedListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- suite a une consultation d'une ou plus couvertures  financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="ConsultCarmedResultType">
+		<xs:sequence>
+			<xs:element name="eCarmedIdentifier" type="ECarmedIdentifierType"/>
+			<xs:element name="eCarmedContent" type="ECarmedContentType"/>
+		</xs:sequence>
+		<!-- resultat suite a la consultation d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="DoctorType">
+		<xs:complexContent>
+			<xs:extension base="MedicalCoverCommonInformationType">
+				<xs:sequence>
+					<xs:element name="maxPrestation" type="StringMax250Type" minOccurs="0"/>
+					<xs:element name="healthCareProviderList" type="NihiiNbrListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ECarmedAttributedListType">
+		<xs:sequence>
+			<xs:element name="carmed" type="ConsultCarmedInterventionResultType" maxOccurs="24"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ECarmedContentType">
+		<xs:complexContent>
+			<xs:extension base="ECarmedDataType">
+				<xs:sequence>
+					<xs:element name="refund_podmi_sppis" type="Refund_podmi_sppisType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ECarmedContentCareType">
+		<xs:sequence>
+			<xs:element name="medicalCover" type="MedicalCoverType" minOccurs="0"/>
+			<xs:element name="refund_podmi_sppis" type="Refund_podmi_sppisType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ECarmedDataType">
+		<xs:sequence>
+			<xs:element name="judicialDecisionInd" type="IndicatorType">
+				<xs:annotation>
+					<xs:documentation>décision judiciaire</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decisionDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>conseil d'aide sociale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="incomeLessThanRISInd" type="IndicatorType">
+				<xs:annotation>
+					<xs:documentation>The Income of the Beneficiary is less than RIS </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="medicalCover" type="MedicalCoverType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ECarmedIdentifierType">
+		<xs:sequence>
+			<xs:element name="eCarmedNumber" type="MedicalCardNumberType"/>
+			<xs:element name="versionNbr" type="xs:integer"/>
+			<xs:element name="cardStatus" type="StateCarmedType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>reserved</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="beneficiary" type="BeneficiaryType"/>
+			<xs:element name="validityPeriod" type="PeriodType"/>
+			<xs:element name="pswc" type="OCMW_CPAS_Type">
+				<xs:annotation>
+					<xs:documentation>cpas ocmw</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="managedDates" type="ManagedDatesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ECarmedListType">
+		<xs:sequence>
+			<xs:element name="carmed" type="ConsultCarmedResultType" maxOccurs="24"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ECarmedOwnerListType">
+		<xs:sequence>
+			<xs:element name="carmed" type="QueryCarmedManagerDataType" maxOccurs="24"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EndUserType">
+		<xs:sequence>
+			<!--<xs:element name="entity" type="IdentifierType" minOccurs="0"/>-->
+			<xs:element name="medicalEntity" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>profession medicale ou etablissement</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="nihiiNbr" type="NihiiNbrType" maxOccurs="15">
+								<xs:annotation>
+									<xs:documentation>prestataire (personne morale ou physique)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="cbeNumber" type="common:CbeNumberType">
+								<xs:annotation>
+									<xs:documentation>prestataire : pas utilisé au release 1</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="medicalCategory" type="MedicalCategoryType">
+							<xs:annotation>
+								<xs:documentation>enumeration doctor, ...</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EvaluateCarmedResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="proposal" type="OpenCarmedDataType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+					<xs:element name="result" type="EvaluateCarmedResultType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!--  	 suite a une evaluation d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="EvaluateCarmedResultType">
+		<xs:sequence>
+			<xs:element name="beneficiaryLegalData" type="LegalDataType" minOccurs="0"/>
+			<xs:element name="refund_podmi_sppis" type="Refund_podmi_sppisType"/>
+		</xs:sequence>
+		<!-- resultat suite a l'evaluation d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="HospitalizationType">
+		<xs:complexContent>
+			<xs:extension base="MedicalCoverCommonInformationType">
+				<xs:sequence>
+					<xs:element name="hospitalList" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="hospital" type="HospitalType" maxOccurs="25"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="supportedDrugsDescription" type="StringMax4000Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IdentifierType">
+		<xs:simpleContent>
+			<xs:extension base="Decimal10_11Type">
+				<xs:attribute name="class" type="ClassType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NihiiNbrListType">
+		<xs:sequence>
+			<xs:element name="nihiiNbr" type="NihiiNbrType" maxOccurs="100"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LegalDataType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="registrationRegister" type="legalData:RegistrationRegisterType"/>
+			<xs:element name="identity" type="legalData:IdentityType"/>
+			<xs:element name="nationalities" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nationality" type="legalData:NationalityType" maxOccurs="5"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addresses" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="address" maxOccurs="30">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="communeRef" type="rrn:IT001" minOccurs="0"/>
+									<xs:element name="address" type="legalData:AddressType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="addressRefs" minOccurs="0" maxOccurs="30">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="addressRef" type="rrn:IT024"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="deceases" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="decease" type="legalData:DeceaseType" maxOccurs="3"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="civilStates" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="civilState" type="legalData:CivilStateType" maxOccurs="20"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="rrnInfos" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="identityCards" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="it195" type="rrn:IT195" maxOccurs="50">
+										<xs:annotation>
+											<xs:documentation>Carte d'identite</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="specialInfos" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="it202" type="rrn:IT202" maxOccurs="20">
+										<xs:annotation>
+											<xs:documentation>Information Speciale</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="refugeeTypes" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="it205" type="rrn:IT205" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation>Type de Personne dans le registre d'attente</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="statusOfRefugee" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="it206" type="rrn:IT206" maxOccurs="100">
+										<xs:annotation>
+											<xs:documentation>Statut de refugie</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="organizationsInCharge" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="it207" type="rrn:IT207" maxOccurs="40">
+										<xs:annotation>
+											<xs:documentation>Identification du CPAS</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="registrationRegisters" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="it210" type="rrn:IT210" maxOccurs="10">
+										<xs:annotation>
+											<xs:documentation>Registre d'inscription</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ManagedDatesType">
+		<xs:sequence>
+			<xs:element name="creationDate" type="xs:dateTime"/>
+			<xs:element name="lastModificationDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedicalCardIdentificationCardNrType">
+		<xs:sequence>
+			<xs:element name="medicalCardNr" type="MedicalCardNumberType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedicalCoverCommonInformationType">
+		<xs:sequence>
+			<xs:annotation>
+				<xs:documentation>common information of the medical cover</xs:documentation>
+			</xs:annotation>
+			<xs:element name="validityPeriod" type="PeriodType">
+				<xs:annotation>
+					<xs:documentation>Validity Period of the medical cover</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pswc_Support" type="PSWC_SupportType" minOccurs="0"/>
+			<xs:element name="description" type="StringMax4000Type" minOccurs="0"/>
+			<xs:element name="decisionDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>decision date of the medical cover</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="supportedSupplementsDescription" type="StringMax4000Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedicalCoverType">
+		<xs:annotation>
+			<xs:documentation>Representation of all the covers of a medical card</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="doctor" type="DoctorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Doctor medcial cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hospitalization" type="HospitalizationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hospitalization medicial cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ambulatoryHospitalization" type="HospitalizationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ambulatory Hospitalization medcial cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="medicalTransportation" type="MedicalTransportationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Medical transportation medcial cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="miscellaneous" type="MiscellaneousType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Miscellaneous medical cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paramedic" type="ParamedicType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Paramedic medical cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pharmaceuticalDrug" type="PharmaceuticalDrugType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Pharmaceutical drug medical cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="prosthesis" type="ProsthesisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Prosthesis medical cover type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedicalTransportationType">
+		<xs:complexContent>
+			<xs:extension base="MedicalCoverCommonInformationType">
+				<xs:sequence>
+					<xs:element name="companyList" type="CompanyListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MiscellaneousType">
+		<xs:complexContent>
+			<xs:extension base="MedicalCoverCommonInformationType">
+				<xs:sequence>
+					<xs:element name="maxAmount" type="StringMax250Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ModifyCarmedDataType">
+		<xs:sequence>
+			<xs:element name="eCarmedNumber" type="MedicalCardNumberType"/>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="newValidityPeriod" type="PeriodType"/>
+			<xs:element name="newMedicalCard" type="ECarmedDataType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModifyCarmedRequestType">
+		<xs:complexContent>
+			<xs:extension base="AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="proposal" type="ModifyCarmedDataType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- modification d'une couverture  financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="ModifyCarmedResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="proposal" type="ModifyCarmedDataType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+					<xs:element name="result" type="OpenCarmedResultType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- suite a une modification d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<!--<xs:complexType name="OCMW_CPAS_SupportType">
+		<xs:sequence>
+			<xs:element name="pswc_PatientPart">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="pswc_ZIV_AMI_Part">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="pswc_Supplement">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>-->
+	<xs:complexType name="OCMW_CPAS_Type">
+		<xs:sequence>
+			<xs:element name="cbeNumber" type="common:CbeNumberType">
+				<xs:annotation>
+					<xs:documentation>Kbo_BCE number of the OCMW_CPAS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="municipalityINS" type="InsType">
+				<xs:annotation>
+					<xs:documentation>INS number of the municipality of the OCMW_CPAS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="NameType" minOccurs="2" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Name of the OCMW_CPAS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpenCarmedDataType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="validityPeriod" type="PeriodType"/>
+			<xs:element name="medicalCard" type="ECarmedDataType"/>
+		</xs:sequence>
+		<!-- donnees pour attribuer une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="OpenCarmedRequestType">
+		<xs:complexContent>
+			<xs:extension base="AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="proposal" type="OpenCarmedDataType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!--  	 Evaluation ou Ouverture d'une couverture financiere soin de sante -->
+		<!-- evaluation d'une eventuelle couverture sociale -->
+	</xs:complexType>
+	<xs:complexType name="OpenCarmedResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="proposal" type="OpenCarmedDataType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+					<xs:element name="result" type="OpenCarmedResultType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!--  	 suite a une ouverture d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="OpenCarmedResultType">
+		<xs:complexContent>
+			<xs:extension base="EvaluateCarmedResultType">
+				<xs:sequence>
+					<xs:element name="eCarmedIdentifier" type="ECarmedIdentifierType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- resultat suite a l'attribution d'une couverture financiere soin de sante -->
+	</xs:complexType>
+	<xs:complexType name="Refund_podmi_sppisType">
+		<xs:annotation>
+			<xs:documentation>Refund Code defined by the POD MI / SPP IS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="refundCode" type="RefundCodeType"/>
+			<xs:element name="affiliedMutualityInd" type="IndicatorType"/>
+			<!--<xs:element name="incomeLessThanRISInd" type="IndicatorType">
+				<xs:annotation>
+					<xs:documentation>The Income of the Beneficiary is less than RIS : 
+Y = Yes
+N =No</xs:documentation>
+				</xs:annotation>
+			</xs:element>-->
+			<xs:element name="beneficiaryStatus" type="BeneficiaryStatusType"/>
+			<xs:element name="justification" type="Name500Type" minOccurs="2" maxOccurs="2"/>
+			<xs:element name="podmi_sppis_Hospitalization_ZIV_AMI_Part" type="PourcentageType"/>
+			<xs:element name="podmi_sppis_AmbulatoryCare_ZIV_AMI_Part" type="PourcentageType"/>
+			<xs:element name="podmi_sppis_Other_ZIV_AMI_Part" type="PourcentageType"/>
+			<xs:element name="podmi_sppis_Hospitalization_PatientPart" type="PourcentageType"/>
+			<xs:element name="podmi_sppis_AmbulatoryCare_PatientPart" type="PourcentageType"/>
+			<xs:element name="podmi_sppis_Other_PatientPart" type="PourcentageType"/>
+			<xs:element name="medicalUrgencyInd" type="IndicatorType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParamedicType">
+		<xs:complexContent>
+			<xs:extension base="MedicalCoverCommonInformationType">
+				<xs:sequence>
+					<xs:element name="maxAmount" type="StringMax250Type" minOccurs="0"/>
+					<xs:element name="maxPrestation" type="StringMax250Type" minOccurs="0"/>
+					<xs:element name="providerList" minOccurs="0">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="NihiiNbrListType"/>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PeriodType">
+		<xs:sequence>
+			<xs:element name="startDate" type="xs:date"/>
+			<xs:element name="endDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PharmaceuticalDrugType">
+		<xs:complexContent>
+			<xs:extension base="MedicalCoverCommonInformationType">
+				<xs:sequence>
+					<xs:element name="maxAmount" type="StringMax250Type" minOccurs="0"/>
+					<xs:element name="pharmacyList" type="NihiiNbrListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProsthesisType">
+		<xs:complexContent>
+			<xs:extension base="MedicalCoverCommonInformationType">
+				<xs:sequence>
+					<xs:element name="maxAmount" type="StringMax250Type" minOccurs="0"/>
+					<xs:element name="companyList" type="CompanyListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="QueryCarmedManagerDataType">
+		<xs:sequence>
+			<xs:element name="eCarmedIdentifier" type="ECarmedIdentifierType"/>
+			<!--<xs:element name="carmedManager" type="OCMW_CPAS_Type"/>-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueryCarmedManagerResponseType">
+		<xs:complexContent>
+			<xs:extension base="AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="selectionCriteria" type="ConsultCarmedDataType"/>
+					<xs:element name="status" type="StatusType"/>
+					<xs:element name="backendMessages" type="BackendMessagesType" minOccurs="0"/>
+					<xs:element name="result" type="ECarmedOwnerListType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- suite à la demande d'obtenir le CPAS gerant la ou les  couvertures  financiere soin de sante -->
+	</xs:complexType>
+	<xs:simpleType name="AgreementNbrType">
+		<xs:restriction base="xs:string">
+			<xs:length value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BeneficiaryStatusType">
+		<xs:annotation>
+			<xs:documentation>Status of a Beneficiary</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:enumeration value="L"/>
+			<xs:enumeration value="I"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ClassType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="cbe"/>
+			<xs:enumeration value="ssin"/>
+			<xs:enumeration value="nihii"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Decimal10_11Type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{10}"/>
+			<xs:pattern value="\d{11}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PourcentageType">
+		<xs:annotation>
+			<xs:documentation>0 %, 50%, 100%</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+			<xs:enumeration value="0.00"/>
+			<xs:enumeration value="0.50"/>
+			<xs:enumeration value="1.00"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--<xs:simpleType name="DecimalMax9999.99Type">
+		<xs:annotation>
+			<xs:documentation>Decimal with a maxium of 9999.99</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+			<xs:minInclusive value="0.00"/>
+			<xs:maxInclusive value="99999.99"/>
+		</xs:restriction>
+	</xs:simpleType>-->
+	<xs:simpleType name="GenderType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="M"/>
+			<xs:enumeration value="F"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NihiiNbrType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{11}"/>
+			<xs:pattern value="\d{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IndicatorType">
+		<xs:annotation>
+			<xs:documentation>Indicator Yes (Y) - No (N)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:enumeration value="N"/>
+			<xs:enumeration value="Y"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InsType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MedicalCardNumberType">
+		<xs:restriction base="xs:string">
+			<xs:length value="12"/>
+			<xs:pattern value="\d{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RefundCodeType">
+		<xs:annotation>
+			<xs:documentation>Representation of a refund code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StateCarmedType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BLOCKED"/>
+			<xs:enumeration value="UNBLOCKED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StringMax100Type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StringMax250Type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StringMax4000Type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StringMax500Type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceCodeType">
+		<xs:annotation>
+			<xs:documentation>Representation of an hospital Service</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PSWC_SupportType">
+		<xs:annotation>
+			<xs:documentation>Support of a CPAS / OCMW</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="pswc_ziv_ami_part" type="PSWC_ParticipationType"/>
+			<xs:element name="pswc_PatientPart" type="PSWC_ParticipationType"/>
+			<xs:element name="pswc_Supplement" type="PSWC_ParticipationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PSWC_ParticipationType">
+		<xs:annotation>
+			<xs:documentation>Participation of a OCMW/CPAS. Possible values : NOTHING,PARTIAL,FULL. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NOTHING"/>
+			<xs:enumeration value="PARTIAL"/>
+			<xs:enumeration value="FULL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HospitalType">
+		<xs:annotation>
+			<xs:documentation>Representation of an hospital</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nihiiNbr" type="NihiiNbrType"/>
+			<xs:element name="serviceDescription" type="StringMax4000Type" minOccurs="0"/>
+			<xs:element name="hospitalServiceList" type="HospitalServiceListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HospitalServiceListType">
+		<xs:annotation>
+			<xs:documentation>List of codes of services of an hospital</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serviceCode" type="ServiceCodeType" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LangType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fr"/>
+			<xs:enumeration value="nl"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NameType">
+		<xs:simpleContent>
+			<xs:extension base="StringMax100Type">
+				<xs:attribute name="lang" type="LangType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="Name500Type">
+		<xs:simpleContent>
+			<xs:extension base="StringMax500Type">
+				<xs:attribute name="lang" type="LangType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BackendMessagesType">
+		<xs:sequence>
+			<xs:element name="backendMessage" type="BackendMessageType" maxOccurs="400"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BackendMessageType">
+		<xs:sequence>
+			<xs:element name="reasonCode" type="xs:string"/>
+			<xs:element name="source" type="xs:string"/>
+			<xs:element name="communication" minOccurs="2" maxOccurs="2">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="lang" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="fr"/>
+										<xs:enumeration value="nl"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="severity" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="ERROR"/>
+					<xs:pattern value="WARNING"/>
+					<xs:pattern value="INFORMATION"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="MedicalCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="doctor"/>
+			<xs:enumeration value="pharmacist"/>
+			<xs:enumeration value="dentist"/>
+			<xs:enumeration value="midwife"/>
+			<xs:enumeration value="nurse"/>
+			<xs:enumeration value="physiotherapist"/>
+			<xs:enumeration value="dietist"/>
+			<xs:enumeration value="podiatrist"/>
+			<xs:enumeration value="logopedist"/>
+			<xs:enumeration value="orthoptist"/>
+			<xs:enumeration value="orthopedist"/>
+			<xs:enumeration value="bandagist"/>
+			<xs:enumeration value="implantprovider"/>
+			<xs:enumeration value="occupationaltherapist"/>
+			<xs:enumeration value="opticien"/>
+			<xs:enumeration value="audicien"/>
+			<xs:enumeration value="biologistpharmacist"/>
+			<xs:enumeration value="psychologist"/>
+			<xs:enumeration value="mastergerontology"/>
+			<xs:enumeration value="masterremedialeducation"/>
+			<xs:enumeration value="specializededucator"/>
+			<xs:enumeration value="bachelorfamilyscience"/>
+			<xs:enumeration value="bachelorreadaptation"/>
+			<xs:enumeration value="masterpsychomotortherapy"/>
+			<xs:enumeration value="masterappliedpsychology"/>
+			<xs:enumeration value="practicalnurse"/>
+			<xs:enumeration value="retirementnurse"/>
+			<xs:enumeration value="daycarecenter"/>
+			<xs:enumeration value="groupofnurses"/>
+			<xs:enumeration value="hospital"/>
+			<xs:enumeration value="retirement"/>
+			<xs:enumeration value="medicalhouse"/>
+			<xs:enumeration value="pharmacy"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LegalContextEcarmedType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="manage eCarmed"/>
+			<xs:enumeration value="rights eCarmed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StatusType">
+		<xs:sequence>
+			<xs:element name="value">
+				<xs:annotation>
+					<xs:documentation>global status of the result</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="DATA_FOUND"/>
+						<xs:enumeration value="NO_DATA_FOUND"/>
+						<xs:enumeration value="NO_RESULT"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="code">
+				<xs:annotation>
+					<xs:documentation>the code of the status</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="16"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="description" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>the description of the status</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="256"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="information" type="common:InformationType" minOccurs="0" maxOccurs="400"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

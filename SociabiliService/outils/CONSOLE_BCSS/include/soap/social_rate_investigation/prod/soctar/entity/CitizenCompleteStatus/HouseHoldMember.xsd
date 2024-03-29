@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 sp1 (http://www.altova.com) by Pierre Carabin (SPF Economie) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:HouseHoldMember="http://economie.fgov.be/soctar/entity/v2/HouseHoldMember" targetNamespace="http://economie.fgov.be/soctar/entity/v2/HouseHoldMember" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Definitions of citizen details.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="HouseHoldMember">
+		<xs:annotation>
+			<xs:documentation>
+				The National Register person.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ssin" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A national registry person ssin. This is a string, consists only of numeric characters and it must be 11 characters long.
+                    </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]{11}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="name" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The household member's last name. This is a free-format string, but it must be at	least one character long.
+                    </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="firstNames" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The household member's first names. This is a free-format string, but it must be at least one character long.
+                    </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

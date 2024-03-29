@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :             SelfEmployedV1.xsd
+         * Author :                  Cerberus Team
+         * Owner :                   KSZ / CBSS
+         * Creation date :           2015-06-08
+         * Last revision date :     
+         * Status :                  Planned
+         * Description :           This service aggregates and supplies the information for a self employed
+         * Current version :         0.1
+         * Revision History :   
+============================================================================================================= -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/SelfEmployedService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/SelfEmployed/v1" xmlns:tns="http://kszbcss.fgov.be/intf/SelfEmployedService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"  version="2015-06-08">
+			<xsd:import schemaLocation="SelfEmployedTypesV1.xsd" namespace="http://kszbcss.fgov.be/types/SelfEmployed/v1"/>
+			<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultCareerRequest" type="puo:ConsultCareerRequestType"/>
+			<xsd:element name="consultCareerResponse" type="puo:ConsultCareerResponseType"/>
+			<xsd:element name="consultCareerFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultContributionsRequest" type="puo:ConsultContributionsRequestType"/>
+			<xsd:element name="consultContributionsResponse" type="puo:ConsultContributionsResponseType"/>
+			<xsd:element name="consultContributionsFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultCareerAndContributionsRequest" type="puo:ConsultCareerAndContributionsRequestType"/>
+			<xsd:element name="consultCareerAndContributionsResponse" type="puo:ConsultCareerAndContributionsResponseType"/>
+			<xsd:element name="consultCareerAndContributionsFault" type="common:CBSSFaultType"/>
+		</xsd:schema>

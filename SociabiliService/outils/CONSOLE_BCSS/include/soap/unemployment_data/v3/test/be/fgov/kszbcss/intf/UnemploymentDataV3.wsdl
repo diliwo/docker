@@ -1,0 +1,345 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="UnemploymentDataService" targetNamespace="http://kszbcss.fgov.be/intf/UnemploymentDataService/v3" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:v3="http://kszbcss.fgov.be/types/UnemploymentData/v3" xmlns:tns="http://kszbcss.fgov.be/intf/UnemploymentDataService/v3" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/UnemploymentDataService/v3" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:ued="http://kszbcss.fgov.be/types/UnemploymentData/v3" xmlns:tns="http://kszbcss.fgov.be/intf/UnemploymentDataService/v3" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" version="2017-09-26">
+			<xsd:import namespace="http://kszbcss.fgov.be/types/UnemploymentData/v3" schemaLocation="../types/UnemploymentDataTypesV3.xsd"/>
+			<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../types/common/CommonV3.xsd"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultPaidSumsRequest" type="ued:ConsultPaidSumsRequestType"/>
+			<xsd:element name="consultPaidSumsResponse" type="ued:ConsultPaidSumsResponseType"/>
+			<xsd:element name="consultPaidSumsFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultRightsRequest" type="ued:ConsultRightsRequestType"/>
+			<xsd:element name="consultRightsResponse" type="ued:ConsultRightsResponseType"/>
+			<xsd:element name="consultRightsFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultPaymentsRequest" type="ued:ConsultPaymentsRequestType"/>
+			<xsd:element name="consultPaymentsResponse" type="ued:ConsultPaymentsResponseType"/>
+			<xsd:element name="consultPaymentsFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultActivationPaidSumsRequest" type="ued:ConsultActivationPaidSumsRequestType"/>
+			<xsd:element name="consultActivationPaidSumsResponse" type="ued:ConsultActivationPaidSumsResponseType"/>
+			<xsd:element name="consultActivationPaidSumsFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultScheduledPaymentRequest" type="ued:ConsultScheduledPaymentRequestType"/>
+			<xsd:element name="consultScheduledPaymentResponse" type="ued:ConsultScheduledPaymentResponseType"/>
+			<xsd:element name="consultScheduledPaymentFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultScaleCodeHistoryRequest" type="ued:ConsultScaleCodeHistoryRequestType"/>
+			<xsd:element name="consultScaleCodeHistoryResponse" type="ued:ConsultScaleCodeHistoryResponseType"/>
+			<xsd:element name="consultScaleCodeHistoryFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultSanctionHistoryRequest" type="ued:ConsultSanctionHistoryRequestType"/>
+			<xsd:element name="consultSanctionHistoryResponse" type="ued:ConsultSanctionHistoryResponseType"/>
+			<xsd:element name="consultSanctionHistoryFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultExemptionHistoryRequest" type="ued:ConsultExemptionHistoryRequestType"/>
+			<xsd:element name="consultExemptionHistoryResponse" type="ued:ConsultExemptionHistoryResponseType"/>
+			<xsd:element name="consultExemptionHistoryFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultWorkDisabilityHistoryRequest" type="ued:ConsultWorkDisabilityHistoryRequestType"/>
+			<xsd:element name="consultWorkDisabilityHistoryResponse" type="ued:ConsultWorkDisabilityHistoryResponseType"/>
+			<xsd:element name="consultWorkDisabilityHistoryFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultNoEarningCapacityAndLawsuitMutualityRequest" type="ued:ConsultNoEarningCapacityAndLawsuitMutualityRequestType"/>
+			<xsd:element name="consultNoEarningCapacityAndLawsuitMutualityResponse" type="ued:ConsultNoEarningCapacityAndLawsuitMutualityResponseType"/>
+			<xsd:element name="consultNoEarningCapacityAndLawsuitMutualityFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultYoungAvailabilityDecisionHistoryRequest" type="ued:ConsultYoungAvailabilityDecisionHistoryRequestType"/>
+			<xsd:element name="consultYoungAvailabilityDecisionHistoryResponse" type="ued:ConsultYoungAvailabilityDecisionHistoryResponseType"/>
+			<xsd:element name="consultYoungAvailabilityDecisionHistoryFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="consultPaidSumsRequestMsg">
+		<wsdl:part name="consultPaidSumsRequestParameters" element="tns:consultPaidSumsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultPaidSumsResponseMsg">
+		<wsdl:part name="consultPaidSumsResponseParameters" element="tns:consultPaidSumsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultPaidSumsFaultMsg">
+		<wsdl:part name="consultPaidSumsFaultParameters" element="tns:consultPaidSumsFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultRightsRequestMsg">
+		<wsdl:part name="consultRightsRequestParameters" element="tns:consultRightsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultRightsResponseMsg">
+		<wsdl:part name="consultRightsResponseParameters" element="tns:consultRightsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultRightsFaultMsg">
+		<wsdl:part name="consultRightsFaultParameters" element="tns:consultRightsFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultPaymentsRequestMsg">
+		<wsdl:part name="consultPaymentsRequestParameters" element="tns:consultPaymentsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultPaymentsResponseMsg">
+		<wsdl:part name="consultPaymentsResponseParameters" element="tns:consultPaymentsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultPaymentsFaultMsg">
+		<wsdl:part name="consultPaymentsFaultParameters" element="tns:consultPaymentsFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultActivationPaidSumsRequestMsg">
+		<wsdl:part name="consultActivationPaidSumsRequestParameters" element="tns:consultActivationPaidSumsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultActivationPaidSumsResponseMsg">
+		<wsdl:part name="consultActivationPaidSumsResponseParameters" element="tns:consultActivationPaidSumsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultActivationPaidSumsFaultMsg">
+		<wsdl:part name="consultActivationPaidSumsFaultParameters" element="tns:consultActivationPaidSumsFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultScheduledPaymentRequestMsg">
+		<wsdl:part name="consultScheduledPaymentRequestParameters" element="tns:consultScheduledPaymentRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultScheduledPaymentResponseMsg">
+		<wsdl:part name="consultScheduledPaymentResponseParameters" element="tns:consultScheduledPaymentResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultScheduledPaymentFaultMsg">
+		<wsdl:part name="consultScheduledPaymentFaultParameters" element="tns:consultScheduledPaymentFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultScaleCodeHistoryRequestMsg">
+		<wsdl:part name="consultScaleCodeHistoryRequestParameters" element="tns:consultScaleCodeHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultScaleCodeHistoryResponseMsg">
+		<wsdl:part name="consultScaleCodeHistoryResponseParameters" element="tns:consultScaleCodeHistoryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultScaleCodeHistoryFaultMsg">
+		<wsdl:part name="consultScaleCodeHistoryFaultParameters" element="tns:consultScaleCodeHistoryFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultSanctionHistoryRequestMsg">
+		<wsdl:part name="consultSanctionHistoryRequestParameters" element="tns:consultSanctionHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultSanctionHistoryResponseMsg">
+		<wsdl:part name="consultSanctionHistoryResponseParameters" element="tns:consultSanctionHistoryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultSanctionHistoryFaultMsg">
+		<wsdl:part name="consultSanctionHistoryFaultParameters" element="tns:consultSanctionHistoryFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultExemptionHistoryRequestMsg">
+		<wsdl:part name="consultExemptionHistoryRequestParameters" element="tns:consultExemptionHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultExemptionHistoryResponseMsg">
+		<wsdl:part name="consultExemptionHistoryResponseParameters" element="tns:consultExemptionHistoryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultExemptionHistoryFaultMsg">
+		<wsdl:part name="consultExemptionHistoryFaultParameters" element="tns:consultExemptionHistoryFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultWorkDisabilityHistoryRequestMsg">
+		<wsdl:part name="consultWorkDisabilityHistoryRequestParameters" element="tns:consultWorkDisabilityHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultWorkDisabilityHistoryResponseMsg">
+		<wsdl:part name="consultWorkDisabilityHistoryResponseParameters" element="tns:consultWorkDisabilityHistoryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultWorkDisabilityHistoryFaultMsg">
+		<wsdl:part name="consultWorkDisabilityHistoryFaultParameters" element="tns:consultWorkDisabilityHistoryFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultNoEarningCapacityAndLawsuitMutualityRequestMsg">
+		<wsdl:part name="consultNoEarningCapacityAndLawsuitMutualityRequestParameters" element="tns:consultNoEarningCapacityAndLawsuitMutualityRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultNoEarningCapacityAndLawsuitMutualityResponseMsg">
+		<wsdl:part name="consultNoEarningCapacityAndLawsuitMutualityResponseParameters" element="tns:consultNoEarningCapacityAndLawsuitMutualityResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultNoEarningCapacityAndLawsuitMutualityFaultMsg">
+		<wsdl:part name="consultNoEarningCapacityAndLawsuitMutualityFaultParameters" element="tns:consultNoEarningCapacityAndLawsuitMutualityFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultYoungAvailabilityDecisionHistoryRequestMsg">
+		<wsdl:part name="consultYoungAvailabilityDecisionHistoryRequestParameters" element="tns:consultYoungAvailabilityDecisionHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultYoungAvailabilityDecisionHistoryResponseMsg">
+		<wsdl:part name="consultYoungAvailabilityDecisionHistoryResponseParameters" element="tns:consultYoungAvailabilityDecisionHistoryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultYoungAvailabilityDecisionHistoryFaultMsg">
+		<wsdl:part name="consultYoungAvailabilityDecisionHistoryFaultParameters" element="tns:consultYoungAvailabilityDecisionHistoryFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="UnemploymentDataPortType">
+		<wsdl:operation name="consultPaidSums">
+			<wsdl:input name="consultPaidSumsRequest" message="tns:consultPaidSumsRequestMsg"/>
+			<wsdl:output name="consultPaidSumsResponse" message="tns:consultPaidSumsResponseMsg"/>
+			<wsdl:fault name="consultPaidSumsFault" message="tns:consultPaidSumsFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultRights">
+			<wsdl:input name="consultRightsRequest" message="tns:consultRightsRequestMsg"/>
+			<wsdl:output name="consultRightsResponse" message="tns:consultRightsResponseMsg"/>
+			<wsdl:fault name="consultRightsFault" message="tns:consultRightsFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultPayments">
+			<wsdl:input name="consultPaymentsRequest" message="tns:consultPaymentsRequestMsg"/>
+			<wsdl:output name="consultPaymentsResponse" message="tns:consultPaymentsResponseMsg"/>
+			<wsdl:fault name="consultPaymentsFault" message="tns:consultPaymentsFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultActivationPaidSums">
+			<wsdl:input name="consultActivationPaidSumsRequest" message="tns:consultActivationPaidSumsRequestMsg"/>
+			<wsdl:output name="consultActivationPaidSumsResponse" message="tns:consultActivationPaidSumsResponseMsg"/>
+			<wsdl:fault name="consultActivationPaidSumsFault" message="tns:consultActivationPaidSumsFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultScheduledPayment">
+			<wsdl:input name="consultScheduledPaymentRequest" message="tns:consultScheduledPaymentRequestMsg"/>
+			<wsdl:output name="consultScheduledPaymentResponse" message="tns:consultScheduledPaymentResponseMsg"/>
+			<wsdl:fault name="consultScheduledPaymentFault" message="tns:consultScheduledPaymentFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultScaleCodeHistory">
+			<wsdl:input name="consultScaleCodeHistoryRequest" message="tns:consultScaleCodeHistoryRequestMsg"/>
+			<wsdl:output name="consultScaleCodeHistoryResponse" message="tns:consultScaleCodeHistoryResponseMsg"/>
+			<wsdl:fault name="consultScaleCodeHistoryFault" message="tns:consultScaleCodeHistoryFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultSanctionHistory">
+			<wsdl:input name="consultSanctionHistoryRequestRequest" message="tns:consultSanctionHistoryRequestMsg"/>
+			<wsdl:output name="consultSanctionHistoryResponse" message="tns:consultSanctionHistoryResponseMsg"/>
+			<wsdl:fault name="consultSanctionHistoryFault" message="tns:consultSanctionHistoryFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultExemptionHistory">
+			<wsdl:input name="consultExemptionHistoryRequest" message="tns:consultExemptionHistoryRequestMsg"/>
+			<wsdl:output name="consultExemptionHistoryResponse" message="tns:consultExemptionHistoryResponseMsg"/>
+			<wsdl:fault name="consultExemptionHistoryFault" message="tns:consultExemptionHistoryFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultWorkDisabilityHistory">
+			<wsdl:input name="consultWorkDisabilityHistoryRequest" message="tns:consultWorkDisabilityHistoryRequestMsg"/>
+			<wsdl:output name="consultWorkDisabilityHistoryResponse" message="tns:consultWorkDisabilityHistoryResponseMsg"/>
+			<wsdl:fault name="consultWorkDisabilityHistoryFault" message="tns:consultWorkDisabilityHistoryFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultNoEarningCapacityAndLawsuitMutuality">
+			<wsdl:input name="consultNoEarningCapacityAndLawsuitMutualityRequest" message="tns:consultNoEarningCapacityAndLawsuitMutualityRequestMsg"/>
+			<wsdl:output name="consultNoEarningCapacityAndLawsuitMutualityResponse" message="tns:consultNoEarningCapacityAndLawsuitMutualityResponseMsg"/>
+			<wsdl:fault name="consultNoEarningCapacityAndLawsuitMutualityFault" message="tns:consultNoEarningCapacityAndLawsuitMutualityFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultYoungAvailabilityDecisionHistory">
+			<wsdl:input name="consultYoungAvailabilityDecisionHistoryRequest" message="tns:consultYoungAvailabilityDecisionHistoryRequestMsg"/>
+			<wsdl:output name="consultYoungAvailabilityDecisionHistoryResponse" message="tns:consultYoungAvailabilityDecisionHistoryResponseMsg"/>
+			<wsdl:fault name="consultYoungAvailabilityDecisionHistoryFault" message="tns:consultYoungAvailabilityDecisionHistoryFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="UnemploymentDataHTTPBinding" type="tns:UnemploymentDataPortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultPaidSums">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultPaidSums"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultPaidSumsFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultPaidSumsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultRights">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultRights"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultRightsFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultRightsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultPayments">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultPayments"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultPaymentsFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultPaymentsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultActivationPaidSums">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultActivationPaidSums"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultActivationPaidSumsFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultActivationPaidSumsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultScheduledPayment">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultScheduledPayment"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultScheduledPaymentFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultScheduledPaymentFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultScaleCodeHistory">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultScaleCodeHistory"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultScaleCodeHistoryFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultScaleCodeHistoryFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultSanctionHistory">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultSanctionHistory"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultSanctionHistoryFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultSanctionHistoryFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultExemptionHistory">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultExemptionHistory"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultExemptionHistoryFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultExemptionHistoryFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultWorkDisabilityHistory">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultWorkDisabilityHistory"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultWorkDisabilityHistoryFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultWorkDisabilityHistoryFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultNoEarningCapacityAndLawsuitMutuality">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultNoEarningCapacityAndLawsuitMutuality"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultNoEarningCapacityAndLawsuitMutualityFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultNoEarningCapacityAndLawsuitMutualityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultYoungAvailabilityDecisionHistory">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/UnemploymentDataService/consultYoungAvailabilityDecisionHistory"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultYoungAvailabilityDecisionHistoryFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultYoungAvailabilityDecisionHistoryFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="UnemploymentDataService">
+		<wsdl:port name="UnemploymentDataConsult" binding="tns:UnemploymentDataHTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://bcssksz-services-test.smals.be:443/SOA4520/UnemploymentDataService/v3/consult"/>
+			<!--Environnement de developpement : here always in comment (just an information for your customer the dev/acc/prod endpoint -->
+			<!-- Example : Environnement d'acceptation : https://b2b-acpt.ksz-bcss.fgov.be:4520/UnemploymentDataService/pull-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

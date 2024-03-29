@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+* File Name :				TaxAssessmentDataServiceV1.xsd
+* Author:					Peter Van den Bosch
+* Owner					CBSS
+* Description : 			Webservice BCSS for Consultation Of Tax Assessment Data (data on the notice of assessment) of SPF Fin / Fod FIN for OCMW/CPAS 
+* Revision History :	2013-05-02 Initial version
+=============================================================================================================-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://kszbcss.fgov.be/types/TaxAssessmentDataService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:commonData="http://kszbcss.fgov.be/types/TaxAssessmentDataCommon/v1" targetNamespace="http://kszbcss.fgov.be/types/TaxAssessmentDataService/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+  <xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="be/fgov/kszbcss/types/common/CommonV3.xsd"/>
+  <xsd:import namespace="http://kszbcss.fgov.be/types/TaxAssessmentDataCommon/v1" schemaLocation="TaxAssessmentDataCommon.xsd"/>
+  <!--==============GetTaxAssessmentData====================-->
+  <xsd:complexType name="GetTaxAssessmentDataRequestType">
+    <xsd:annotation>
+      <xsd:documentation>The consultation of the payed sums in a given period.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="common:BaseRequestType">
+        <xsd:sequence>
+          <xsd:element name="searchCriteria" type="TaxAssessmentDataSearchCriteriaType"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetTaxAssessmentDataResponseType">
+    <xsd:annotation>
+      <xsd:documentation>The response for the consultation of tax assessment data for the given criteria.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="common:BaseResponseType">
+        <xsd:sequence>
+          <xsd:element name="searchCriteria" type="TaxAssessmentDataSearchCriteriaType"/>
+          <xsd:element name="status" type="common:StatusType"/>
+          <xsd:element name="taxAssessmentData" type="commonData:TaxAssessmentDataType" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TaxAssessmentDataSearchCriteriaType">
+    <xsd:annotation>
+      <xsd:documentation>The search criteria for the consultation of the payed sums in a given period.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="ssin" type="common:SsinType"/>
+      <xsd:element name="taxAssessmentDataSelection" type="commonData:TaxAssessmentDataSelectionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

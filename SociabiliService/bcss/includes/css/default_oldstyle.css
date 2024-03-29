@@ -1,0 +1,219 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #444;
+	background: #ccc;
+	background-repeat: repeat-x;
+	margin: 0;
+	padding: 0;
+}
+img {
+	border: none;
+}
+p {
+	margin:0;
+	padding: 0;
+}
+h1 {
+	text-align: center;
+	padding: 5px 0 10px 0;
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+h2 {
+	color: #444450;
+	text-align: center;
+	text-decoration: underline;
+	font-size: 18px;
+	font-style: italic;
+	clear: both;
+}
+
+/**
+ * Inputs
+ **/
+ form {
+
+    text-align: left;
+}
+form h1 {
+	text-align: center;
+	color: #777777;
+	border-bottom: 1px dashed #777777;
+	font-size: 16px;
+}
+form p {
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 20px;
+}
+form label {
+    display: block;
+    float: left;
+    width: 200px;
+}
+
+input[type=text], input[type=password] {
+	width: 200px;
+}
+
+fieldset {
+	width: 96%;
+	margin-top: 20px;
+	border: none;
+}
+fieldset legend {
+	width: 100%;
+	border: none;
+	border-bottom: 1px black dashed;
+	text-align: left;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+	padding-bottom: 3px;
+}
+fieldset p {
+	text-align: left;
+	padding-bottom: 5px;
+}
+table {
+	width: 100%;
+}
+table th {
+	width: 300px;
+	text-align: left;
+}
+
+table th,
+table td {
+	vertical-align: top;
+}
+
+/**
+ * Parties de la page
+ **/
+#banner {
+	height: 120px;
+	width: 980px;
+	background: url('../images/banner.png') no-repeat;
+}
+#container {
+	width: 980px;
+	margin: auto;
+	background-color: #FFF;
+}
+#content {
+	padding: 5px;
+	text-align: left;
+}
+#footer {
+	padding-top: 20px;
+	font-weight: bold;
+	height: 80px;
+	background-repeat: no-repeat;
+	text-align: center;
+}
+#footer hr {
+	height: 10px;
+	border: 1px solid #D84545;
+	background-color: #CA0000;
+}
+
+/**
+ * DIVERS
+ **/
+
+.error {
+	text-align: center !important;
+	color: red;
+	font-size: 2em;
+}
+.info {
+	text-align: center !important;
+	color: blue;
+	font-size: 2em;
+}
+.infobulle {
+	cursor: help;
+}
+
+img.ui-datepicker-trigger {
+	cursor: pointer;
+}
+#impression {
+	text-align: right;
+	margin-right: 20px;
+	margin-top: 5px;
+}
+div.fieldset {
+	width: 96%;
+	margin-left: 10px;
+	margin-top: 20px;
+	border: none;
+}
+div.fieldset>h1 {
+	width: 100%;
+	border: none;
+	border-bottom: 1px black dashed;
+	text-align: left;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+	padding-bottom: 3px;
+	text-decoration: none;
+}
+div.fieldset>p {
+	text-align: left; 
+}
+span.titre-infos {
+	display: block;
+    float: right;
+	text-align: right;
+	font-weight: normal;
+	font-size: 10px;
+	font-style: normal;
+	margin-top: 10px;
+}
+span.titre-infos-bottom {
+	display: block;
+    float: right;
+	text-align: right;
+	font-weight: normal;
+	font-size: 10px;
+	font-style: normal;
+	margin-top: 24px;
+}
+th.thead-pension {
+    border-width:3px; 
+    border-style:solid; 
+    border-color: grey;
+	background-color: #96CA2D;
+	color: white;
+}
+table.pension{
+	border-collapse: collapse;	
+	border-width:3px; 
+    border-style:solid; 
+    border-color: grey;
+}
+table.pension td{
+	border-width:3px; 
+    border-style:double; 
+    border-color: grey;
+}
+.bold{
+
+	font-weight: bold;
+}
+.cacher{
+	visibility: collapse;
+}
+
+.hide {
+	display: none;
+}
+

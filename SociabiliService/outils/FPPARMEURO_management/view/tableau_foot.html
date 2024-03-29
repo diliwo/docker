@@ -1,0 +1,92 @@
+        
+                </tbody>             
+            </table>
+   <script>
+      /* $("#tab tr").click(function(){            
+            $(this).addClass('selected').siblings().removeClass('selected');
+    });*/
+
+       
+        var selectionPivot;
+        var LEFT_MOUSE_BUTTON = 1;
+        var trs = document.getElementById('tab').tBodies[0].getElementsByTagName('tr');
+        var idTds = $('td:first-child');
+        var cpt = 0;
+        idTds.each(function(idx, val) {
+            cpt = 0;
+            // onselectstart because IE doesn't respect the css `user-select: none;`
+            val.onselectstart = function() { return false; };
+            $(val).mousedown(function(event) {
+                if(event.which != LEFT_MOUSE_BUTTON) {
+                    return;
+                }
+                var row = trs[idx];
+                if (!event.ctrlKey && !event.shiftKey) {
+                    clearAll();
+                    toggleRow(row);
+                    selectionPivot = row;
+                    disabeledEnabeledButton(cpt);
+                    
+                    return;
+                }
+                if (event.ctrlKey && event.shiftKey) {
+                    selectRowsBetweenIndexes(selectionPivot.rowIndex, row.rowIndex);
+                    disabeledEnabeledButton(cpt);
+                    return;
+                }
+                if (event.ctrlKey) {
+                    toggleRow(row);
+                    selectionPivot = row;
+                    disabeledEnabeledButton(cpt);
+                }
+                if (event.shiftKey) {
+                    clearAll();
+                    selectRowsBetweenIndexes(selectionPivot.rowIndex, row.rowIndex);
+                    disabeledEnabeledButton(cpt);
+                }
+                
+            });
+            
+        });
+        function toggleRow(row) {
+            //row.className = row.className == 'selected' ? '' : 'selected';
+            if(row.className == 'selected'){
+
+                row.className = '';
+                cpt=cpt-1;
+            }
+            else{
+                row.className = 'selected';
+                cpt = cpt+1;
+            }
+        }
+        function selectRowsBetweenIndexes(ia, ib) {
+            var bot = Math.min(ia, ib);
+            var top = Math.max(ia, ib);
+
+            for (var i = bot; i <= top; i++) {
+                trs[i-1].className = 'selected';
+                cpt = cpt+1;
+            }
+        }
+        function clearAll() {
+            for (var i = 0; i < trs.length; i++) {
+                trs[i].className = '';
+                cpt = 0;
+            }
+        }
+        function disabeledEnabeledButton(selected){
+            //console.log(selected);
+            if(selected > 1){
+                $('#bAjouter').prop('disabled', true);
+                $('#bSupprimer').prop('disabled', true);
+               
+            }
+            else{
+                $('#bAjouter').prop('disabled', false);
+                $('#bSupprimer').prop('disabled', false);
+               
+            }
+        }   
+
+    </script>         

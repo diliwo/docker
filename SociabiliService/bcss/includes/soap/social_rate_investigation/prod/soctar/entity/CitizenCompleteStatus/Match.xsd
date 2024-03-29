@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by Annick Buelinckx (UPFRONT SPRL) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:Match="http://economie.fgov.be/soctar/entity/v2/Match" targetNamespace="http://economie.fgov.be/soctar/entity/v2/Match" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Definitions of contract match type.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="Match">
+		<xs:annotation>
+			<xs:documentation>
+				The contract match.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ssin">
+				<xs:annotation>
+					<xs:documentation>
+						A contract person ssin (ssin of the citizen matched with the contract).This is a string, consists only of
+						numeric characters and it must be
+						11 characters long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]{11}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="supplierName">
+				<xs:annotation>
+					<xs:documentation>
+						A contract supplier. This is a free-format string, but it must be
+						at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="custId">
+				<xs:annotation>
+					<xs:documentation>
+						A contract customer name. This is a free-format string, but it must be at least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="name">
+				<xs:annotation>
+					<xs:documentation>
+						A person's names. This is a free-format string, but it must be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="firstNames" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						A contract customer first name. This is a free-format string, but
+						it must be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="streetName">
+				<xs:annotation>
+					<xs:documentation>
+						A contract street (supply address, not facturation). This is a free-format string, but it must be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="houseNu" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						A contract house number(supply address, not facturation).  This is a free-format string, but it must
+						be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="boxNu" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A contract box number(supply address, not facturation).  This is a free-format
+						string, but it must be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postalCode" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A contract postal code (supply address, not facturation). This is a free-format string, but it must
+						be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cityName" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A contract city (supply address, not facturation). This is a free-format
+						string, but it must be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="eanId">
+				<xs:annotation>
+					<xs:documentation>
+						A contract ean number. This is a free-format string, but must be 18
+						characters long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="18"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="product" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A contract type of product. Value is either E (electricity) or G (gas).
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="E"/>
+						<xs:enumeration value="G"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="eligibility" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+                        An indication if the contract has been given the social tariff or not. This is a free-format string one character long.
+                        0 means has right to social tariff.
+                        1 means has NOT right to social tariff.
+                        If the element is not present this means the eligibility has not yet been determined.
+                    </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[01]{1}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="startDate" type="xs:date" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Start date of the right to a social tariff. The format of the date is yyyy-MM-dd.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="updateDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The date when the FPS ECONOMY has communicated to the supplier the right to a social tariff. The format of the date is yyyy-MM-dd.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endDate" type="xs:date" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						End date of the right to a social tariff. The format of the date is yyyy-MM-dd.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="supplierStart" type="xs:date" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Start date of the corresponding contract, format of the date is yyyy-MM-dd.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="supplierEnd" type="xs:date" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						End date of the corresponding contract, format of the date is yyyy-MM-dd.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

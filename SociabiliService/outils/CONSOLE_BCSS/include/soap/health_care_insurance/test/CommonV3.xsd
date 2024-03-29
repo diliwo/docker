@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!--
+====================================================================================================================================
+	* File Name				: CommonV3.xsd
+	* Author					: Johan Kumps - Peter Van den Bosch
+	* Owner					: Crossroad Bank for Social Security (CBSS)
+	* Domain					: CBSS Registries Public Services
+	* Creation Date			: 31-05-2010
+	* Last revision date	: 25-03-2011
+	* Description				: This XML schema document contains a set of Common XML  type definition and content model fragments for use in CBSS webservices and batch file schema definitions within the CBSS domain. 
+	* Status					: 
+	* Current Version		: 3.0
+	* Revision History		: 09-03-2011  	String2Type added
+	*														LegalContext added
+	*														DescriptionType refactored + lenght constraint 50 changed to 100
+	*														InformationCustomerType.ticket length constraint 32 changed to 36
+	*														LegalContext + IntegrationContext concepts added
+	*														RuntimeFaultType refactored to CBSSFaultType
+	*														Parameters added to BaseRequestType
+	*                                18-10-2011 		removed String100Type 
+   *                                         				Added InformationNotificationCBSS/InformationNotified
+   *                                         				Increased the max number of occurences of Information in CBSSFaultType from 5 to 15
+	*									25-10-2011	Refactored unbounded business errors to 25
+	*														Refactored SSINType to SsinType
+   *                          09-11-2011 Changed namespace to v3
+   *                                         thorough validation leading to modifications: see CBSS common XSD types.doc
+   *                           18-01-2011          informationNotified: identification renamed to notifiedIdentification (consistency)
+   *                                                          CbeNumberType: changed from 9 or 10 digits, to mandatory 10 digits
+  *                                                          added types for euro amounts, enterprise numbers and business unit numbers
+ *                                                          Removed status and business anomalies from BaseResponseType, as the request fields should be copied in the same order in the response
+====================================================================================================================================
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kszbcss.fgov.be/types/common/v3" targetNamespace="http://kszbcss.fgov.be/types/common/v3" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+	<!-- Request / response meta data -->
+	<xsd:simpleType name="SeverityType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="INFORMATION"/>
+			<xsd:enumeration value="WARNING"/>
+			<xsd:enumeration value="FATAL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UUIDType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TicketType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="36"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CbeNumberType">
+		<xsd:annotation>
+			<xsd:documentation>CBE number identifying an enterprise or business unit</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{10}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EnterpriseNumberType">
+		<xsd:annotation>
+			<xsd:documentation>CBE enterprise number (starting with 0 or 1)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-1]\d{9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BusinessUnitNumberType">
+		<xsd:annotation>
+			<xsd:documentation>CBE business unit number (starting with 2-8)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[2-8]\d{9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SsinType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9][0-9](([0][0-9])|([1][0-2]))(([0-2][0-9])|([3][0-1]))(([0-9]{2}[1-9])|([0-9][1-9][0-9])|([1-9][0-9]{2}))(([0-8][0-9])|([9][0-7]))">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="FR">Registre National</xsd:documentation>
+					<xsd:documentation xml:lang="NL">Rijksregister</xsd:documentation>
+				</xsd:annotation>
+			</xsd:pattern>
+			<xsd:pattern value="[0-9][0-9](([2][0-9])|([3][0-2]))(([0-2][0-9])|([3][0-1]))[0-9]{3}(([0-8][0-9])|([9][0-7]))">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="FR">Registre Bis : numero Bis</xsd:documentation>
+					<xsd:documentation xml:lang="NL">Bis register : Bisnummer</xsd:documentation>
+				</xsd:annotation>
+			</xsd:pattern>
+			<xsd:pattern value="[0-9][0-9](([4][0-9])|([5][0-2]))(([0-2][0-9])|([3][0-1]))[0-9]{3}(([0-8][0-9])|([9][0-7]))">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="FR">Registre Bis : numero TER</xsd:documentation>
+					<xsd:documentation xml:lang="NL">Bisregister : Ternummer</xsd:documentation>
+				</xsd:annotation>
+			</xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LegalContextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="64"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegrationContextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="64"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="InformationCBSSType">
+		<xsd:annotation>
+			<xsd:documentation>Information block from CBSS.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ticketCBSS" type="tns:UUIDType"/>
+			<xsd:element name="timestampReceive" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Time request was received by CBSS.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timestampReply" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Time reply was sent by CBSS.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformationCustomerType">
+		<xsd:annotation>
+			<xsd:documentation>Information block that can be used by the customer for diagnostic use.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ticket" type="tns:TicketType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Client can assign their own ticket reference for the request. Not mandatory.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timestampSent" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Timestamp when client sent request.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="customerIdentification" type="tns:OrganizationIdentificationType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformationSupplierType">
+		<xsd:annotation>
+			<xsd:documentation>Information block for supplier of a service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ticket" type="tns:TicketType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>UUID generated by Customer or Supplier</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timestampReceive" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Time of request</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timestampReply" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Time of request</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="supplierIdentification" type="tns:OrganizationIdentificationType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformationNotificationCBSSType">
+		<xsd:annotation>
+			<xsd:documentation>Information block for CBSS info when CBSS notifies partner</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ticketCBSS" type="tns:UUIDType">
+				<xsd:annotation>
+					<xsd:documentation>UUID generated by Customer or Supplier</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timestampSent" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Time of request</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformationNotifiedType">
+		<xsd:annotation>
+			<xsd:documentation>Information block for partner info when CBSS notifies partner</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ticket" type="tns:TicketType" minOccurs="0"/>
+			<xsd:element name="timestampReply" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="notifiedIdentification" type="tns:OrganizationIdentificationType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrganizationIdentificationType">
+		<xsd:choice>
+			<xsd:element name="cbeNumber" type="tns:CbeNumberType"/>
+			<xsd:sequence>
+				<xsd:element name="sector">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:unsignedShort">
+							<xsd:maxInclusive value="999"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="institution">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:unsignedShort">
+							<xsd:maxInclusive value="999"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="OpenPeriodType">
+		<xsd:annotation>
+			<xsd:documentation>Period containining a begin date and an optional end date.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="beginDate" type="xsd:date"/>
+			<xsd:element name="endDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PeriodType">
+		<xsd:annotation>
+			<xsd:documentation>Period containining a begin date and an end date.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="beginDate" type="xsd:date"/>
+			<xsd:element name="endDate" type="xsd:date"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="IncompleteDateType">
+		<xsd:annotation>
+			<xsd:documentation>A possibly incomplete date. Format yyyy-mm-dd, yyyy-mm-00 or yyyy-00-00
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="10"/>
+			<xsd:whiteSpace value="collapse"/>
+			<xsd:pattern value="[0-2][0-9]{3}\-[0-1][0-9]\-[0-3][0-9]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="DescriptionType">
+		<xsd:annotation>
+			<xsd:documentation>Type specifying how a value that can exist in several languages will be modelled</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="tns:BaseDescriptionType">
+				<xsd:attribute name="language" type="tns:LanguageType" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="BaseDescriptionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="DescriptionStyleParametersType">
+		<xsd:sequence>
+			<xsd:element name="descriptionExpected" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Using this element the consumer can specify whether the description of the given CTMS code is expected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="descriptionLanguage" type="tns:LanguageType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The language the consumer can specify in order to receive code table value descriptions in the preferred language. If not provided the description will be provided in NL, FR and DE languages.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="errorDescriptionExpected" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Using this element the consumer can specify whether the description of the given error code is expected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LanguageType">
+		<xsd:annotation>
+			<xsd:documentation>Type specifying the language of a given value</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NL"/>
+			<xsd:enumeration value="FR"/>
+			<xsd:enumeration value="DE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RegistersCharacterSetType">
+		<xsd:annotation>
+			<xsd:documentation>Type defining the possible character sets to use.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ASCII"/>
+			<xsd:enumeration value="ASCII_ÄÖÜ"/>
+			<xsd:enumeration value="ASCII_CBSS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Errors and warnings structures -->
+	<xsd:group name="BusinessAnomaliesContentFragment">
+		<xsd:annotation>
+			<xsd:documentation>Structure reporting business errors to the consumer</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="businessAnomalies" type="tns:BusinessAnomaliesType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="BusinessAnomaliesType">
+		<xsd:annotation>
+			<xsd:documentation>Type defining the structure of the part of the response containing business Faults</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="businessAnomaly" type="tns:BusinessAnomalyType" maxOccurs="25"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessAnomalyType">
+		<xsd:annotation>
+			<xsd:documentation>Type defining the structure of one business Faults</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="code" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Unique code referring to a description of this Fault </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="severity" type="tns:SeverityType"/>
+			<xsd:element name="description">
+				<xsd:annotation>
+					<xsd:documentation>Some description of this Fault</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="256"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="information" type="tns:InformationType" minOccurs="0" maxOccurs="15"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CBSSFaultType">
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="tns:InformationCustomerType" minOccurs="0"/>
+			<xsd:element name="informationCBSS" type="tns:InformationCBSSType"/>
+			<xsd:element name="detail" type="tns:MessageType" maxOccurs="30"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MessageType">
+		<xsd:sequence>
+			<xsd:element name="severity" type="tns:SeverityType"/>
+			<xsd:element name="reasonCode">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="16"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="diagnostic">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="256"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="authorCode">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="64"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="information" type="tns:InformationType" minOccurs="0" maxOccurs="15"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformationType">
+		<xsd:sequence>
+			<xsd:element name="fieldName">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="64"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="fieldValue" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="256"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Base types for most common request/response format for consultation type operations. Can be used to define request and response types with extension type inheritance. Don't use if it doesn't fit the requirements.  -->
+	<xsd:complexType name="BaseRequestType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Type defining the base structure for all service requests</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="tns:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="tns:InformationCBSSType" minOccurs="0"/>
+			<xsd:element name="legalContext" type="tns:LegalContextType">
+				<xsd:annotation>
+					<xsd:documentation>legal context under which the request was made</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BaseResponseType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Type defining the base structure for all service responses</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="tns:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="tns:InformationCBSSType"/>
+			<xsd:element name="legalContext" type="tns:LegalContextType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Commonly used status type for consultation type operations. Define another if it doesn't fit requirements.-->
+	<xsd:complexType name="StatusType">
+		<xsd:sequence>
+			<xsd:element name="value">
+				<xsd:annotation>
+					<xsd:documentation>global status of the result</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="DATA_FOUND"/>
+						<xsd:enumeration value="NO_DATA_FOUND"/>
+						<xsd:enumeration value="NO_RESULT"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="code">
+				<xsd:annotation>
+					<xsd:documentation>the code of the status</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="16"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="description" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>the description of the status</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="256"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="information" type="tns:InformationType" minOccurs="0" maxOccurs="15"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="EuroPositiveAmountType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="2"/>
+			<xsd:maxExclusive value="1000000000000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EuroAmountType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="2"/>
+			<xsd:maxExclusive value="1000000000000000"/>
+			<xsd:minExclusive value="-1000000000000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EurocentPositiveAmountType">
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:maxExclusive value="100000000000000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EurocentAmountType">
+		<xsd:restriction base="xsd:long">
+			<xsd:minExclusive value="-100000000000000000"/>
+			<xsd:maxExclusive value="100000000000000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

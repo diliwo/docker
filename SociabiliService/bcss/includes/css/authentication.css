@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+#authentication {
+	width: 50%;
+	margin-left: 25%;
+	border: 1px solid black;
+    padding: 5px 10px;
+    text-align: left;
+}
+#authentication h1 {
+	text-align: center;
+	color: #777777;
+	border-bottom: 1px dashed #777777;
+	font-size: 16px;
+}
+#username, #password {
+    text-align: left;
+    width: 240px;
+}

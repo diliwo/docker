@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  hop-web:
+    image: apache/hop-web:latest
+    container_name: hop-web-container
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./mount_opt:/opt/
+    environment:
+      HOP_PROJECT_NAME: migration-mssql-postgresql
+      HOP_PROJECT_FOLDER: /opt/hop-project
+      HOP_ENVIRONMENT_NAME: acc
+      HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS: /opt/hop-project/config/acc.json
+      HOP_SHARED_JDBC_FOLDER: /opt/hop-plugins/databases
+    stdin_open: true
+    tty: true
+    restart: unless-stopped

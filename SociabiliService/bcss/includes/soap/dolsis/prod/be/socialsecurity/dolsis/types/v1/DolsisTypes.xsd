@@ -1,0 +1,1430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===================================================================== -->
+<!-- * File Name : DolsisTypes.xsd -->
+<!-- * Author : Alain Tilmant, Willem Salembier -->
+<!-- * Owner : CBSS / Smals -->
+<!-- * Domain : -->
+<!-- * Creation date : 27/10/2011 -->
+<!-- * Last revision date : 19/11/2014 -->
+<!-- * Description : support a la web-app DOLSIS like Genesis -->
+<!-- * Status : Model -->
+<!-- * Current Version : 1.7 -->
+<!-- ===================================================================== -->
+<xsd:schema version="1.7" targetNamespace="http://socialsecurity.be/dolsis/types/v1" xmlns="http://socialsecurity.be/dolsis/types/v1" attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:cbss="http://kszbcss.fgov.be/types/common/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../../../../fgov/kszbcss/types/common/v3/CommonV3.xsd"/>
+  <xsd:complexType name="Address">
+    <xsd:annotation>
+      <xsd:appinfo>v0.15: removed boolean mainAddress, mainAddress is the Person::address now</xsd:appinfo>
+      <xsd:appinfo>v0.20: street and city type changed to Name + maxOccurs 3</xsd:appinfo>
+      <xsd:documentation>Represents an address</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="street" type="Name" minOccurs="0" maxOccurs="3"/>
+      <xsd:element name="houseNbr" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="postBox" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="zipCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="city" type="Name" minOccurs="0" maxOccurs="3"/>
+      <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="countryCode" type="CountryCode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: added for completeness</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="startDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="type" type="AddressType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="AddressType">
+    <xsd:annotation>
+      <xsd:documentation>Represents the type of address</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="private"/>
+      <xsd:enumeration value="professional"/>
+      <xsd:enumeration value="branch_office"/>
+      <xsd:enumeration value="registered_office"/>
+      <xsd:enumeration value="residence">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="FamilyMember">
+    <xsd:sequence>
+      <xsd:element name="person" type="PersonSummary">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: reused summary instead of ssin/lastName/firstName</xsd:appinfo>
+          <xsd:appinfo>v0.17: removed period</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="positionCode" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Household status / Position dans le ménage / Stand in het gezin
+            1 = householder / chef de ménage / gezinshoofd
+            2 = spouse / conjoint / echtgenoot, echtgenote
+            3 = son, daughter / fils, fille / zoon, dochter
+            4 = son-in-law, daughter-in-law / gendre, bru / schoonzoon, schoondochter
+            5 = grandson, granddaughter / petit-fils, petite-fille / kleinzoon, kleindochter
+            6 = father, mother / père, mère / vader, moeder
+            7 = father-in-law, mother-in-law / beau-père, belle-mère / schoonvader, schoonmoeder
+            8 = grandfather, grandmother / grand-père, grand-mère / grootvader, grootmoeder
+            9 = brother, sister / frère, soeur / broer, zuster
+            10 = brother-in-law, sister-in-law / beau-frère, belle-soeur / schoonbroer, schoonzuster
+            11 = relative / apparenté(e) / verwant, verwante
+            12 = not related / non-apparenté(e) / zonder familieverband
+            13 = stepson, stepdaughter / beau-fils, belle-fille / stiefzoon, stiefdochter
+            14 = great-grandson, great-granddaughter / arrière petit-fils, arrière petite-fille / achterkleinzoon, achterkleindochter
+            15 = aunt, uncle / tante, oncle / tante, oom
+            16 = niece, nephew (relatives in the 3rd degree) / nièce, neveu (3ème degré de parenté) / nicht, neef (verwantschap : 3de graad)
+            17 = cousin (relatives in the 4th degree) / nièce, neveu (4ème degré de parenté) / nicht, neef (verwantschap : 4de graad)
+            20 = communities, homes / communautés, homes / gemeenschappen, tehuizen</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="beginDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="endDate" type="xsd:date" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute default="false" name="householder" type="xsd:boolean" use="optional"/>
+  </xsd:complexType>
+  <xsd:complexType name="Person">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: added: id and changed fields to optional for Limosa use cases</xsd:appinfo>
+      <xsd:appinfo>v0.16: added source attribute</xsd:appinfo>
+      <xsd:appinfo>v0.19: added second name</xsd:appinfo>
+      <xsd:appinfo>v0.20: birthplace type changed to Name + maxOccurs 3</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="ssin" type="cbss:SsinType" minOccurs="0"/>
+      <xsd:element name="lastName" type="xsd:string"/>
+      <xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="secondName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="birthDate" type="cbss:IncompleteDateType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: type changed for Limosa use cases</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="deceaseDate" type="cbss:IncompleteDateType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.7: added field</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="birthPlace" type="Name" minOccurs="0" maxOccurs="3"/>
+      <xsd:element name="gender" type="GenderType" minOccurs="0"/>
+      <xsd:element name="maritalStatus" type="xsd:int" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>0 = Onbekend, 00 = Onbekend, 10 = Ongehuwd, 20 = Gehuwd, 25 = Nietigverklaring van huwelijk, 26 = Putatief huwelijk, 30 = Weduwnaar/weduwe, 40 = Echtgescheiden, 41 = Echtgescheiden, 50 = Gescheiden van T &amp; B, 51 =
+            Gescheiden van T &amp; B, 60 = Verstoting, 80 = Partnerschap, 81 = Beëindigd partnerschap, 90 = Onbepaald</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="maritalStatusInceptionDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="maritalStatusPartner" type="PersonSummary" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nationality" type="CountryCode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: reused existing simple type</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="address" type="Address" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added for limosa use cases</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:long" use="optional"/>
+    <xsd:attribute name="source" type="PersonDataSource" use="optional"/>
+  </xsd:complexType>
+  <xsd:complexType name="PersonSummary">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: renamed from PersonReference</xsd:appinfo>
+      <xsd:appinfo>v0.7: removed status because CBSS will not complete information</xsd:appinfo>
+      <xsd:appinfo>v0.15: set ssin optional for Limosa compatibility</xsd:appinfo>
+      <xsd:appinfo>v0.16: added source attribute</xsd:appinfo>
+      <xsd:appinfo>v0.19: added second name</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="ssin" type="cbss:SsinType" minOccurs="0"/>
+      <xsd:element name="lastName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="secondName" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="source" type="PersonDataSource" use="optional"/>
+  </xsd:complexType>
+  <xsd:simpleType name="PersonDataSource">
+    <xsd:annotation>
+      <xsd:documentation>v0.16: added simple type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="nr">
+        <xsd:annotation>
+          <xsd:documentation>national register</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="bis">
+        <xsd:annotation>
+          <xsd:documentation>BIS register (CBSS)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="rad">
+        <xsd:annotation>
+          <xsd:documentation>Registre des radiés/ Register der geschrapten (CBSS)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Employer">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: added: id and changed fields to optional for Limosa use cases</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="nossRegistrationNumber" type="NOSSRegistrationNbr" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: optional because not always known</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nossTemporaryRegistrationNumber" type="NOSSRegistrationNbr" minOccurs="0"/>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: renamed cbeNumber like type</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ssin" type="cbss:SsinType" minOccurs="0"/>
+      <xsd:element name="feeNumber" type="FeeNumber" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added for Limosa</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="vatNumber" type="VatNumber" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.7: moved from EmployerAdditionalData for Limosa use cases</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="address" type="Address" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: A Limosa case was found without an address</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="countryCode" type="CountryCode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: added the country code for a Limosa employer can be different than the main address</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="underCuratorshipBeginDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nossDeletionDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+          <xsd:appinfo>v1.6: Moved element nossDeletionDate from type EmployerAdditionalData to type Employer</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:long" use="optional"/>
+  </xsd:complexType>
+  <xsd:complexType name="EmployerAdditionalData">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: moved to common dolsis types</xsd:appinfo>
+      <xsd:documentation>Employer data from the NOSS employer registry</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="identificationNumber7M" type="xsd:long" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: type more specific + fix typo</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="buildingRegistrationNumber" type="xsd:long" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: type more specific + optional</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="administrativeCode" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: should be optional element</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="administrativeSystem" type="xsd:int" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: type more specific</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="employerClass" type="xsd:int" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: type more specific</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="importanceCode" type="xsd:int" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: type more specific, should be optional element</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="activityCode" type="xsd:int" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.18: added data field</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="legalForm" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: should be optional element</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nossMembershipDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: should be optional element</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nossDeletionDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: Deprecated. Moved to type Employer</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="phoneNumber" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="faxNumber" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="email" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="bankruptcyDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: moved from EmployerRepresentative</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmployerSocialSecretariat">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: moved to common dolsis types</xsd:appinfo>
+      <xsd:documentation>Details on the employers social secretariat</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="ssaNbr" type="SocialSecretariatNumber" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: optional because the info does not always exist in Reportorium</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="name" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: optional because the info does not always exist in Reportorium</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="address" type="Address" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: optional because the info does not always exist in Reportorium</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="membershipSince" type="Quarter" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element changed (minOccurs added)</xsd:appinfo>
+          <xsd:appinfo>v1.6: optional because the info does not always exist in Reportorium</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmployerRepresentative">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: moved to common dolsis types</xsd:appinfo>
+      <xsd:documentation>Details on the employers representative (mandatary/curator)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="address" type="Address"/>
+      <xsd:element name="beginDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: renamed because not all representatives are curator</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmploymentRecord">
+    <xsd:sequence>
+      <xsd:element name="lastDimonaAction" type="DimonaAction">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: create enumeration type for dimona actions</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="inServiceDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: date and hours must be expressed separately to support absent time information, start is optional</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="inServiceHour" type="xsd:time" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v 0.6: new element hour</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="outServiceDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: date and hours must be expressed separately to support absent time information, start is optional</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="outServiceHour" type="xsd:time" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: new element hour</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="workerType" type="EmploymentWorkerType">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: create enumeration type for worjker types</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="subEntityNbr" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: renamed</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="jointCommissionNbr" type="JointCommissionNumber" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="studentPlaceOfWork" type="StudentPlaceOfWork" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: subtype created</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usingEmployer" type="UsingEmployer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: subtype created</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nbrOfPlannedWorkingDays" type="xsd:int" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="cancelled" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dimonaPeriodId" type="xsd:long" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="creationDate" type="xsd:dateTime" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+          <xsd:documentation>Optional for backward compatibility</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="lastUpdateDate" type="xsd:dateTime" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+          <xsd:documentation>Optional for backward compatibility</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="DimonaAction">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="in"/>
+      <xsd:enumeration value="out"/>
+      <xsd:enumeration value="modification"/>
+      <xsd:enumeration value="cancellation"/>
+      <xsd:enumeration value="deletion"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EmploymentWorkerType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.7: simpleType changed</xsd:appinfo>
+      <xsd:documentation>Worker type in central personnel file (rip)
+      Possible values: stu, stx, ext, ivt, rta, oth, bcw, dwd, tea, tri, flx</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="StudentPlaceOfWork">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="employerName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="address" type="Address" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="UsingEmployer">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+      <xsd:element name="nossRegistrationNbr" type="NOSSRegistrationNbr" minOccurs="0"/>
+      <xsd:element name="jointCommissionNbr" type="JointCommissionNumber" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: element added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType abstract="true" name="DmfaDeclarationRecord">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: changed to mimic DMFA data structure</xsd:appinfo>
+      <xsd:appinfo>v0.19: changed formReceptionDate to xsd:dateTime</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="quarter" type="Quarter"/>
+      <xsd:element name="curatorship" type="Curatorship"/>
+      <xsd:element name="formIdentification" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="formReceptionDate" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="system5" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaNaturalPersonDeclarationRecord">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType changed</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="DmfaDeclarationRecord">
+        <xsd:sequence>
+          <xsd:element name="person" type="PersonSummary" minOccurs="0"/>
+          <xsd:element name="workerRecord" type="DmfaWorkerRecord" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ticketNbrLastSituation" type="TicketNumber">
+            <xsd:annotation>
+              <xsd:appinfo>v1.2: added</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaUnrelatedToNaturalPersonDeclarationRecord">
+    <xsd:complexContent>
+      <xsd:extension base="DmfaDeclarationRecord">
+        <xsd:sequence>
+          <xsd:element name="contribution" type="DmfaContributionUnrelatedToNP" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaWorkerRecord">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="employerClass" type="xsd:int"/>
+      <xsd:element name="workerCode" type="xsd:int"/>
+      <xsd:element name="quarterStartingDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: should be optional</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="quarterEndingDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: should be optional</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="occupation" type="DmfaOccupation" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="hasIndemnityWAPM" type="xsd:boolean"/>
+      <xsd:element name="indemnityWAPM" type="DmfaIndemnityWAPM" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="hasDismissedStatutoryWorkerContribution" type="xsd:boolean"/>
+      <xsd:element name="dismissedStatutoryWorkerContribution" type="DmfaDismissedStatutoryWorkerContribution" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="hasStudentContribution" type="xsd:boolean"/>
+      <xsd:element name="studentContribution" type="DmfaStudentContribution" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="hasEarlyRetirementContribution" type="xsd:boolean"/>
+      <xsd:element name="earlyRetirementContribution" type="DmfaEarlyRetirementContribution" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="hasComplementaryIndemnity" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: element added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="complementaryIndemnity" type="DmfaComplementaryIndemnity" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: element added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaOccupation">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="occupationSequenceNumber" type="xsd:int"/>
+      <xsd:element name="occupationStartingDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="occupationEndingDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="jointCommissionNumber" type="JointCommissionNumber"/>
+      <xsd:element name="workingDaysSystem" type="xsd:int"/>
+      <xsd:element name="meanWorkingHours" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="refMeanWorkingHours" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="contractType" type="ContractType"/>
+      <xsd:element name="reorganisationMeasure" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="remunMethod" type="xsd:int" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: element added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="workerStatus" type="WorkerStatus" minOccurs="0"/>
+      <xsd:element name="hasServices" type="xsd:boolean"/>
+      <xsd:element name="service" type="DmfaService" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="hasRemunerations" type="xsd:boolean"/>
+      <xsd:element name="remuneration" type="DmfaRemuneration" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="hasCompanyCar" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaService">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="seqNr" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="code" type="xsd:int"/>
+      <xsd:element name="nbrDays" type="xsd:int"/>
+      <xsd:element name="nbrHours" type="xsd:int" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaRemuneration">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="seqNr" type="xsd:int"/>
+      <xsd:element name="code" type="xsd:int"/>
+      <xsd:element name="amount" type="xsd:long"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaIndemnityWAPM">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="indemnityNature" type="xsd:int"/>
+      <xsd:element name="incapacityDegree" type="xsd:double" minOccurs="0"/>
+      <xsd:element name="indemnityAmount" type="xsd:long" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaDismissedStatutoryWorkerContribution">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="refNumberDays" type="xsd:int"/>
+      <xsd:element name="refGrossRemunerationAmount" type="xsd:long" minOccurs="0"/>
+      <xsd:element name="subjectionStartingDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="subjectionEndingDate" type="xsd:date" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaStudentContribution">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="numberDays" type="xsd:int"/>
+      <xsd:element name="remunerationAmount" type="xsd:long" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaEarlyRetirementContribution">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="code" type="xsd:int"/>
+      <xsd:element name="numberMonths" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="contributionAmount" type="xsd:long" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaComplementaryIndemnity">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="jointCommissionNbr" type="JointCommissionNumber"/>
+      <xsd:element name="activityCode" type="xsd:int"/>
+      <xsd:element name="substituteSsin" type="cbss:SsinType" minOccurs="0"/>
+      <xsd:element name="employerNotion" type="xsd:long"/>
+      <xsd:element name="firstComplementaryIndemnityDate" type="xsd:date"/>
+      <xsd:element name="complementaryIndemnityAgreementNotion" type="xsd:int"/>
+      <xsd:element name="halfTimeCareerInterruptionNotion" type="xsd:string"/>
+      <xsd:element name="serviceExemptionNotion" type="xsd:string"/>
+      <xsd:element name="replacementAccordanceWCCNotion" type="xsd:string"/>
+      <xsd:element name="resumptionOfWorkMeasure" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="debtorType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="complementaryIndemnityNbrOfParts" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="noticeDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="ailingOrReorgCompanyNotion" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="acknowledgementStartDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="acknowledgementEndDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="complementaryIndemnityContribution" type="DmfaComplementaryIndemnityContribution" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaComplementaryIndemnityContribution">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="contributionWorkerCode" type="xsd:int"/>
+      <xsd:element name="contributionType" type="xsd:int"/>
+      <xsd:element name="contributionAmount" type="xsd:long"/>
+      <xsd:element name="complementaryIndemnityAmountAdjustNotion" type="xsd:int"/>
+      <xsd:element name="complementaryIndemnityAmount" type="xsd:long"/>
+      <xsd:element name="complementaryIndemnityNbrMonths" type="xsd:int"/>
+      <xsd:element name="capitalizationNotion" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="contributionSequenceNbr" type="xsd:int"/>
+      <xsd:element name="welfareBenefitTheoreticalAmount" type="xsd:long" minOccurs="0"/>
+      <xsd:element name="nbrMonthsDecimals" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="incompleteMonthNbrDays" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="incompleteMonthReason" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="floorApplicationNotion" type="xsd:int" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaContributionUnrelatedToNP">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new complex type</xsd:appinfo>
+      <xsd:documentation>Dmfa contributions unrelated to natural persons</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="employerClass" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="workerCode" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="calculationBasis" type="xsd:long" minOccurs="0"/>
+      <xsd:element name="amount" type="xsd:long" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ContractType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="full_time"/>
+      <xsd:enumeration value="part_time"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="WorkerStatus">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new simpleType</xsd:appinfo>
+      <xsd:documentation>Status of the worker</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="seasonal_worker"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="GenderType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="male"/>
+      <xsd:enumeration value="female"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Curatorship">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="yes"/>
+      <xsd:enumeration value="no"/>
+      <xsd:enumeration value="undetermined"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Tolerance">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: changed maxInclusive to 99</xsd:appinfo>
+      <xsd:documentation>The tolerance must be 0 or a number between 1 and 12 if only a birth year and month are specified or between 1 and 99 if only a birth year is specified.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="99"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="NOSSRegistrationNbr">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: base type changed to string because numbers in construction are alphanumeric, removed restrictions and merged with NossTemporaryRegistrationNbr.</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="type" type="NOSSRegistrationNbrType" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo>v0.6: optional because type 'both' meant in fact 'unspecified'</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="subType" type="NOSSRegistrationNbrSubType" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo>v0.7: optional attribute to qualify registration number better, permits more exact lookup</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="NOSSRegistrationNbrType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: removed type 'both' because it meant 'unspecified'</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="noss"/>
+      <xsd:enumeration value="noss_pla">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: Deprecated. Replaced by ossss</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ossss">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NOSSRegistrationNbrSubType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.7: new simple type to completely describe the number</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="default"/>
+      <xsd:enumeration value="building"/>
+      <xsd:enumeration value="building_owner"/>
+      <xsd:enumeration value="building_atce"/>
+      <xsd:enumeration value="contractor"/>
+      <xsd:enumeration value="subcontractor"/>
+      <xsd:enumeration value="social_secretariat"/>
+      <xsd:enumeration value="curator"/>
+      <xsd:enumeration value="pla">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: Deprecated. Replaced by ossss</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ossss">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="temporary"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="VatNumber">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="TicketNumber">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: simpleType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9A-Z]{13}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SocialSecretariatNumber">
+    <xsd:restriction base="xsd:int">
+      <xsd:totalDigits value="3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="LimosaIdentifier">
+    <xsd:sequence>
+      <xsd:element name="value" type="xsd:string"/>
+      <xsd:element name="type" type="LimosaIdentifierType" minOccurs="0"/>
+      <xsd:element name="countryCode" type="CountryCode"/>
+      <xsd:element name="startDate" type="xsd:date"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="JointCommissionNumber">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: new simpleType</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="LimosaIdentifierType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.14: removed 'all' for consistence with other criteria types, added new types 'unknown' + 'driving_license_nr'</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="foreign_noss"/>
+      <xsd:enumeration value="foreign_vat"/>
+      <xsd:enumeration value="declared_cbe"/>
+      <xsd:enumeration value="declared_noss"/>
+      <xsd:enumeration value="declared_feen"/>
+      <xsd:enumeration value="belgian_vat"/>
+      <xsd:enumeration value="national_nr"/>
+      <xsd:enumeration value="social_security_nr"/>
+      <xsd:enumeration value="passport_nr"/>
+      <xsd:enumeration value="pension_nr"/>
+      <xsd:enumeration value="driving_license_nr"/>
+      <xsd:enumeration value="health_insurance_nr">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ssin_self_employed">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="cbe_self_employed">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PostingDocumentType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.14: added missing types (which are those listed before e101)</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="ch1"/>
+      <xsd:enumeration value="ch2"/>
+      <xsd:enumeration value="ce1"/>
+      <xsd:enumeration value="ce2"/>
+      <xsd:enumeration value="form1"/>
+      <xsd:enumeration value="form2"/>
+      <xsd:enumeration value="b_usa"/>
+      <xsd:enumeration value="b_can"/>
+      <xsd:enumeration value="b_aus"/>
+      <xsd:enumeration value="b_phi"/>
+      <xsd:enumeration value="b_hr"/>
+      <xsd:enumeration value="cert"/>
+      <xsd:enumeration value="except"/>
+      <xsd:enumeration value="b_jap"/>
+      <xsd:enumeration value="a1"/>
+      <xsd:enumeration value="be_in_101"/>
+      <xsd:enumeration value="e101_independent"/>
+      <xsd:enumeration value="e102_independent"/>
+      <xsd:enumeration value="e101"/>
+      <xsd:enumeration value="e102"/>
+      <xsd:enumeration value="mp_article_4"/>
+      <xsd:enumeration value="mp_article_5"/>
+      <xsd:enumeration value="mp_declaration_manquante"/>
+      <xsd:enumeration value="mp_stagiaire"/>
+      <xsd:enumeration value="permis_a"/>
+      <xsd:enumeration value="permis_b"/>
+      <xsd:enumeration value="permis_c"/>
+      <xsd:enumeration value="permis_temporaire">
+        <xsd:annotation>
+          <xsd:appinfo>v0.21: added value</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="a1_independent">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="be_que_101">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PostingDocumentSource">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="permit"/>
+      <xsd:enumeration value="gototin"/>
+      <xsd:enumeration value="mandatory_declaration"/>
+      <xsd:enumeration value="professional_card"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PostingDocumentSupplier">
+    <xsd:annotation>
+      <xsd:documentation>Supplier of the declaration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="region_wallonia">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 1</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="region_flanders">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 2</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="region_bruxelles">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 3</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="german_community">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 4</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="foreign_affairs">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 5</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="fps_economy">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 6</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="mandatory_declaration">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 7</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="gototin">
+        <xsd:annotation>
+          <xsd:appinfo>limosa value 8</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="PostingDocumentSummary">
+    <xsd:annotation>
+      <xsd:appinfo>mapping: be.smalsmvm.limosa.ejb.files.FileSummary</xsd:appinfo>
+      <xsd:documentation>Summary of a declaration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="documentNbr" type="xsd:string"/>
+      <xsd:element name="documentType" type="PostingDocumentType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: changed optional for unknown case</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="documentSource" type="PostingDocumentSource" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: new information instead of supplier</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="period" type="cbss:OpenPeriodType"/>
+      <xsd:element name="person" type="PersonSummary" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.7: changed to optional because person summary is always the same when used in getPostedWorkerDetail</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:long"/>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocumentStatus">
+    <xsd:annotation>
+      <xsd:appinfo>v0.19: changed open period to begin/end because of type xsd:dateTime instead of date</xsd:appinfo>
+      <xsd:documentation>Status of a declaration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="type" type="PostingDocumentStatusType"/>
+      <xsd:element name="beginDate" type="xsd:dateTime"/>
+      <xsd:element name="endDate" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PartnerInstitution">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+      <xsd:documentation>Partner institution</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="type" type="PartnerInstitutionType"/>
+      <xsd:element name="countryCode" type="CountryCode" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:long"/>
+  </xsd:complexType>
+  <xsd:simpleType name="PartnerInstitutionType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: simpleType added</xsd:appinfo>
+      <xsd:documentation>The partner institution type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unknown">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 0</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="consulate">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 1</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="social_secretariat">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 2</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="PostingPlaceOfWork">
+    <xsd:annotation>
+      <xsd:appinfo>v0.7: merged with PostingPlaceOfWorkSummary, removed period</xsd:appinfo>
+      <xsd:documentation>Relation between a place of work and a declaration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="type" type="PostingPlaceOfWorkType"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="nossRegistrationNumber" type="NOSSRegistrationNbr" minOccurs="0"/>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+      <xsd:element name="address" type="Address" minOccurs="0"/>
+      <xsd:element name="phone" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="email" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:long"/>
+  </xsd:complexType>
+  <xsd:complexType name="PostingPlaceOfWorkRelation">
+    <xsd:annotation>
+      <xsd:documentation>Relation between a place of work and a declaration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="placeOfWork" type="PostingPlaceOfWork"/>
+      <xsd:element name="period" type="cbss:OpenPeriodType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PostingPlaceOfWorkType">
+    <xsd:annotation>
+      <xsd:documentation>The decision type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unknown">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 0</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="area">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 1</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="company">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 2</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="construction_site">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 3</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="boat">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code: 4</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PostingDocumentStatusType">
+    <xsd:annotation>
+      <xsd:documentation>The status type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unknown">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 0</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="valid">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 1</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="appeal">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 2</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="on_hold">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 3</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="submitted">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 4</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="decision">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 5</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="classified_noresult">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 6</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="cancelled">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 7</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="deleted">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 8</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="refused">
+        <xsd:annotation>
+          <xsd:appinfo>limosa code = 9</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType abstract="true" name="PagingList">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: sequence removed</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="maxResults" type="xsd:int">
+      <xsd:annotation>
+        <xsd:documentation>The total number of results</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="nextOffset" type="xsd:int">
+      <xsd:annotation>
+        <xsd:documentation>The offset of the next page (if there is a next page)</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:complexType name="PostingRelationPagingList">
+    <xsd:complexContent>
+      <xsd:extension base="PagingList">
+        <xsd:sequence>
+          <xsd:element name="relation" type="PostingRelation" minOccurs="0" maxOccurs="2000"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingRelation">
+    <xsd:annotation>
+      <xsd:appinfo>mapping: be.smalsmvm.limosa.ejb.actors.ActorDataRelation</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="period" type="cbss:OpenPeriodType"/>
+      <xsd:element name="type" type="PostingRelationType"/>
+      <xsd:choice>
+        <xsd:element name="person" type="Person"/>
+        <xsd:element name="employer" type="Employer"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:long"/>
+  </xsd:complexType>
+  <xsd:simpleType name="PostingRelationType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="created_from"/>
+      <xsd:enumeration value="occupation"/>
+      <xsd:enumeration value="mandataire"/>
+      <xsd:enumeration value="employe"/>
+      <xsd:enumeration value="independant"/>
+      <xsd:enumeration value="stagiaire"/>
+      <xsd:enumeration value="stagiaire_independant"/>
+      <xsd:enumeration value="occupation_mandataire_ou_dirigeant"/>
+      <xsd:enumeration value="employer_belgian_client">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LimosaSearchScope">
+    <xsd:annotation>
+      <xsd:documentation>The partition of the Limosa registry to search</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="official"/>
+      <xsd:enumeration value="all"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="PostingDocumentRelationPagingList">
+    <xsd:complexContent>
+      <xsd:extension base="PagingList">
+        <xsd:sequence>
+          <xsd:element name="relation" type="PostingDocumentRelation" minOccurs="0" maxOccurs="2000"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocumentRelation">
+    <xsd:annotation>
+      <xsd:appinfo>v0.7: type split into PostingDocumentRelation for POW-Document relation PostingDocumentParticipation for Actor-Document relation</xsd:appinfo>
+      <xsd:appinfo>mapping: be.smalsmvm.limosa.ejb.files.POWRelation</xsd:appinfo>
+      <xsd:documentation>Relation between an actor and a declaration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="period" type="cbss:OpenPeriodType"/>
+      <xsd:element name="summary" type="PostingDocumentSummary" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocumentParticipationPagingList">
+    <xsd:complexContent>
+      <xsd:extension base="PagingList">
+        <xsd:sequence>
+          <xsd:element name="participation" type="PostingDocumentParticipation" minOccurs="0" maxOccurs="2000"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocumentParticipation">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v0.7: type split into PostingDocumentRelation for POW-Document relation PostingDocumentParticipation for Actor-Document relation</xsd:appinfo>
+      <xsd:appinfo>mapping: be.smalsmvm.limosa.ejb.files.Participation</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PostingDocumentRelation">
+        <xsd:sequence>
+          <xsd:element name="type" type="ParticipationType"/>
+          <xsd:choice minOccurs="0">
+            <xsd:element name="person" type="Person"/>
+            <xsd:element name="employer" type="Employer"/>
+            <xsd:element name="partnerInstitution" type="PartnerInstitution">
+              <xsd:annotation>
+                <xsd:appinfo>v1.2: added</xsd:appinfo>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ParticipationType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="worker"/>
+      <xsd:enumeration value="trainee"/>
+      <xsd:enumeration value="self_employed"/>
+      <xsd:enumeration value="self_employed_trainee"/>
+      <xsd:enumeration value="belgian_institution"/>
+      <xsd:enumeration value="belgian_user"/>
+      <xsd:enumeration value="foreign_institution"/>
+      <xsd:enumeration value="foreign_employer"/>
+      <xsd:enumeration value="representative"/>
+      <xsd:enumeration value="salary_paid_by"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BelgianClientParticipationType">
+    <xsd:restriction base="ParticipationType">
+      <xsd:enumeration value="belgian_user"/>
+      <xsd:enumeration value="belgian_institution"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PostedWorkerParticipationType">
+    <xsd:restriction base="ParticipationType">
+      <xsd:enumeration value="worker"/>
+      <xsd:enumeration value="trainee"/>
+      <xsd:enumeration value="self_employed"/>
+      <xsd:enumeration value="self_employed_trainee"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ForeignEmployerParticipationType">
+    <xsd:restriction base="ParticipationType">
+      <xsd:enumeration value="foreign_employer"/>
+      <xsd:enumeration value="foreign_institution"/>
+      <xsd:enumeration value="self_employed"/>
+      <xsd:enumeration value="self_employed_trainee"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Activity">
+    <xsd:sequence>
+      <xsd:element name="code" type="xsd:int"/>
+      <xsd:element name="sector" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContactData">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="type" type="ContactDataType" use="optional"/>
+        <xsd:attribute name="startDate" type="xsd:date" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo>v0.7: added for limosa</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ContactDataType">
+    <xsd:annotation>
+      <xsd:documentation>Type of the contact data (mail, private phone, ...)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="phone"/>
+      <xsd:enumeration value="fax"/>
+      <xsd:enumeration value="cell_phone"/>
+      <xsd:enumeration value="voip"/>
+      <xsd:enumeration value="email"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Alias">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="type" type="AliasType" use="optional"/>
+        <xsd:attribute name="startDate" type="xsd:date" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo>v0.8: added start date for alias</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="AliasType">
+    <xsd:annotation>
+      <xsd:documentation>The alias type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="alias_name"/>
+      <xsd:enumeration value="abbreviation"/>
+      <xsd:enumeration value="sign"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CountryCode">
+    <xsd:annotation>
+      <xsd:documentation>Numerical country codes defined by statbel.fgov.be (Country nomenclature GEOBEL)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="100"/>
+      <xsd:maxInclusive value="999">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: 999 added for unknown</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:maxInclusive>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FeeNumber">
+    <xsd:restriction base="xsd:long"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="CentralPersonnelFileSearchScope">
+    <xsd:annotation>
+      <xsd:appinfo>renamed from CentralPersonnelFileScope</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="active">
+        <xsd:annotation>
+          <xsd:documentation>Search the active periods of the worker in the central file registry</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="activeInPeriod">
+        <xsd:annotation>
+          <xsd:documentation>Search the active periods of a worker during a period.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="mutations">
+        <xsd:annotation>
+          <xsd:documentation>Search all mutations (entries/exists) of a worker within a period , inclusive cancelled ones</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Quarter">
+    <xsd:restriction base="xsd:int">
+      <xsd:totalDigits value="5"/>
+      <xsd:pattern value="\d{4}(1|2|3|4)"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Name">
+    <xsd:annotation>
+      <xsd:appinfo>v0.20: new complex type</xsd:appinfo>
+      <xsd:documentation>a translated string with optional language information</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="language" type="cbss:LanguageType" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="OpenPeriod">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+      <xsd:documentation>Period containining an optional begin date and an optional end date.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="beginDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="endDate" type="xsd:date" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="WorkSectorCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:appinfo>v1.6: moved simpleType to DolsisTypes.xsd so that it can be shared by ContractualRelationshipRegistry and PresenceRegistration</xsd:appinfo>
+      <xsd:documentation>Work sector
+        1 = Construction work
+        2 = Security / Guarding
+        3 = Meat</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+</xsd:schema>

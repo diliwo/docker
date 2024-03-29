@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :   			UnemployementDataTypesV3.xsd
+         * Author :        			Groenveldt Choukri
+         * Creation date :     		05/12/2016
+         * Status :                 Planned
+         * Description :            This service provides a lot of unemployment information from NEO about a person based on his SSIN 
+         * Current version :        2016-12-05
+		 * Revision : 
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://kszbcss.fgov.be/types/UnemploymentData/v3" xmlns:tns="http://kszbcss.fgov.be/types/UnemploymentData/v3" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:neocom="http://onemrva.fgov.be/types/UnemploymentData/Common/v3" targetNamespace="http://kszbcss.fgov.be/types/UnemploymentData/v3" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2016-12-05">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="common/CommonV3.xsd"/>
+	<xsd:import namespace="http://onemrva.fgov.be/types/UnemploymentData/Common/v3" schemaLocation="../../neo/types/common/UnemploymentDataCommonTypesV3.xsd"/>
+	<!--=== Provide a detail of the paid allowance by month for a person ===-->
+	<xsd:complexType name="ConsultPaidSumsRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByMonthlyPeriodWithAllowanceCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultPaidSumsResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByMonthlyPeriodWithAllowanceCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="paidSums" type="neocom:PaidSumsBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides all information about the rights for a people ===-->
+	<xsd:complexType name="ConsultRightsRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByDateType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultRightsResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByDateType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="rights" type="neocom:RightsBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides all information about the payments for a people === -->
+	<xsd:complexType name="ConsultPaymentsRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByDateType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultPaymentsResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByDateType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="payment" type="neocom:PaymentBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides all information about activation payments  ===-->
+	<xsd:complexType name="ConsultActivationPaidSumsRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByMonthlyPeriodWithAllowanceCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultActivationPaidSumsResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByMonthlyPeriodWithAllowanceCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="activationAllowances" type="neocom:ActivationAllowancesBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides a grid than contains the detail of allowance by allowance paid day ===-->
+	<xsd:complexType name="ConsultScheduledPaymentRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByMonthlyPeriodCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultScheduledPaymentResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByMonthlyPeriodCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="scheduledPayment" type="neocom:ScheduledPaymentBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>=== Provides history information about scale code based on a ssin with a search period criteria ===</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ConsultScaleCodeHistoryRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultScaleCodeHistoryResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="response" type="neocom:ScaleCodeBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides history about sanction information based on a ssin and a search period criteria ===-->
+	<xsd:complexType name="ConsultSanctionHistoryRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultSanctionHistoryResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="response" type="neocom:SanctionHistoryBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides a history about exemption information based on a ssin and a search period criteria ===-->
+	<xsd:complexType name="ConsultExemptionHistoryRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultExemptionHistoryResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="exemptions" type="neocom:ExemptionsBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides a history about work disability information based on a ssin and a search period criteria ===-->
+	<xsd:complexType name="ConsultWorkDisabilityHistoryRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultWorkDisabilityHistoryResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="disabilities" type="neocom:DisabilitiesBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides information about the work capacity for a person, based on a ssin ===-->
+	<xsd:complexType name="ConsultNoEarningCapacityAndLawsuitMutualityRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultNoEarningCapacityAndLawsuitMutualityResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="response" type="neocom:NoEarningCapacityAndLawsuitMutualityBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=== Provides a history about the young avaibility history a ssin and a search period criteria ===-->
+	<xsd:complexType name="ConsultYoungAvailabilityDecisionHistoryRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultYoungAvailabilityDecisionHistoryResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="searchCriteria" type="SearchCriteriaByPeriodDefaultCriteriaType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="ssin" type="SsinWithCanceledAndReplacesStatusType" minOccurs="0"/>
+					<xsd:element name="decisions" type="neocom:DecisionsBusinessResponseType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=============== Fault Type =====================-->
+	<!--=== Redefined common type  ===-->
+	<xsd:complexType name="AbstractRequestCustomerType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Base complex type for all request messages.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xsd:element name="legalContext" type="neocom:UnemploymentDataLegalContextType">
+				<xsd:annotation>
+					<xsd:documentation>Peut-il être intéressant pour le fournisseur dans le futur ?</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AbstractResponseCustomerType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Base complex type for all response messages.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xsd:element name="legalContext" type="neocom:UnemploymentDataLegalContextType">
+				<xsd:annotation>
+					<xsd:documentation>Remarque identique request</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=== Redefined searchCriteriaType - Different time criteria are needed for all the operations ===-->
+	<xsd:complexType name="SearchCriteriaByDateType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>In the case where the date is not defined the last situation found is searched</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SearchCriteriaByMonthlyPeriodWithAllowanceCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="period" type="MonthlyPeriodCriteriaType"/>
+			<xsd:element name="allAllowance" type="neocom:AllAllowanceType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SearchCriteriaByMonthlyPeriodCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="period" type="MonthlyPeriodCriteriaType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SearchCriteriaByPeriodDefaultCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="period" type="common:PeriodType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SearchCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MonthlyPeriodCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="startMonth" type="xsd:gYearMonth"/>
+			<xsd:element name="endMonth" type="xsd:gYearMonth"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SsinWithCanceledAndReplacesStatusType">
+		<xsd:simpleContent>
+			<xsd:extension base="common:SsinType">
+				<xsd:attribute name="canceled" type="xsd:boolean"/>
+				<xsd:attribute name="replaces" type="common:SsinType"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+</xsd:schema>

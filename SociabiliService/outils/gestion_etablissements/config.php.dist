@@ -1,0 +1,6 @@
+<?php
+
+define('ORACLE_USERNAME', 'MO1030');
+define('ORACLE_PASSWORD', 'mo1030');
+define('ORACLE_CONNECTION_STRING', '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP) (HOST=SRV-A-DB01.cpas.schaerbeek.dom) (PORT=1521)) (CONNECT_DATA=(SID=sociabili)))');
+define('ORACLE_CHARSET', 'AL32UTF8');

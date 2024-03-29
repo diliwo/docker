@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:HouseHoldData="http://economie.fgov.be/soctar/entity/v2/HouseHoldData" targetNamespace="http://economie.fgov.be/soctar/entity/v2/HouseHoldData" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Definitions of citizen details.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="HouseHoldData">
+		<xs:annotation>
+			<xs:documentation>
+				The National Register person.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="streetName" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+                        A person's street name. This is a free-format
+                        string, but it must be at
+                        least one character long and cannot start
+                        with whitespace.
+                    </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="houseNu" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+                        A person's house number. This is a free-format
+                        string, but it must be at least one character long.
+                    </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="boxNu" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A person's box number. This is a free-format
+						string, but it must be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postalCode" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+                        A person's postal code. This is a string of maximum 6 characters, all numeric.
+                    </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="6"/>
+						<xs:pattern value="([0-9])*"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cityName" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A person's city name. This is a free-format
+						string, but it must be at
+						least one character long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

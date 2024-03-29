@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+============================================================================================================================
+* File Name          : DGPHBaseLegalDataV1.xsd
+* Author             : SPFSS + BCSS
+* Owner              : Crossroad Bank for Social Security (CBSS)
+* Domain             : CBSS Registries Public Services
+* Creation date      : 06-03-2013
+* Last revision date :  
+* Description	     : This XML schema document contains a set of XML types and content model fragments used to model legal person data. 
+* Status	     : 
+* Current Version    : 1.1
+* Revision History   : 
+* 30/09/2013 : schema adapte par la DGPH en consequence : (ATI)
+											* autre namespace
+											* changement de version
+*  05/02/2014 : (ATI) changer les noms et prefix namespace   avec DGPH
+* 28/04/2014 : agrandir la taille de building 48 vs 24
+============================================================================================================================
+-->
+<xs:schema xmlns="http://dgph.fgov.be" xmlns:tns="http://dgph.fgov.be/types/baselegaldata" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dgph_common="http://dgph.fgov.be/types/common/v3" targetNamespace="http://dgph.fgov.be/types/baselegaldata" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2014-04-28">
+	<xs:import namespace="http://dgph.fgov.be/types/common/v3" schemaLocation="DGPHCommonV3.xsd"/>
+	<xs:complexType name="PersonDataType">
+		<xs:sequence>
+			<xs:element name="lastName">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="48"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- Sometimes, people has no first name -->
+			<xs:element name="firstName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="address" type="tns:AddressType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="building" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="48"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="streetCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]{10}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="streetName" type="dgph_common:DescriptionType" minOccurs="0" maxOccurs="3"/>
+			<xs:element name="houseNumber" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="boxNumber" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postalCode" type="tns:PostalCodeType" minOccurs="0"/>
+			<xs:element name="cityCode" type="tns:CityCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For Belgian locations this is the "NISCode", for foreign locations the cityCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cityName" type="dgph_common:DescriptionType" minOccurs="0" maxOccurs="3"/>
+			<xs:element name="countryCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="countryName" type="dgph_common:DescriptionType" minOccurs="0" maxOccurs="3"/>
+			<xs:element name="date" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="class" use="required">
+			<xs:annotation>
+				<xs:documentation>Type of location: Belgian, Foreign or Diplomatic Post</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="belgianAddress"/>
+					<xs:enumeration value="foreignAddress"/>
+					<xs:enumeration value="diplomaticPost"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="BaseDescriptionType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CivilStateCodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>single</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>married</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="25">
+				<xs:annotation>
+					<xs:documentation>annulment of marriage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="26">
+				<xs:annotation>
+					<xs:documentation>putative marriage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="30">
+				<xs:annotation>
+					<xs:documentation>widow</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40">
+				<xs:annotation>
+					<xs:documentation>divorced</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41">
+				<xs:annotation>
+					<xs:documentation>divorced (from 01/10/1994)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50">
+				<xs:annotation>
+					<xs:documentation>separated from bed and board</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="51">
+				<xs:annotation>
+					<xs:documentation>separated from bed and board (from 01/10/1994)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="60">
+				<xs:annotation>
+					<xs:documentation>repudiation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="80">
+				<xs:annotation>
+					<xs:documentation>partnership</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="81">
+				<xs:annotation>
+					<xs:documentation>end of partnership</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="90">
+				<xs:annotation>
+					<xs:documentation>indeterminate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CityCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CivilStateType">
+		<xs:sequence>
+			<xs:element name="date" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+			<xs:element name="suppressDate" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+			<xs:element name="civilStateCode" type="tns:CivilStateCodeType"/>
+			<xs:element name="partner" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="partnerSsin" type="dgph_common:SsinType" minOccurs="0"/>
+						<xs:element name="lastName" type="tns:NameType" minOccurs="0"/>
+						<xs:element name="givenName" type="tns:GivenNameType" minOccurs="0" maxOccurs="3"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeceaseType">
+		<xs:sequence>
+			<xs:element name="date" type="dgph_common:IncompleteDateType"/>
+			<xs:element name="suppressDate" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+			<xs:element name="actNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="deceasePlace" type="tns:LocationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="GenderCodeType">
+		<xs:annotation>
+			<xs:documentation>The gender code  (omit, M = male, F = female)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="collapse"/>
+			<xs:enumeration value="F"/>
+			<xs:enumeration value="M"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="GivenNameType">
+		<xs:simpleContent>
+			<xs:extension base="tns:GivenNameValueType">
+				<xs:attribute name="sequence">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:maxInclusive value="3"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="GivenNameValueType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="48"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IdentityType">
+		<xs:sequence>
+			<xs:element name="lastName" type="tns:NameType"/>
+			<xs:element name="givenName" type="tns:GivenNameType" minOccurs="0" maxOccurs="4"/>
+			<xs:element name="gender" type="tns:GenderCodeType" minOccurs="0"/>
+			<xs:element name="birthDate" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NationalityType">
+		<xs:sequence>
+			<xs:element name="date" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+			<xs:element name="suppressDate" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+			<xs:element name="nationalityCode" type="tns:NationalityCodeType"/>
+			<xs:element name="nationalityDescription" type="dgph_common:DescriptionType" minOccurs="0" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InfoGenericType">
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0"/>
+			<xs:element name="label" type="tns:LabelType" minOccurs="0" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InfoGenericRNType">
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"/>
+			<xs:element name="label" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LabelType">
+		<xs:annotation>
+			<xs:documentation>Type specifying how a value that can exist in several languages will be modelled</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="tns:BaseDescriptionType">
+				<xs:attribute name="language" type="dgph_common:LanguageType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="LocationType">
+		<xs:annotation>
+			<xs:documentation>Type describing a Belgian location (BelgianMunicipality). Can be used as a birthplace or decease place.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="countryCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="countryName" type="dgph_common:DescriptionType" minOccurs="0" maxOccurs="3"/>
+			<xs:element name="cityCode" type="tns:CityCodeType" minOccurs="0"/>
+			<xs:element name="cityName" type="dgph_common:DescriptionType" minOccurs="0" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NameType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NationalityCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="RegistrationRegisterType">
+		<xs:sequence>
+			<xs:element name="date" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+			<xs:element name="suppressDate" type="dgph_common:IncompleteDateType" minOccurs="0"/>
+			<xs:element name="register" type="tns:OriginType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginType">
+		<xs:annotation>
+			<xs:documentation>Type specifying the register which is the authentic source of the legal data of a person.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0"/>
+			<xs:element name="label" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:enumeration value="BCSS_KSZ"/>
+						<xs:enumeration value="RN_RR"/>
+						<xs:enumeration value="RN_RA"/>
+						<xs:enumeration value="RAD"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PostalCodeType">
+		<xs:annotation>
+			<xs:documentation>Type defining a postal code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

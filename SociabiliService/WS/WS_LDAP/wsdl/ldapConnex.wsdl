@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+
+
+<definitions name="ldapConnex" targetNamespace="urn:ldapConnex" xmlns:typens="urn:ldapConnex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<types>
+	<schema xmlns="http://www.w3.org/2000/10/XMLSchema">
+	<complexType name="ArrayOfCustomers">
+		<complexContent>
+			<restriction base="soapenc:Array"/>
+		</complexContent>
+	</complexType>
+	</schema>
+</types>
+	
+<message name="connexion">
+	<part name="log" type="xsd:string"/>
+	<part name="mdp" type="xsd:string"/>
+</message>
+
+<message name="droits">
+	<part name="log" type="xsd:string"/>
+	<part name="mdp" type="xsd:string"/>
+</message>
+
+<message name="cryptage">
+	<part name="chaine" type="xsd:string"/>
+</message>
+
+<message name="getMembresGroupe">
+	<part name="chaine" type="xsd:string"/>
+</message>
+
+	
+<message name="connexionResponse">
+	<part name="connexionReturn" type="ArrayOfCustomers"/>	
+</message>	
+
+<message name="droitsResponse">
+	<part name="droitsReturn" type="ArrayOfCustomers"/>	
+</message>
+
+<message name="cryptageResponse">
+	<part name="cryptageReturn" type="string"/>	
+</message>
+
+<message name="getMembresGroupeResponse">
+	<part name="chaine" type="xsd:string"/>
+</message>
+
+	
+<portType name="ldapConnexPortType">
+	<operation name="connexion">
+		<input message="typens:connexion"/>
+		<output message="typens:connexionResponse"/>
+	</operation>
+	
+	<operation name="droits">
+		<input message="typens:droits"/>
+		<output message="typens:droitsResponse"/>
+	</operation>
+
+	<operation name="cryptage">
+		<input message="typens:cryptage"/>
+		<output message="typens:cryptageResponse"/>
+	</operation>
+	
+	<operation name="GetMembresGroupe">
+		<input message="typens:getMembresGroupe"/>
+		<output message="typens:getMembresGroupeResponse"/>
+	</operation>
+</portType>
+	
+<binding name="ldapConnexBinding" type="typens:ldapConnexPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="connexion">
+		<soap:operation soapAction="urn:ldapConnexAction"/>
+		<input>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+	
+	<operation name="droits">
+		<soap:operation soapAction="urn:ldapConnexAction"/>
+		<input>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="cryptage">
+		<soap:operation soapAction="urn:ldapConnexAction"/>
+		<input>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+	
+	<operation name="GetMembresGroupe">
+		<soap:operation soapAction="urn:ldapConnexAction"/>
+		<input>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+		<soap:body namespace="urn:ldapConnex" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+	
+</binding>
+<service name="ldapConnexService">
+	<port name="ldapConnexPort" binding="typens:ldapConnexBinding">
+		<soap:address location="http://srv-d-wb01/ws/ws_ldap/request.php"/>
+	</port>
+</service>
+</definitions>

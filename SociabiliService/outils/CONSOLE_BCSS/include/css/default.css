@@ -1,0 +1,84 @@
+div#wait {
+	position:absolute;
+	left: 50%;
+	top: 50%;
+	width: 300px;
+	height: 60px;
+	margin-left: -150px; /* Cette valeur doit être la moitié négative de la valeur du width */
+	margin-top: -30px; /* Cette valeur doit être la moitié négative de la valeur du height */
+	padding-top: 12px;
+	text-align: center;
+	border: 2px double black;
+	background-color: white;
+	font-size: 1.5em;
+	display: none;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+
+.doverlay {
+ 	visibility: hidden;
+	position: absolute !important;
+	background: #fff;
+	width: 50%;
+	height: 50%;
+	left: 25%;
+	top: 25%;
+	border-radius: 4px;
+	border: 1px solid #e3e3e3;
+	padding:20px;
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	z-index:1000;
+}
+
+.doverlay.dactive {
+	visibility:visible;
+	height: auto;
+	display: block;
+}
+
+.doverlay {
+	visibility:hidden;
+}
+
+.doverlay.dactive {
+	visibility:visible;
+}
+
+.dhelp {
+	display:inline-block;
+  	vertical-align:middle;
+  	border-radius:4px;
+  	font-size: 1rem;
+	background-color: #428bca;
+    border-color: #357ebd;
+ 	color:#fff;
+  	padding:5px;
+  	margin-top: 5px;
+}
+
+.dhelp:hover {
+	background-color: #ccc;
+    border-color: #357ebd;
+ 	color:#fff;
+  	padding:5px;
+	cursor: pointer;
+}
+
+.dheading {
+	color:green;
+}
+
+
+
+
+

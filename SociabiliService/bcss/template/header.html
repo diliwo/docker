@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="icon" type="image/gif" href="includes/images/favicon.gif" />
+		<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="includes/images/favicon.ico" /><![endif]-->
+		<title><?php echo $title; ?></title>
+		<!-- CSS DEFAULT -->
+		<link rel="stylesheet" type="text/css" href="includes/css/default_oldstyle.css" />
+		<link rel="stylesheet" type="text/css" media="print" href="includes/css/print.css" />
+		<!-- CSS MENU -->
+		<link rel="stylesheet" type="text/css" href="includes/css/menu.css" />
+		<!-- CSS BUTTONS -->
+		<link rel="stylesheet" type="text/css" href="includes/css/buttons.css" />
+		
+		<?php
+			include_once 'configs/css.config.php';
+			foreach ($_config['css'] as $css_name=>$css_href) {
+				echo "<!-- CSS ".$css_name." -->\n";
+				echo "\t\t<link rel='stylesheet' type='text/css' href='".$css_href."' />\n";
+			}
+		?>
+		<?php
+			include_once 'configs/js.config.php';
+			foreach ($_config['js'] as $js_name=>$js_src) {
+				echo "<!-- JS ".$js_name." -->\n";
+				echo "\t\t<script type='text/javascript' src='".str_replace(basename($_SERVER['PHP_SELF']), '', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']). $js_src."'></script>\n";
+			}
+		?>
+	</head>
+		<body>
+			<script type="text/javascript">
+			 
+			<?php include_once 'includes/js/default.js'; ?>
+			 
+			</script>
+			<div id="container">
+				<div id="banner"></div>

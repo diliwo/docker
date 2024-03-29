@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/HandiService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:puo="http://kszbcss.fgov.be/types/Handi/v1" xmlns:tns="http://kszbcss.fgov.be/intf/HandiService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" version="2013-10-08">
+	<xsd:import schemaLocation="HandiTypesV1.xsd" namespace="http://kszbcss.fgov.be/types/Handi/v1"/>
+	<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+	<!--========= xsd element ===========-->
+	<xsd:element name="consultFileRequest" type="puo:ConsultFileRequestType"/>
+	<xsd:element name="consultFileResponse" type="puo:ConsultFileResponseType"/>
+	<xsd:element name="consultFileFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultRightsAndPaymentsRequest" type="puo:ConsultRightsAndPaymentsRequestType"/>
+	<xsd:element name="consultRightsAndPaymentsResponse" type="puo:ConsultRightsAndPaymentsResponseType"/>
+	<xsd:element name="consultRightsAndPaymentsFault" type="common:CBSSFaultType"/>
+</xsd:schema>

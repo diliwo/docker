@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===================================================================== -->
+<!-- * File Name : ContractualRelationshipRegistryTypes.xsd -->
+<!-- * Author : Evert D'Hooghe, Willem Salembier -->
+<!-- * Owner : Smals -->
+<!-- * Domain : -->
+<!-- * Creation date : 15/09/2014 -->
+<!-- * Last revision date : 19/11/2014 -->
+<!-- * Description : Dolsis ContractualRelationshipRegistry types -->
+<!-- * Status : Model -->
+<!-- * Current Version : 1.7 -->
+<!-- ===================================================================== -->
+<xsd:schema version="1.7" targetNamespace="http://socialsecurity.be/dolsis/contractualrelationshipregistry/types/v1" xmlns="http://socialsecurity.be/dolsis/contractualrelationshipregistry/types/v1" attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:cbss="http://kszbcss.fgov.be/types/common/v3" xmlns:common="http://socialsecurity.be/dolsis/types/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../../../../../fgov/kszbcss/types/common/v3/CommonV3.xsd"/>
+  <xsd:import namespace="http://socialsecurity.be/dolsis/types/v1" schemaLocation="../../../types/v1/DolsisTypes.xsd"/>
+  <xsd:complexType name="DeclarationSummary">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the common information of a declaration (contracts excluded) in the h30bis-ter database</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="declarationId" type="DeclarationId"/>
+      <xsd:element name="statusCode" type="StatusCode" minOccurs="0"/>
+      <xsd:element name="isActorDeclarant" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Indicates if the given companyid is the company of a declarant</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="site" type="Site"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Declaration">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines all the information of a declaration (contracts included) in the h30bis-ter database</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="declarationId" type="DeclarationId"/>
+      <xsd:element name="statusCode" type="StatusCode" minOccurs="0"/>
+      <xsd:element name="site" type="Site"/>
+      <xsd:element name="contract" type="Contract" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="DeclarationId">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Unique identification number of a declaration in the h30bis-ter database</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[A-HJ-NP-Z0-9]{13}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ContractId">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Unique identification number of a contract in the h30bis-ter database</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[A-HJ-NP-Z0-9]{14,16}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Site">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the information of a site</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="workSectorCode" type="common:WorkSectorCode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: simpleType 'WorkSectorCode' has been moved to DolsisTypes.xsd so that it can be shared by ContractualRelationshipRegistry and PresenceRegistration</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="worksGlobalProjectPurposeCode" type="WorksGlobalProjectPurposeCode" minOccurs="0"/>
+      <xsd:element name="workTypeCode" type="WorkTypeCode" minOccurs="0"/>
+      <xsd:element name="serviceDescriptionCode" type="ServiceDescriptionCode" minOccurs="0"/>
+      <xsd:element name="siteStartDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which a site starts</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="siteEndDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which a site ends</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="isMobileSite" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>A mobile site is a site that is not made at a fixed location throughout the duration of the work.
+            0/false = not mobile
+            1/true = mobile</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="isObligedToRegister" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Indicates if the workers of a site are obliged to register their presence on the site. Depends on the total cost of the works
+            0/false = No
+            1/true = Yes</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="placeOfWork" type="common:Address">
+        <xsd:annotation>
+          <xsd:documentation>The location information of a site.
+            The following elements can be present:
+            street (optional, maximum 1 occurrence)
+            houseNbr (optional)
+            postBox (optional)
+            zipCode (mandatory)
+            city (mandatory, maximum 1 occurrence)
+            countryCode (optional). If the ContractualRelationshipRegistry web service returns a CountryCode greater than 999 then CountryCode 999 (Unknown) will be returned by the Dolsis web service.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="addressDetails" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Location indication of a site via a short description</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="workOwner" type="WorkOwner"/>
+      <xsd:element name="otherParticipant" type="OtherParticipant" minOccurs="0" maxOccurs="4"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="WorksGlobalProjectPurposeCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Global project purpose of the project
+        1 = Works with specific purpose
+        2 = Works with continuous purpose</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="WorkTypeCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Work type
+        1 = Construction
+        2 = Renovation
+        3 = Servicing
+        4 = Cleaning
+        5 = Demolition without reconstruction
+        6 = Soil Remediation
+        7 = Transformation
+        8 = Achievement
+        9 = Amenagement
+        10 = Repair
+        99 = Other</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="ServiceDescriptionCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Description of the service.
+        1 = Commercial building
+        2 = Building with apartments, studios, flats
+        3 = Building room with common arrangements (hotels, motels, ...)
+        4 = Building shows, relaxation
+        5 = Building for education, science
+        6 = Building of worship
+        7 = Building for social recreation
+        8 = Building for exhibitions, museums
+        9 = Building for animal care
+        10 = Building for health care
+        11 = Building for information, documentation
+        12 = Individual Housing
+        13 = Sports facilities
+        14 = Books for industrial use
+        15 = Work for the protective services (fire, service order, ...)
+        16 = Work for the administration offices
+        17 = Books for energy supply
+        18 = Public for distribution and discharge of water
+        19 = Work for the treatment of waste
+        20 = Books for air transport
+        21 = Books for rail
+        22 = Books for water transport
+        23 = Books for road transport
+        24 = Books for telecommunications
+        25 = Restaurant, cafeteria
+        99 = Other non aforementioned book</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:complexType name="WorkOwner">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the information of the supervisor responsible for the conception of a work</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="nossRegistrationNumber" type="common:NOSSRegistrationNbr" minOccurs="0"/>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+      <xsd:element name="actor30BisTerId" type="Actor30BisTerId" minOccurs="0"/>
+      <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="languagePreference" type="cbss:LanguageType" minOccurs="0"/>
+      <xsd:element name="address" type="common:Address" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The information of an address
+            The following elements can be present:
+            street (mandatory, maximum 1 occurrence)
+            houseNbr (mandatory)
+            postBox (optional)
+            zipCode (mandatory)
+            city (mandatory, maximum 1 occurrence)
+            countryCode (mandatory). If the ContractualRelationshipRegistry web service returns a CountryCode greater than 999 then CountryCode 999 (Unknown) will be returned by the Dolsis web service.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="isNaturalPerson" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Indicates if an actor is a natural person
+            0/false = No
+            1/true = Yes</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="Actor30BisTerId">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Uniquely identifies an employer 30bis-ter number (7 million) in the h30bis-ter database</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="9"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="OtherParticipant">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the information of another participant:
+        participantQualityCode 1 = Supervisor responsible for the conception of a work
+        participantQualityCode 2 = Supervisor responsible for the execution of a work
+        participantQualityCode 3 = Coordinator during the elaboration of the project
+        participantQualityCode 4 = Coordinator during the realisation of the project
+
+        For the following participants there is a specific type:
+        participantQualityCode 5 = Orderer (type WorkOwner)
+        participantQualityCode 6 = Contractor/Declarant (type Declarant)
+        participantQualityCode 7 = Subcontractor (type Subcontractor)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+      <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="languagePreference" type="cbss:LanguageType" minOccurs="0"/>
+      <xsd:element name="participantQualityCode" type="ParticipantQualityCode"/>
+      <xsd:element name="address" type="common:Address" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The information of an address
+            The following elements can be present:
+            street (mandatory, maximum 1 occurrence)
+            houseNbr (mandatory)
+            postBox (optional)
+            zipCode (mandatory)
+            city (mandatory, maximum 1 occurrence)
+            countryCode (mandatory). If the ContractualRelationshipRegistry web service returns a CountryCode greater than 999 then CountryCode 999 (Unknown) will be returned by the Dolsis web service.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="lastName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ParticipantQualityCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Quality of a participant.
+        1 = Supervisor responsible for the conception of a work
+        2 = Supervisor responsible for the execution of a work
+        3 = Coordinator of the project
+        4 = Coordinator of the realisation
+        5 = Orderer
+        6 = Contractor/ Declarant
+        7 = Subcontractor</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:complexType name="Contract">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the information of a contract</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="contractId" type="ContractId"/>
+      <xsd:element name="statusCode" type="StatusCode" minOccurs="0"/>
+      <xsd:element name="contractSignatureDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which the contract is signed between the declarant (contractor) and the work owner for the execution of the concerned work</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="workTypeCode" type="WorkTypeCode" minOccurs="0"/>
+      <xsd:element name="workStartDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which the works made by the declarant (contractor) starts</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="workEndDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which the works made by the declarant (contractor) ends</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="workTotalCost" type="xsd:integer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Work total amount in euro cent billed by the prime contractor.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="declarant" type="Declarant"/>
+      <xsd:element name="contactPerson" type="ContactPerson" minOccurs="0"/>
+      <xsd:element name="subcontractor" type="Subcontractor" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="dangerousConstructionWork" type="DangerousConstructionWork" minOccurs="0"/>
+      <xsd:element name="comment" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Comment</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Declarant">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the information of a declaration in the h30bis-ter database</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="nossRegistrationNumber" type="common:NOSSRegistrationNbr" minOccurs="0"/>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+      <xsd:element name="actor30BisTerId" type="Actor30BisTerId" minOccurs="0"/>
+      <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="languagePreference" type="cbss:LanguageType" minOccurs="0"/>
+      <xsd:element name="address" type="common:Address" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The information of an address
+            The following elements can be present:
+            street (mandatory, maximum 1 occurrence)
+            houseNbr (mandatory)
+            postBox (optional)
+            zipCode (mandatory)
+            city (mandatory, maximum 1 occurrence)
+            countryCode (mandatory). If the ContractualRelationshipRegistry web service returns a CountryCode greater than 999 then CountryCode 999 (Unknown) will be returned by the Dolsis web service.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="contactInformation" type="ContactInformation" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContactPerson">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the coordinates of the contact person of a contract</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="lastName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="contactInformation" type="ContactInformation" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContactInformation">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the communication information of an actor</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="phoneNumber" type="xsd:string" minOccurs="0" maxOccurs="2"/>
+      <xsd:element name="faxNumber" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="email" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Subcontractor">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the information of a subcontractor</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="nossRegistrationNumber" type="common:NOSSRegistrationNbr" minOccurs="0"/>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+      <xsd:element name="actor30BisTerId" type="Actor30BisTerId" minOccurs="0"/>
+      <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="languagePreference" type="cbss:LanguageType" minOccurs="0"/>
+      <xsd:element name="address" type="common:Address" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The information of an address
+            The following elements can be present:
+            street (mandatory, maximum 1 occurrence)
+            houseNbr (mandatory)
+            postBox (optional)
+            zipCode (mandatory)
+            city (mandatory, maximum 1 occurrence)
+            countryCode (mandatory). If the ContractualRelationshipRegistry web service returns a CountryCode greater than 999 then CountryCode 999 (Unknown) will be returned by the Dolsis web service.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="subcontractorActivityInformation" type="SubcontractorActivityInformation"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SubcontractorActivityInformation">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the activity information of a subcontractor</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="interventionCreationDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which a subcontractor is added in a contract</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="interventionStartDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which a subcontractor starts his intervention on a site</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="interventionEndDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date on which a subcontractor ends his intervention on a site</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usingEmployerCbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+      <xsd:element name="usingEmployerName" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Direct employer name of the subcontractor. Must be identical to the name of the direct employer. it can be either the declarant or a subcontractor.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="subcontractorActivityCode" type="SubcontractorActivityCode" minOccurs="0" maxOccurs="4"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="SubcontractorActivityCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Activity information of a subcontractor
+        1 = Hydraulic, maritime and river works
+        2 = Earthwork
+        3 = Demolition
+        4 = Masonry and Concrete
+        5 = Laying of cables and various pipes
+        6 = Repointing work
+        7 = Carpentry, joinery and metalwork
+        8 = Roofing and waterproofing construction work
+        9 = Works of thermal and / or acoustic
+        10 = Work placement of prefabricated elements
+        11 = Work placement of objects or wood products
+        12 = Glazing
+        13 = Plastering work
+        14 = Painting, wallpapering and decorations
+        15 = Restoration
+        16 = Works of stones and marble
+        17 = Works of floor and wall coverings (except the wood)
+        18 = health facilities, central heating, plumbing - guttering, pipes and drains
+        19 = Construction Scaffolding
+        20 = Metal structures and engineering metal art
+        21 = Road works
+        22 = Construction of Structures nonmetallic art
+        23 = Construction of railways
+        24 = Electrical Works
+        25 = Construction and maintenance of varied terrain
+        26 = Farm Works
+        27 = Works of cleaning and maintenance
+        28 = Special Facilities</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:complexType name="DangerousConstructionWork">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>This functional block defines the nature of dangerous construction work</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="usingEmployerCbeNumber" type="cbss:CbeNumberType" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Direct employer company id of the subcontractor. Must be identical to the company id of the direct employer.
+            It can be either the declarant or a subcontractor.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usingEmployerName" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Direct employer name of the subcontractor. Must be identical to the name of the direct employer.
+            it can be either the declarant or a subcontractor.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dangerousConstructionWorkNatureCode" type="DangerousConstructionWorkNatureCode"/>
+      <xsd:element name="maxNbrOfWorkers" type="xsd:int" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Maximum number of workers who will be simultaneously occupied on the site of dangerous works.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="DangerousConstructionWorkNatureCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Indicates the nature of dangerous works to be made.
+        1 = Asbestos
+        9 = Other dangerous work included in the Royal Decree of 25 January 2001 on temporary or mobile construction sites</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="StatusCode">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Status of a declaration or contract.
+        TODO</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+</xsd:schema>

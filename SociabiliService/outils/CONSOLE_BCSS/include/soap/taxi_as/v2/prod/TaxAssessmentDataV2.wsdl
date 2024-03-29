@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================================================
+         * File Name :						TaxAssessmentDataV2.wsdl
+         * Author :								Cerberus Team
+         * Owner :								KSZ / CBSS
+         * Creation date :					2015-12-15
+         * Last revision date :				
+         * Status :								Concept
+         * Description :						Service for consulting the Tas Assessment Notice data at PFS Finance
+         * Current version :					0.1
+         * Revision History :				2015-12-15 Initial Version
+============================================================================================================= -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="TaxAssessmentDataService" targetNamespace="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v2" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/TaxAssessmentData/v2" xmlns:tns="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v2" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<xsd:schema 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			attributeFormDefault="unqualified" 
+			elementFormDefault="unqualified" 
+			targetNamespace="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v2" 
+			xmlns:common="http://kszbcss.fgov.be/types/common/v3"  
+			xmlns:puo="http://kszbcss.fgov.be/types/TaxAssessmentData/v2" 
+			xmlns:tns="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v2" 
+			xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+			version="2015-12-15">
+			<xsd:import schemaLocation="TaxAssessmentDataTypesV2.xsd" namespace="http://kszbcss.fgov.be/types/TaxAssessmentData/v2"/>
+			<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultTaxAssessmentDataRequest" type="puo:ConsultTaxAssessmentDataRequestType"/>
+			<xsd:element name="consultTaxAssessmentDataResponse" type="puo:ConsultTaxAssessmentDataResponseType"/>
+			<xsd:element name="consultTaxAssessmentDataFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="consultTaxAssessmentDataRequestMsg">
+		<wsdl:part name="consultTaxAssessmentDataRequestParameters" element="tns:consultTaxAssessmentDataRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultTaxAssessmentDataResponseMsg">
+		<wsdl:part name="consultTaxAssessmentDataResponseParameters" element="tns:consultTaxAssessmentDataResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultTaxAssessmentDataFaultMsg">
+		<wsdl:part name="consultTaxAssessmentDataFaultParameters" element="tns:consultTaxAssessmentDataFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="TaxAssessmentDataPortType">
+		<wsdl:operation name="consultTaxAssessmentData">
+			<wsdl:input name="consultTaxAssessmentDataRequest" message="tns:consultTaxAssessmentDataRequestMsg"/>
+			<wsdl:output name="consultTaxAssessmentDataResponse" message="tns:consultTaxAssessmentDataResponseMsg"/>
+			<wsdl:fault name="consultTaxAssessmentDataFault" message="tns:consultTaxAssessmentDataFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="TaxAssessmentDataHTTPBinding" type="tns:TaxAssessmentDataPortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultTaxAssessmentData">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/TaxAssessmentDataService/consultTaxAssessmentData"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultTaxAssessmentDataFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultTaxAssessmentDataFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="TaxAssessmentDataService">
+		<wsdl:port name="TaxAssessmentDataConsult" binding="tns:TaxAssessmentDataHTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://bcssksz-services-prod.smals.be:443/SOA4520/TaxAssessmentDataService/v2/consult"/>
+			<!--Environnement de developpement : https://b2b-test.ksz-bcss.fgov.be:4520/TaxAssessmentNoticeService/v2/consult-->
+			<!--Environnement d'acceptation : https://b2b-acpt.ksz-bcss.fgov.be:4520/TaxAssessmentNoticeService/v2/consult-->
+			<!--Environnement de production : https://b2b.ksz-bcss.fgov.be:4520/TaxAssessmentNoticeService/v2/consult-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

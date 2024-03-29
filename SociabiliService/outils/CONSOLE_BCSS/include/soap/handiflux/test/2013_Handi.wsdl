@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================-->
+<!--=   Service : Handi                      -->
+<!--=   Filename : 2013_Handi.wsdl                      -->
+<!--=   Author : Alain Tilmant                      -->
+<!--=   Owner : BCSS                      -->
+<!--=   Date : 2013-10-07                      -->
+<!--=  Status : Planned                       -->
+<!--=   Description :Service Front-End de la BCSS permettant la consultation de la db TETRA de la DGPH                      -->
+<!--=  Current Version : 1.0                      -->
+<!--=   Revision History :                      -->
+<!--  *                      -->
+<!--=============================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="HandiService" targetNamespace="http://kszbcss.fgov.be/intf/HandiService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/Handi/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/HandiService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<!--xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/Handi/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/HandiService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"-->
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/HandiService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/Handi/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/HandiService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" version='2013-10-08'>
+			<xsd:import schemaLocation="HandiTypesV1.xsd" namespace="http://kszbcss.fgov.be/types/Handi/v1"/>
+			<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultFileRequest" type="puo:ConsultFileRequestType"/>
+			<xsd:element name="consultFileResponse" type="puo:ConsultFileResponseType"/>
+			<xsd:element name="consultFileFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultRightsAndPaymentsRequest" type="puo:ConsultRightsAndPaymentsRequestType"/>
+			<xsd:element name="consultRightsAndPaymentsResponse" type="puo:ConsultRightsAndPaymentsResponseType"/>
+			<xsd:element name="consultRightsAndPaymentsFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="consultFileRequestMsg">
+		<wsdl:part name="consultFileRequestParameters" element="tns:consultFileRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultFileResponseMsg">
+		<wsdl:part name="consultFileResponseParameters" element="tns:consultFileResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultFileFaultMsg">
+		<wsdl:part name="consultFileFaultParameters" element="tns:consultFileFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultRightsAndPaymentsRequestMsg">
+		<wsdl:part name="consultRightsAndPaymentsRequestParameters" element="tns:consultRightsAndPaymentsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultRightsAndPaymentsResponseMsg">
+		<wsdl:part name="consultRightsAndPaymentsResponseParameters" element="tns:consultRightsAndPaymentsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultRightsAndPaymentsFaultMsg">
+		<wsdl:part name="consultRightsAndPaymentsFaultParameters" element="tns:consultRightsAndPaymentsFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="HandiPortType">
+		<wsdl:operation name="consultFile">
+			<wsdl:input name="consultFileRequest" message="tns:consultFileRequestMsg"/>
+			<wsdl:output name="consultFileResponse" message="tns:consultFileResponseMsg"/>
+			<wsdl:fault name="consultFileFault" message="tns:consultFileFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultRightsAndPayments">
+			<wsdl:input name="consultRightsAndPaymentsRequest" message="tns:consultRightsAndPaymentsRequestMsg"/>
+			<wsdl:output name="consultRightsAndPaymentsResponse" message="tns:consultRightsAndPaymentsResponseMsg"/>
+			<wsdl:fault name="consultRightsAndPaymentsFault" message="tns:consultRightsAndPaymentsFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="HandiHTTPBinding" type="tns:HandiPortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultFile">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/HandiService/consultFile"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultFileFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultFileFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultRightsAndPayments">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/HandiService/consultRightsAndPayments"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultRightsAndPaymentsFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultRightsAndPaymentsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="HandiService">
+		<wsdl:port name="HandiConsult_01" binding="tns:HandiHTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://bcssksz-services-test.smals.be/SOA4520/HandiService/consult_01"/>
+			<!--Environnement de developpement : https://b2b-test.ksz-bcss.fgov.be:4520/HandiService/consult_01-->
+			<!--Environnement d'acceptation : https://b2b-acpt.ksz-bcss.fgov.be:4520/HandiService/consult_01-->
+			<!--Environnement de production : https://b2b.ksz-bcss.fgov.be:4520/HandiService/consult_01-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

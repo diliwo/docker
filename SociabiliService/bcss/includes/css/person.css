@@ -1,0 +1,131 @@
+@CHARSET "UTF-8";
+
+#personal_informations {
+	border: 1px solid black;
+	width: 80%;
+	margin-left: 10%;
+	margin-bottom: 20px;
+}
+
+#search_person {
+	width: 50%;
+	margin-left: 25%;
+	border: 1px solid black;
+    padding: 5px 10px;
+    text-align: left;
+}
+#search_person h1 {
+	text-align: center;
+	color: #777777;
+	border-bottom: 1px dashed #777777;
+	font-size: 16px;
+}
+
+#date_debut, #date_fin
+{
+	width: 80px;
+}
+
+.rn {
+	text-decoration: none; 
+	font-style: italic;
+	border-bottom: 1px black dotted;
+	cursor: pointer;
+}
+
+.entree {
+	background: url('../images/in.png') no-repeat;
+	padding-left: 20px;
+}
+.sortie {
+	background: url('../images/out.png') no-repeat;
+	padding-left: 20px;
+}
+.modification {
+	background: url('../images/modify.png') no-repeat;
+	padding-left: 20px;
+}
+.annulation {
+	background: url('../images/cancel.png') no-repeat;
+	padding-left: 20px;
+}
+.yes_no {
+	width: 20px;
+}
+
+div.flux_child_glob fieldset { 
+	margin-bottom:5px;
+	padding-top:10px!important;
+	
+} 
+
+div.flux_child_glob legend { 
+	margin-bottom:5px;
+	padding-top:20px!important;
+} 
+
+div.res_block {
+	border:1px solid #ccc; float: left; margin:5px;
+}
+
+div.recit hr , div.recit2 hr {
+	display: block;
+	clear: both;
+	height: 0;
+	margin: -5px 0 15px;
+	padding: 0;
+	border: 0;
+	text-align: left;
+	font-size: 15px;
+	line-height: 1;
+}
+
+div.recit hr:after, div.recit2 hr:after  {
+	content: "\25E6 \25E6 \25E6 \25E6 \25E6 \25E6 \25E6 \25E6 \25E6 \25E6";
+	height: 0;			
+	letter-spacing: 0.9em;
+	color: #ccc;
+}
+
+div.recit, div.recit2   {
+	position:relative; 
+	float:left; 
+	padding: 5px;
+}
+
+div.recit {
+    width:300px; 
+}
+
+div.recit2 { 
+	width:575px;
+}
+
+div.title_flux {
+	clear: both; 
+	border-bottom: 1px black dashed;
+	text-align: left;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+	padding-bottom: 3px;
+	margin-bottom: 10px;
+	padding-top: 20px;
+}
+
+.ui-tabs {  
+	/* padding-bottom: 70px!important; */
+	display: table;
+}
+
+.ui-tabs .ui-tabs-panel {
+
+    margin-bottom: 30px!important;
+}
+
+.btnOpen{
+	color:red; cursor:pointer;
+}
+
+
+

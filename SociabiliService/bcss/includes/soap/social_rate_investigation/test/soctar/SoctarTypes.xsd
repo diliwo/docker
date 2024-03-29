@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by Annick Buelinckx 
+	(UPFRONT SPRL) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://fsb.belgium.be/soctar/schema/v2_00"
+	xmlns:CitizenCompleteStatus="http://economie.fgov.be/soctar/entity/v2/CitizenCompleteStatus"
+	xmlns:CompleteStatusRequest="http://economie.fgov.be/soctar/entity/v2/CompleteStatusRequest"
+	xmlns:Status="http://economie.fgov.be/soctar/entity/v2/Status"
+	xmlns:RequestOrigin="http://economie.fgov.be/soctar/entity/v2/RequestOrigin"
+	targetNamespace="http://fsb.belgium.be/soctar/schema/v2_00"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import
+		namespace="http://economie.fgov.be/soctar/entity/v2/CitizenCompleteStatus"
+		schemaLocation="./entity/CitizenCompleteStatus/CitizenCompleteStatus.xsd" />
+	<xs:import
+		namespace="http://economie.fgov.be/soctar/entity/v2/CompleteStatusRequest"
+		schemaLocation="./entity/CitizenCompleteStatus/CompleteStatusRequest.xsd" />
+	<xs:import namespace="http://economie.fgov.be/soctar/entity/v2/Status"
+		schemaLocation="./entity/CitizenCompleteStatus/Status.xsd" />
+	<xs:import namespace="http://economie.fgov.be/soctar/entity/v2/RequestOrigin"
+		schemaLocation="./entity/CitizenCompleteStatus/RequestOrigin.xsd" />
+	<xs:complexType name="CitizenCompleteStatusRequest">
+		<xs:sequence>
+			<xs:element ref="CompleteStatusRequest:CompleteStatusRequest"
+				minOccurs="1" />
+			<xs:element ref="RequestOrigin:RequestOrigin" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CitizenCompleteStatusReply">
+		<xs:sequence>
+			<xs:element ref="CitizenCompleteStatus:CitizenCompleteStatus"
+				minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PingRequest">
+		<xs:sequence>
+			<xs:element name="timestamp" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="bcssdescriptor" type="xs:string"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional text specified by the BCSS for their
+						internal use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PingReply">
+		<xs:sequence>
+			<xs:element name="timestamp" type="xs:dateTime" />
+			<xs:element name="available" type="xs:boolean" />
+			<xs:element name="bcssdescriptor" type="xs:string"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Same text as the one received in the
+						bcssdescriptor of the request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="Status:Status" minOccurs="0"
+				maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates the overall status of the treatment.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CitizenCompleteStatusRequest" type="tns:CitizenCompleteStatusRequest" />
+	<xs:element name="CitizenCompleteStatusReply" type="tns:CitizenCompleteStatusReply" />
+	<xs:element name="PingRequest" type="tns:PingRequest" />
+	<xs:element name="PingReply" type="tns:PingReply" />
+</xs:schema>

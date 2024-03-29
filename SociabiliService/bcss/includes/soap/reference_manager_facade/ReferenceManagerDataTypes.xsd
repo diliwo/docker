@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by BANQUE CARREFOUR DE LA SECURITE SOCIALE (BANQUE CARREFOUR DE LA SECURITE SOCIALE) -->
+<xs:schema targetNamespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/ReferenceManagerFacade" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:common="http://www.ksz-bcss.fgov.be/XSD/SSDN/Common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ksz-bcss.fgov.be/XSD/SSDN/ReferenceManagerFacade">
+	<xs:import namespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/Common" schemaLocation="../Common/CommonDataTypes.xsd"/>
+	<xs:complexType name="SectorQualityCodesCombinationType">
+		<xs:annotation>
+			<xs:documentation>Represents the requested combination of Sectors and/or QualtiyCodes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Sector">
+				<xs:annotation>
+					<xs:documentation>The sector.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="QualityCodes" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>The qualityCodes within the sector</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultOtherSectorsCriteriaType">
+		<xs:annotation>
+			<xs:documentation>Represents the criteria used to do a consultation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="QualityCodeRequestor" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The quality code under which the person is known at the requesting sector. (902 will be used if empty)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="902"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RequestedSsin" type="common:t_SSIN">
+				<xs:annotation>
+					<xs:documentation>The SSIN of the person whose info is requested. (mandatory)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntegratedPeriod" type="common:StartingPeriodType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The period under which the person is integrated at the requesting sector under the specified quality code. (optional) </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequestedPeriod" type="common:ClosedPeriodType">
+				<xs:annotation>
+					<xs:documentation>The period to search. (mandatory).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SectorQualityCodesCombination" type="SectorQualityCodesCombinationType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>The requested sector/quality code combinations. (Optional)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FetchDescriptions" type="xs:boolean" default="true">
+				<xs:annotation>
+					<xs:documentation>Fetch dutch and french descriptions of sectors and qualitycodes. (Default = true).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultationType">
+		<xs:annotation>
+			<xs:documentation>Represent an answer of one sector/qualitycode combination.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Sector" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The sector.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QualityCode">
+				<xs:annotation>
+					<xs:documentation>The qualityCode.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Period" type="common:PeriodType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The period for which the subject is known by the sector with the specified quality code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SectorDescriptionNl" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the sector (NL).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SectorDescriptionFr" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the sector (FR).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QualityCodeDescriptionNl" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the qualityCode (NL)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QualityCodeDescriptionFr" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the qualityCode (FR).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InscriptionType">
+		<xs:annotation>
+			<xs:documentation>Represents a subset of an inscription in the KSZ person repertoire.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SSIN" type="common:t_SSIN">
+				<xs:annotation>
+					<xs:documentation>The SSIN of the subject</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SectorCode" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sector code to which the inscription belongs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QualityCode" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The dossier code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

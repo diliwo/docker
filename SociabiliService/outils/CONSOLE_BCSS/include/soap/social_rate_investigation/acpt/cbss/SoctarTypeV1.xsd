@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :             SoctarType.xsd
+         * Author :                  Benoit Natus & Jorick Flabat
+         * Owner :                  KSZ / CBSS
+         * Creation date :        30-04-13
+         * Last revision date :  30-04-13
+         * Status :                  Planned
+         * Description :           Give the historic information of a SSIN about the Social Tariff. It gives the information about the final customer, his heads of households end the protected persons bounded to him in a period
+         * Current version :      0.1
+         * Revision History : 
+* 17/01/2014 (ATI)  rendre optionnels les infos de la BCSS
+============================================================================================================= -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://kszbcss.fgov.be/types/SoctarType/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" targetNamespace="http://kszbcss.fgov.be/types/SoctarType/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2014-01-17">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../CommonV3.xsd"/>
+	<xsd:complexType name="ResultType">
+		<xsd:sequence>
+			<xsd:element name="identifier">
+				<xsd:annotation>
+					<xsd:documentation>categorie</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="common:SsinType">
+							<xsd:attribute name="finalCustomer" type="xsd:boolean" use="required"/>
+							<xsd:attribute name="householdHead" type="xsd:boolean" use="required"/>
+							<xsd:attribute name="protectedPerson" type="xsd:boolean" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="finalCustomer" type="CFType" minOccurs="0" maxOccurs="10">
+				<xsd:annotation>
+					<xsd:documentation>client final</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="householdHead" type="HHType" minOccurs="0" maxOccurs="10">
+				<xsd:annotation>
+					<xsd:documentation>chef de menage</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="protectedPerson" type="PPType" minOccurs="0" maxOccurs="25">
+				<xsd:annotation>
+					<xsd:documentation>personne protegee</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--     client final             -->
+	<xsd:complexType name="CFType">
+		<xsd:choice>
+			<xsd:sequence>
+				<xsd:element name="ssin" type="common:SsinType">
+					<xsd:annotation>
+						<xsd:documentation>ssin client final</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="hasRight" type="HasRightType" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:element name="nobody" type="NobodyType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!--     PeriodType             -->
+	<xsd:complexType name="PeriodType">
+		<xsd:sequence>
+			<xsd:element name="start" type="xsd:date"/>
+			<xsd:element name="end" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--         HasRightType         -->
+	<xsd:complexType name="HasRightType">
+		<xsd:sequence>
+			<xsd:element name="globalRightPeriod" type="PeriodType" maxOccurs="12">
+				<xsd:annotation>
+					<xsd:documentation>du droit TS</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="householdHead" type="MemberType" minOccurs="0" maxOccurs="10">
+				<xsd:annotation>
+					<xsd:documentation>identifiant du chef de menage</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--         menage household         -->
+	<xsd:complexType name="HHType">
+		<xsd:choice>
+			<xsd:sequence>
+				<xsd:element name="ssin" type="common:SsinType">
+					<xsd:annotation>
+						<xsd:documentation>chef de menage</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="householdHeadPeriod" type="PeriodType" minOccurs="0"/>
+				<xsd:element name="member" type="MemberType" minOccurs="0" maxOccurs="25">
+					<xsd:annotation>
+						<xsd:documentation>personne protegee</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:element name="nobody" type="NobodyType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!--	    membre du menage         -->
+	<xsd:complexType name="MemberType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="householdPeriod" type="PeriodType" minOccurs="0" maxOccurs="24">
+				<xsd:annotation>
+					<xsd:documentation>période dans le menage</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--         personne protegee         -->
+	<xsd:complexType name="PPType">
+		<xsd:choice>
+			<xsd:sequence>
+				<xsd:element name="ssin" type="common:SsinType">
+					<xsd:annotation>
+						<xsd:documentation>personne protegee</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="rightPeriod" maxOccurs="24">
+					<xsd:annotation>
+						<xsd:documentation>de droit</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="PeriodType">
+								<xsd:attribute name="organization" type="xsd:int"/>
+							</xsd:extension>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:element name="nobody" type="NobodyType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!-- Soctar Request Type -->
+	<xsd:complexType name="SoctarCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType">
+				<xsd:annotation>
+					<xsd:documentation>SSIN from the person for who we want to consult the data</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NobodyType"/>
+</xsd:schema>

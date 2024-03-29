@@ -1,0 +1,43 @@
+{
+    "variables" : [{
+      "name" : "PgHostname",
+      "value" : "172.31.26.112",
+      "description" : ""
+    }, {
+      "name" : "PgPortNumber",
+      "value" : "5432",
+      "description" : ""
+    }, {
+      "name" : "PgUsername",
+      "value" : "postgres",
+      "description" : ""
+    }, {
+      "name" : "PgPassword",
+      "value" : "Cpas-1030",
+      "description" : ""
+    }, {
+      "name" : "PgDatabaseName",
+      "value" : "referentacc",
+      "description" : ""
+    }, {
+      "name" : "SqlDatabaseName",
+      "value" : "ReferentAcc",
+      "description" : ""
+    }, {
+      "name" : "SqlUsername",
+      "value" : "referent",
+      "description" : ""
+    }, {
+      "name" : "SqlPassword",
+      "value" : "referent",
+      "description" : ""
+    }, {
+      "name" : "SqlPortNumber",
+      "value" : "1433",
+      "description" : ""
+    }, {
+      "name" : "SqlHostname",
+      "value" : "172.31.26.154",
+      "description" : ""
+    } ]
+}

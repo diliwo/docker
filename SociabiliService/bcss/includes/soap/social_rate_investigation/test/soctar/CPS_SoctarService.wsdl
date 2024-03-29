@@ -1,0 +1,70 @@
+<definitions targetNamespace="http://fsb.belgium.be/SoctarService/v1_00" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:fsb="http://fsb.belgium.be/v1_01" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:messages="http://fsb.belgium.be/soctar/schema/v2_00" xmlns:tns="http://fsb.belgium.be/SoctarService/v1_00">
+	<types>
+		<xsd:schema targetNamespace="http://fsb.belgium.be/soctar/schema/v2_00" elementFormDefault="qualified" attributeFormDefault="unqualified">
+			<xsd:include schemaLocation="./SoctarTypes.xsd"/>
+			<xsd:import namespace="http://fsb.belgium.be/v1_01" schemaLocation="./fsb-1.01.xsd"/>
+		</xsd:schema>
+	</types>
+	<message name="CitizenCompleteStatusRequest">
+		<part name="inputParam" element="messages:CitizenCompleteStatusRequest"/>
+	</message>
+	<message name="CitizenCompleteStatusReply">
+		<part name="outputParam" element="messages:CitizenCompleteStatusReply"/>
+	</message>
+	   <message name="RequestHeader">
+      <part name="requestHeader" element="fsb:SyncHeader"/>
+   </message>
+   <message name="ResponseHeader">
+      <part name="responseHeader" element="fsb:SyncResponseHeader"/>
+   </message>
+	<message name="PingRequest">
+		<part name="inputParam" element="messages:PingRequest"/>
+	</message>
+	<message name="PingReply">
+		<part name="outputParam" element="messages:PingReply"/>
+	</message>
+	<portType name="GetCitizenCompleteStatusType">
+		<operation name="CitizenCompleteStatusRequest">
+			<input message="tns:CitizenCompleteStatusRequest"/>
+			<output message="tns:CitizenCompleteStatusReply"/>
+		</operation>
+		<operation name="Ping">
+			<input message="tns:PingRequest"/>
+			<output message="tns:PingReply"/>
+		</operation>
+	</portType>
+	<binding name="GetCitizenCompleteStatusSOAP" type="tns:GetCitizenCompleteStatusType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="CitizenCompleteStatusRequest">
+			<soap:operation soapAction="http://economie.fgov.be/soctar/wscitizencompletestatusrequest/v2/GetCitizenCompleteStatus" style="document"/>
+			<input>
+				<soap:header message="tns:RequestHeader" part="requestHeader" use="literal"/>
+				<soap:body parts="inputParam" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="tns:ResponseHeader" part="responseHeader" use="literal"/>
+				<soap:body parts="outputParam" use="literal"/>
+			</output>
+		</operation>
+		<operation name="Ping">
+			<soap:operation soapAction="http://economie.fgov.be/soctar/wscitizencompletestatusrequest/v2/Ping"/>
+			<input>
+				<soap:header message="tns:RequestHeader" part="requestHeader" use="literal"/>
+				<soap:body parts="inputParam" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="tns:ResponseHeader" part="responseHeader" use="literal"/>
+				<soap:body parts="outputParam" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="GetCitizenCompleteStatusService">
+		<port name="GetCitizenCompleteStatusType" binding="tns:GetCitizenCompleteStatusSOAP">
+			<soap:address location="http://soctar.economie.fgov.be/matcher/soctarwebsevices/GetCitizenCompleteStatus"/>
+		</port>
+	</service>
+	<!--
+		Service element, needed because of this bug:
+		https://issues.apache.org/jira/browse/CXF-1950
+	-->
+</definitions>

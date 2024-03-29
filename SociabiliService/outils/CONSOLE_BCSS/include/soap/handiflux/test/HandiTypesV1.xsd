@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- =====================================================================
+* File Name          : HandiTypesV1.xsd
+* Author             : Alain Tilmant & Catherine Cocu  (BCSS)
+                      
+* Owner              : 
+* Domain             : 
+* Creation date      : 07/10/2014
+* Last revision date :  
+* Description        : support WS Handi (DB Tetra de la DGPH
+* Status             : Model
+* Current Version    : 1.1
+* Revision History
+* 07/10/2013 : adapter les informations pour un service a destination de plusieurs clients (CPAS, MRBC, VAPH, DG06, Studie Toelagen)
+* 08/10/2013 : ajout d'une operation et definition des premiers legal context
+* 14/10/2014 : ajout de tous les legal context connus a ce jour
+* 21/10/2013 : ajout des schemas de la DGPH pour reprendre ses types  particuliers d'adresse  (DGPH/BaseLegalDataV1.xsd + DGPH/common)
+* 28/10/2013 : suite aux premiers tests - decouvertes des adaptations unilaterales du schéma DGPH 
+								right : inversion totalMonthAmount & monthAmount
+								recognition : choice entre child and aldult
+								recognitionChild : unsuitability optional
+* 06/12/2013 : chgt nom handicapRecognition par handicapRecognitionDetails
+* 11/12/2013 : ajouter le ssin dans la reponse
+* 13/12/2013 : mettre deux occurences pour bloc socialCards
+* 20/12/2013 : noDataReasonType
+* 05/02/2013 : CategoryIVT add '-'   = ne s'applique pas
+-->
+<xsd:schema xmlns:tns="http://kszbcss.fgov.be/types/Handi/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:dgph="http://dgph.fgov.be/types/baselegaldata" targetNamespace="http://kszbcss.fgov.be/types/Handi/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2014-02-05">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="CommonV3.xsd"/>
+	<!--<xsd:import namespace="http://kszbcss.fgov.be/types/legaldata/v3" schemaLocation="BaseLegalDataV3.xsd"/>-->
+	<xsd:import namespace="http://dgph.fgov.be/types/baselegaldata" schemaLocation="DGPH/DGPHBaseLegalDataV1.xsd"/>
+	<xsd:complexType name="AbstractRequestCustomerType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Base complex type for all request messages.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xsd:element name="legalContext" type="tns:HandiLegalContext"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AbstractResponseCustomerType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Base complex type for all response messages.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xsd:element name="legalContext" type="tns:HandiLegalContext"/>
+			<!--<xsd:element name="status" type="common:StatusType"/>-->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultFileRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="tns:AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="wantedInformation" type="tns:WantedInformationType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultFileResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="tns:AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="wantedInformation" type="tns:WantedInformationType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="file" type="tns:FileType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultRightsAndPaymentsRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="tns:AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="tns:CriteriaRightsAndPaymentsType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultRightsAndPaymentsResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="tns:AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="tns:CriteriaRightsAndPaymentsType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="file" type="tns:FileType" minOccurs="0" maxOccurs="100"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EvolutionOfRequestType">
+		<xsd:choice>
+			<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+			<xsd:sequence>
+				<xsd:element name="legislation">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:int">
+							<xsd:minInclusive value="0"/>
+							<xsd:maxInclusive value="20"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="requestDate" type="xsd:date" minOccurs="0"/>
+				<xsd:element name="administrativePendingRequest" type="xsd:boolean"/>
+				<xsd:element name="handicapRecognitionPending" type="xsd:boolean"/>
+				<xsd:element name="fileCompletionDate" type="xsd:date" minOccurs="0"/>
+				<xsd:element name="appeal" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="FileType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="addressHandicappedPerson" type="tns:PersonDataType" minOccurs="0"/>
+			<xsd:element name="evolutionOfRequest" type="tns:EvolutionOfRequestType"/>
+			<!--      from 5  -->
+			<xsd:element name="handicapRecognition" type="tns:HandicapType"/>
+			<!--      from 5  -->
+			<xsd:element name="rights" type="tns:RightsType"/>
+			<!--      from 100 -->
+			<xsd:element name="socialCards" type="tns:SocialCardsType" maxOccurs="2"/>
+			<!--      from 24  -->
+			<xsd:element name="payments" type="tns:PaymentsType" maxOccurs="24"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HandicapRecognitionType">
+		<xsd:sequence>
+			<xsd:element name="lowerLimbs50p" type="xsd:boolean"/>
+			<xsd:element name="fullBlindness" type="xsd:boolean"/>
+			<xsd:element name="upperLimbsAmputated" type="xsd:boolean"/>
+			<xsd:element name="upperLimbsParalyzed" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HandicapType">
+		<xsd:choice>
+			<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+			<xsd:sequence>
+				<xsd:element name="dateOfDecision" type="xsd:date"/>
+				<xsd:element name="startDateRecognition" type="xsd:date"/>
+				<xsd:element name="endDateRecognition" type="xsd:date" minOccurs="0"/>
+				<xsd:element name="handicapRecognitionDetails" type="tns:HandicapRecognitionType"/>
+				<xsd:choice>
+					<xsd:element name="resultRecognitionChild" type="tns:ResultRecognitionChildType"/>
+					<xsd:element name="resultRecognitionAdult" type="tns:ResultRecognitionAdultType"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:choice>
+		<!--            <xsd:element name="administrativeStatus" type="xsd:int"/>-->
+	</xsd:complexType>
+	<xsd:complexType name="PaymentsType">
+		<xsd:choice>
+			<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+			<xsd:sequence>
+				<xsd:element name="yearMonth" type="xsd:gYearMonth"/>
+				<xsd:element name="amount" type="tns:MoneyAmountType"/>
+				<xsd:element name="cancelledPayment" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="PillarsType">
+		<xsd:sequence>
+			<xsd:element name="pillar1" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="6"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="pillar2" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="12"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="pillar3" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="pillarsTotal" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="36"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ResultRecognitionAdultType">
+		<xsd:choice>
+			<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+			<xsd:sequence>
+				<xsd:element name="diminuationIndependence">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+							<xsd:sequence>
+								<xsd:element name="mobility" type="tns:Int0_3Type" minOccurs="0"/>
+								<xsd:element name="nourishment" type="tns:Int0_3Type" minOccurs="0"/>
+								<xsd:element name="hygiene" type="tns:Int0_3Type" minOccurs="0"/>
+								<xsd:element name="household" type="tns:Int0_3Type" minOccurs="0"/>
+								<xsd:element name="supervision" type="tns:Int0_3Type" minOccurs="0"/>
+								<xsd:element name="socialSkills" type="tns:Int0_3Type" minOccurs="0"/>
+								<xsd:element name="totalPoints" minOccurs="0">
+									<xsd:simpleType>
+										<xsd:restriction base="xsd:int">
+											<xsd:minInclusive value="0"/>
+											<xsd:maxInclusive value="18"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="diminuationEarnings" type="xsd:boolean" minOccurs="0"/>
+				<xsd:element name="unsuitability" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="mentalUnsuitability" type="tns:Percentage" minOccurs="0"/>
+							<xsd:element name="physicalUnsuitability" type="tns:Percentage" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ResultRecognitionChildType">
+		<xsd:choice>
+			<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+			<xsd:sequence>
+				<xsd:element name="inabilityFollowCourse" type="xsd:boolean" minOccurs="0"/>
+				<xsd:element name="inabilityToWork" type="xsd:boolean" minOccurs="0"/>
+				<xsd:element name="disabilityCode" type="tns:Int0_3Type" minOccurs="0"/>
+				<xsd:element name="independencyScore" type="tns:Int0_3Type" minOccurs="0"/>
+				<xsd:element name="pillars" type="tns:PillarsType" minOccurs="0"/>
+				<xsd:element name="childPathology" type="xsd:boolean" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="RightsType">
+		<xsd:choice>
+			<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+			<xsd:sequence>
+				<xsd:element name="period" type="common:OpenPeriodType"/>
+				<xsd:element name="legislation">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:int">
+							<xsd:minInclusive value="3"/>
+							<xsd:maxInclusive value="9"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="totalMonthAmount" type="tns:MoneyAmountType"/>
+				<xsd:element name="monthAmount" type="tns:MoneyAmountType"/>
+				<xsd:element name="categoryIVT" type="tns:CategoryUVTType"/>
+				<xsd:element name="categoryIT">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:int">
+							<xsd:minInclusive value="1"/>
+							<xsd:maxInclusive value="5"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="partnerIncome" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="SocialCardsType">
+		<xsd:choice>
+			<xsd:element name="noDataReason" type="tns:NoDataReasonType"/>
+			<xsd:sequence>
+				<xsd:element name="deliveryDate" type="xsd:date"/>
+				<xsd:element name="endDate" type="xsd:date" minOccurs="0"/>
+				<xsd:element name="cardNumber">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:pattern value="[0-9]{10}"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="cardType" type="tns:CardTypeType"/>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="WantedInformationType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="informationAtReferenceDate" type="tns:InformationAtReferenceDateType" minOccurs="0"/>
+			<xsd:element name="paymentsAtPeriod" type="tns:PeriodType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="CardTypeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PARKINGCARD"/>
+			<xsd:enumeration value="REDUCTIONCARD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CategoryUVTType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="B"/>
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="-"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Int0_3Type">
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Percentage">
+		<xsd:annotation>
+			<xsd:documentation>A percentage number (from 0 to 100)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MoneyAmountType">
+		<xsd:annotation>
+			<xsd:documentation>An amount of money (max 999999999.99, with 2 decimals)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="2"/>
+			<xsd:totalDigits value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="PersonDataType">
+		<xsd:sequence>
+			<xsd:element name="lastName">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="48"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<!-- Sometimes, people has no first name -->
+			<xsd:element name="firstName" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="24"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="address" type="dgph:AddressType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformationAtReferenceDateType">
+		<xsd:sequence>
+			<xsd:element name="referenceDate" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>date de reference pour l'ensemble des informations demandées</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="evolutionOfRequest" type="xsd:boolean"/>
+			<xsd:element name="handicapRecognition" type="xsd:boolean"/>
+			<xsd:element name="rights" type="xsd:boolean"/>
+			<xsd:element name="socialCards" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<xsd:simpleType name="NoDataReasonType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="no data in db"/>
+			<xsd:enumeration value="not requested"/>
+			<xsd:enumeration value="not authorized"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="CriteriaRightsAndPaymentsType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="period" type="common:PeriodType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--   -->
+	<xsd:complexType name="PeriodType">
+		<xsd:sequence>
+			<xsd:element name="startDate" type="xsd:date"/>
+			<xsd:element name="endDate" type="xsd:date"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--    14/10/2013 -->
+	<xsd:simpleType name="HandiLegalContext">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="social inquiry"/>
+			<xsd:enumeration value="debt recovery"/>
+			<xsd:enumeration value="CBSS validation"/>
+			<xsd:enumeration value="social fraud"/>
+			<xsd:enumeration value="relocation allowance"/>
+			<xsd:enumeration value="renovation subsidy"/>
+			<xsd:enumeration value="subsidies for social housing agencies"/>
+			<xsd:enumeration value="calculation of the contribution for subsidies"/>
+			<xsd:enumeration value="calculation of the scholarship"/>
+			<xsd:enumeration value="assitance to individuals"/>
+			<xsd:enumeration value="rent allowance"/>
+			<xsd:enumeration value="request for assistance"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

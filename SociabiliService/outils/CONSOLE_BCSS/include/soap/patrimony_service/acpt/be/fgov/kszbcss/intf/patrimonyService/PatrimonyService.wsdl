@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================-->
+<!--=   Service : Patrimony Service                   -->
+<!--=   Filename : PatrimonyService.wsdl     -->
+<!--=   Author : Alcatraz                      			-->
+<!--=   Owner : BCSS                      				-->
+<!--=   Date : 2016-09-01                      			-->
+<!--=   Description :Service Front-End de la BCSS liés aux consultations ConsultIMMO du SPF Finances   -->
+<!--=  Current Version : 1.0         					-->
+<!--=   Revision History :                      			-->
+<!--=============================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="PatrimonyService" targetNamespace="http://kszbcss.fgov.be/intf/PatrimonyService/v1"  xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:tns="http://kszbcss.fgov.be/intf/PatrimonyService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ps="http://kszbcss.fgov.be/types/PatrimonyService/v1">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/PatrimonyService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:ps="http://kszbcss.fgov.be/types/PatrimonyService/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/ConsultPatrimonyService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" version="09-11-2016">
+			<xsd:import schemaLocation="../../types/patrimonyService/PatrimonyServiceTypes.xsd" namespace="http://kszbcss.fgov.be/types/PatrimonyService/v1"/>
+			<xsd:import schemaLocation="../../types/common/CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultImmovablePropertiesRequest" type="ps:ConsultImmovablePropertiesRequestType"/>
+			<xsd:element name="consultImmovablePropertiesResponse" type="ps:ConsultImmovablePropertiesResponseType"/>
+			<xsd:element name="consultImmovablePropertiesFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultEnterpriseImmovablePropertiesRequest" type="ps:ConsultEnterpriseImmovablePropertiesRequestType"/>
+			<xsd:element name="consultEnterpriseImmovablePropertiesResponse" type="ps:ConsultEnterpriseImmovablePropertiesResponseType"/>
+			<xsd:element name="consultEnterpriseImmovablePropertiesFault" type="common:CBSSFaultType"/>
+			<xsd:element name="findDivisionByEnterpriseNumberRequest" type="ps:FindDivisionByEnterpriseNumberRequestType"/>
+			<xsd:element name="findDivisionByEnterpriseNumberResponse" type="ps:FindDivisionByEnterpriseNumberResponseType"/>
+			<xsd:element name="findDivisionByEnterpriseNumberFault" type="common:CBSSFaultType"/>
+			
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="consultImmovablePropertiesRequestMsg">
+		<wsdl:part name="consultImmovablePropertiesRequestParameters" element="tns:consultImmovablePropertiesRequest"/>
+	</wsdl:message> 
+	<wsdl:message name="consultImmovablePropertiesResponseMsg">
+		<wsdl:part name="consultImmovablePropertiesResponseParameters" element="tns:consultImmovablePropertiesResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultImmovablePropertiesFaultMsg">
+		<wsdl:part name="consultImmovablePropertiesFaultParameters" element="tns:consultImmovablePropertiesFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultEnterpriseImmovablePropertiesRequestMsg">
+		<wsdl:part name="consultEnterpriseImmovablePropertiesRequestParameters" element="tns:consultEnterpriseImmovablePropertiesRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultEnterpriseImmovablePropertiesResponseMsg">
+		<wsdl:part name="consultEnterpriseImmovablePropertiesResponseParameters" element="tns:consultEnterpriseImmovablePropertiesResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultEnterpriseImmovablePropertiesFaultMsg">
+		<wsdl:part name="consultEnterpriseImmovablePropertiesFaultParameters" element="tns:consultEnterpriseImmovablePropertiesFault"/>
+	</wsdl:message>
+	<wsdl:message name="findDivisionByEnterpriseNumberRequestMsg">
+		<wsdl:part name="findDivisionByEnterpriseNumberRequestParameters" element="tns:findDivisionByEnterpriseNumberRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findDivisionByEnterpriseNumberResponseMsg">
+		<wsdl:part name="findDivisionByEnterpriseNumberResponseParameters" element="tns:findDivisionByEnterpriseNumberResponse"/>
+	</wsdl:message>
+	<wsdl:message name="findDivisionByEnterpriseNumberFaultMsg">
+		<wsdl:part name="findDivisionByEnterpriseNumberFaultParameters" element="tns:findDivisionByEnterpriseNumberFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="PatrimonyServicePortType">
+		<wsdl:operation name="consultImmovableProperties">
+			<wsdl:input name="consultImmovablePropertiesRequest" message="tns:consultImmovablePropertiesRequestMsg"/>
+			<wsdl:output name="consultImmovablePropertiesResponse" message="tns:consultImmovablePropertiesResponseMsg"/>
+			<wsdl:fault name="consultImmovablePropertiesFault" message="tns:consultImmovablePropertiesFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultEnterpriseImmovableProperties">
+			<wsdl:input name="consultEnterpriseImmovablePropertiesRequest" message="tns:consultEnterpriseImmovablePropertiesRequestMsg"/>
+			<wsdl:output name="consultEnterpriseImmovablePropertiesResponse" message="tns:consultEnterpriseImmovablePropertiesResponseMsg"/>
+			<wsdl:fault name="consultEnterpriseImmovablePropertiesFault" message="tns:consultEnterpriseImmovablePropertiesFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="findDivisionByEnterpriseNumber">
+			<wsdl:input name="findDivisionByEnterpriseNumberRequest" message="tns:findDivisionByEnterpriseNumberRequestMsg"/>
+			<wsdl:output name="findDivisionByEnterpriseNumberResponse" message="tns:findDivisionByEnterpriseNumberResponseMsg"/>
+			<wsdl:fault name="findDivisionByEnterpriseNumberFault" message="tns:findDivisionByEnterpriseNumberFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="PatrimonyServiceHTTPBinding" type="tns:PatrimonyServicePortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultImmovableProperties">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/PatrimonyService/consultImmovableProperties"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultImmovablePropertiesFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultImmovablePropertiesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultEnterpriseImmovableProperties">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/PatrimonyService/consultEnterpriseImmovableProperties"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultEnterpriseImmovablePropertiesFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultEnterpriseImmovablePropertiesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="findDivisionByEnterpriseNumber">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/PatrimonyService/findDivisionByEnterpriseNumber"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="findDivisionByEnterpriseNumberFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="findDivisionByEnterpriseNumberFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="PatrimonyService">
+		<wsdl:port name="PatrimonyServiceConsult" binding="tns:PatrimonyServiceHTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://bcssksz-services-acpt.smals.be:443/SOA4520/PatrimonyService/consult"/>
+			<!--Environnement de developpement : https://b2b-test.ksz-bcss.fgov.be:4520/PatrimonyService/consult-->
+			<!--Environnement d'acceptation : https://b2b-acpt.ksz-bcss.fgov.be:4520/PatrimonyService/consult-->
+			<!--Environnement de production : https://b2b.ksz-bcss.fgov.be:4520/PatrimonyService/consult-->
+			<!--  port 443 4520  -->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:ns1="http://kszbcss.fgov.be/types/PcsaAlertReaction/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="..\common\CommonV3.xsd"/>
+	<xs:import namespace="http://kszbcss.fgov.be/types/PcsaAlertReaction/v1" schemaLocation="PcsaAlertReactionTypesV1.xsd"/>
+	<xs:element name="motivateDecisionFault" type="common:CBSSFaultType"/>
+	<xs:element name="motivateDecisionResponse" type="ns1:MotivateDecisionResponseType"/>
+	<xs:element name="motivateDecisionRequest" type="ns1:MotivateDecisionRequestType"/>
+</xs:schema>

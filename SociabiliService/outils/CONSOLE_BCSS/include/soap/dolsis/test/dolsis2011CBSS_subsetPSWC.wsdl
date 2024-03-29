@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================-->
+<!--=   Service : Dolsis2011                      -->
+<!--=   Filename : dolsis2011CBSS_subsetPSWC.wsdl                      -->
+<!--=   Author : Willem Salembier,  Alain Tilmant                      -->
+<!--=   Owner : BCSS                      -->
+<!--=   Date : 2015-02-10                      -->
+<!--=  Status : Planned                       -->
+<!--=   Description :consultation des bases des donnees de l'ONSS : employeurs et employes
+		subset pour les CPAS
+                      -->
+<!--=  Current Version : 1.0                      -->
+<!--=   Revision History :                      -->
+<!--  *                      -->
+<!--=============================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="dolsis2011Service" targetNamespace="http://kszbcss.fgov.be/intf/Dolsis2011Service/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/Dolsis2011/v1" xmlns:tns="http://kszbcss.fgov.be/intf/Dolsis2011Service/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<!--xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/Dolsis2011/v1" xmlns:tns="http://kszbcss.fgov.be/intf/Dolsis2011Service/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"-->
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/Dolsis2011Service/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/Dolsis2011/v1" xmlns:tns="http://kszbcss.fgov.be/intf/Dolsis2011Service/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msgdolsis="http://socialsecurity.be/dolsis/messages/v1" version="2015-02-10">
+			<xsd:import schemaLocation="be/fgov/kszbcss/types/Dolsis2011/v1/dolsisCBSSTypesV1.xsd" namespace="http://kszbcss.fgov.be/types/Dolsis2011/v1"/>
+			<xsd:import schemaLocation="be/fgov/kszbcss/types/common/v3/CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<xsd:import schemaLocation="be/socialsecurity/dolsis/messages/v1/DolsisMessages.xsd" namespace="http://socialsecurity.be/dolsis/messages/v1"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="findEmployersByWorkerRequest" type="msgdolsis:FindEmployersByWorkerRequestType"/>
+			<xsd:element name="findEmployersByWorkerResponse" type="msgdolsis:FindEmployersByWorkerResponseType"/>
+			<xsd:element name="findEmployersByWorkerFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getEmploymentDetailRequest" type="msgdolsis:GetEmploymentDetailRequestType"/>
+			<xsd:element name="getEmploymentDetailResponse" type="msgdolsis:GetEmploymentDetailResponseType"/>
+			<xsd:element name="getEmploymentDetailFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getEmployerDetailRequest" type="msgdolsis:GetEmployerDetailRequestType"/>
+			<xsd:element name="getEmployerDetailResponse" type="msgdolsis:GetEmployerDetailResponseType"/>
+			<xsd:element name="getEmployerDetailFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getPostedWorkerDetailRequest" type="msgdolsis:GetPostedWorkerDetailRequestType"/>
+			<xsd:element name="getPostedWorkerDetailResponse" type="msgdolsis:GetPostedWorkerDetailResponseType"/>
+			<xsd:element name="getPostedWorkerDetailFault" type="common:CBSSFaultType"/>
+			<xsd:element name="findPostedWorkersRequest" type="msgdolsis:FindPostedWorkersRequestType"/>
+			<xsd:element name="findPostedWorkersResponse" type="msgdolsis:FindPostedWorkersResponseType"/>
+			<xsd:element name="findPostedWorkersFault" type="common:CBSSFaultType"/>
+			<xsd:element name="findPostingDocumentsRequest" type="msgdolsis:FindPostingDocumentsRequestType"/>
+			<xsd:element name="findPostingDocumentsResponse" type="msgdolsis:FindPostingDocumentsResponseType"/>
+			<xsd:element name="findPostingDocumentsFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getPostingDocumentDetailRequest" type="msgdolsis:GetPostingDocumentDetailRequestType"/>
+			<xsd:element name="getPostingDocumentDetailResponse" type="msgdolsis:GetPostingDocumentDetailResponseType"/>
+			<xsd:element name="getPostingDocumentDetailFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="findEmployersByWorkerRequestMsg">
+		<wsdl:part name="findEmployersByWorkerRequestParameters" element="tns:findEmployersByWorkerRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findEmployersByWorkerResponseMsg">
+		<wsdl:part name="findEmployersByWorkerResponseParameters" element="tns:findEmployersByWorkerResponse"/>
+	</wsdl:message>
+	<wsdl:message name="findEmployersByWorkerFaultMsg">
+		<wsdl:part name="findEmployersByWorkerFaultParameters" element="tns:findEmployersByWorkerFault"/>
+	</wsdl:message>
+	<wsdl:message name="getEmploymentDetailRequestMsg">
+		<wsdl:part name="getEmploymentDetailRequestParameters" element="tns:getEmploymentDetailRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getEmploymentDetailResponseMsg">
+		<wsdl:part name="getEmploymentDetailResponseParameters" element="tns:getEmploymentDetailResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getEmploymentDetailFaultMsg">
+		<wsdl:part name="getEmploymentDetailFaultParameters" element="tns:getEmploymentDetailFault"/>
+	</wsdl:message>
+	<wsdl:message name="getEmployerDetailRequestMsg">
+		<wsdl:part name="getEmployerDetailRequestParameters" element="tns:getEmployerDetailRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getEmployerDetailResponseMsg">
+		<wsdl:part name="getEmployerDetailResponseParameters" element="tns:getEmployerDetailResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getEmployerDetailFaultMsg">
+		<wsdl:part name="getEmployerDetailFaultParameters" element="tns:getEmployerDetailFault"/>
+	</wsdl:message>
+	<wsdl:message name="getPostedWorkerDetailRequestMsg">
+		<wsdl:part name="getPostedWorkerDetailRequestParameters" element="tns:getPostedWorkerDetailRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getPostedWorkerDetailResponseMsg">
+		<wsdl:part name="getPostedWorkerDetailResponseParameters" element="tns:getPostedWorkerDetailResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getPostedWorkerDetailFaultMsg">
+		<wsdl:part name="getPostedWorkerDetailFaultParameters" element="tns:getPostedWorkerDetailFault"/>
+	</wsdl:message>
+	<wsdl:message name="findPostedWorkersRequestMsg">
+		<wsdl:part name="findPostedWorkersRequestParameters" element="tns:findPostedWorkersRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findPostedWorkersResponseMsg">
+		<wsdl:part name="findPostedWorkersResponseParameters" element="tns:findPostedWorkersResponse"/>
+	</wsdl:message>
+	<wsdl:message name="findPostedWorkersFaultMsg">
+		<wsdl:part name="findPostedWorkersFaultParameters" element="tns:findPostedWorkersFault"/>
+	</wsdl:message>
+	<wsdl:message name="findPostingDocumentsRequestMsg">
+		<wsdl:part name="findPostingDocumentsRequestParameters" element="tns:findPostingDocumentsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findPostingDocumentsResponseMsg">
+		<wsdl:part name="findPostingDocumentsResponseParameters" element="tns:findPostingDocumentsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="findPostingDocumentsFaultMsg">
+		<wsdl:part name="findPostingDocumentsFaultParameters" element="tns:findPostingDocumentsFault"/>
+	</wsdl:message>
+	<wsdl:message name="getPostingDocumentDetailRequestMsg">
+		<wsdl:part name="getPostingDocumentDetailRequestParameters" element="tns:getPostingDocumentDetailRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getPostingDocumentDetailResponseMsg">
+		<wsdl:part name="getPostingDocumentDetailResponseParameters" element="tns:getPostingDocumentDetailResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getPostingDocumentDetailFaultMsg">
+		<wsdl:part name="getPostingDocumentDetailFaultParameters" element="tns:getPostingDocumentDetailFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="Dolsis2011PortType">
+		<wsdl:operation name="findEmployersByWorker">
+			<wsdl:input name="findEmployersByWorkerRequest" message="tns:findEmployersByWorkerRequestMsg"/>
+			<wsdl:output name="findEmployersByWorkerResponse" message="tns:findEmployersByWorkerResponseMsg"/>
+			<wsdl:fault name="findEmployersByWorkerFault" message="tns:findEmployersByWorkerFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="getEmploymentDetail">
+			<wsdl:input name="getEmploymentDetailRequest" message="tns:getEmploymentDetailRequestMsg"/>
+			<wsdl:output name="getEmploymentDetailResponse" message="tns:getEmploymentDetailResponseMsg"/>
+			<wsdl:fault name="getEmploymentDetailFault" message="tns:getEmploymentDetailFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="getEmployerDetail">
+			<wsdl:input name="getEmployerDetailRequest" message="tns:getEmployerDetailRequestMsg"/>
+			<wsdl:output name="getEmployerDetailResponse" message="tns:getEmployerDetailResponseMsg"/>
+			<wsdl:fault name="getEmployerDetailFault" message="tns:getEmployerDetailFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPostedWorkerDetail">
+			<wsdl:input name="getPostedWorkerDetailRequest" message="tns:getPostedWorkerDetailRequestMsg"/>
+			<wsdl:output name="getPostedWorkerDetailResponse" message="tns:getPostedWorkerDetailResponseMsg"/>
+			<wsdl:fault name="getPostedWorkerDetailFault" message="tns:getPostedWorkerDetailFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="findPostedWorkers">
+			<wsdl:input name="findPostedWorkersRequest" message="tns:findPostedWorkersRequestMsg"/>
+			<wsdl:output name="findPostedWorkersResponse" message="tns:findPostedWorkersResponseMsg"/>
+			<wsdl:fault name="findPostedWorkersFault" message="tns:findPostedWorkersFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="findPostingDocuments">
+			<wsdl:input name="findPostingDocumentsRequest" message="tns:findPostingDocumentsRequestMsg"/>
+			<wsdl:output name="findPostingDocumentsResponse" message="tns:findPostingDocumentsResponseMsg"/>
+			<wsdl:fault name="findPostingDocumentsFault" message="tns:findPostingDocumentsFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPostingDocumentDetail">
+			<wsdl:input name="getPostingDocumentDetailRequest" message="tns:getPostingDocumentDetailRequestMsg"/>
+			<wsdl:output name="getPostingDocumentDetailResponse" message="tns:getPostingDocumentDetailResponseMsg"/>
+			<wsdl:fault name="getPostingDocumentDetailFault" message="tns:getPostingDocumentDetailFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="Dolsis2011HTTPBinding" type="tns:Dolsis2011PortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findEmployersByWorker">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/Dolsis2011Service/findEmployersByWorker"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="findEmployersByWorkerFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="findEmployersByWorkerFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getEmploymentDetail">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/Dolsis2011Service/getEmploymentDetail"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getEmploymentDetailFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="getEmploymentDetailFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getEmployerDetail">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/Dolsis2011Service/getEmployerDetail"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getEmployerDetailFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="getEmployerDetailFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getPostedWorkerDetail">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/Dolsis2011Service/getPostedWorkerDetail"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getPostedWorkerDetailFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="getPostedWorkerDetailFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="findPostedWorkers">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/Dolsis2011Service/findPostedWorkers"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="findPostedWorkersFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="findPostedWorkersFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="findPostingDocuments">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/Dolsis2011Service/findPostingDocuments"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="findPostingDocumentsFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="findPostingDocumentsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getPostingDocumentDetail">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/Dolsis2011Service/getPostingDocumentDetail"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getPostingDocumentDetailFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="getPostingDocumentDetailFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="Dolsis2011Service">
+		<wsdl:port name="Dolsis2011Consult" binding="tns:Dolsis2011HTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://bcssksz-services-test.smals.be:443/SOA4520/Dolsis2011Service/consult"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

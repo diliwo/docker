@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================================================
+* File Name :				TaxAssessmentDataV1.wsdl
+* Author:					Peter Van den Bosch
+* Owner					CBSS
+* Description : 			Webservice BCSS for Consultation Of Tax Assessment Data (data on the notice of assessment) of SPF Fin / Fod FIN for OCMW/CPAS 
+* Revision History :	2013-05-02 Initial version
+=============================================================================================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="TaxAssessmentDataService" targetNamespace="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:TaxAssessmentDataService="http://kszbcss.fgov.be/types/TaxAssessmentDataService/v1" xmlns:tns="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:tax="http://kszbcss.fgov.be/types/TaxAssessmentDataService/v1" xmlns:tns="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v1">
+			<xsd:import schemaLocation="TaxAssessmentDataV1.xsd" namespace="http://kszbcss.fgov.be/types/TaxAssessmentDataService/v1"/>
+			<xsd:import schemaLocation="be/fgov/kszbcss/types/common/CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= getTaxAssessmentData ===========-->
+			<xsd:element name="getTaxAssessmentDataRequest" type="tax:GetTaxAssessmentDataRequestType"/>
+			<xsd:element name="getTaxAssessmentDataResponse" type="tax:GetTaxAssessmentDataResponseType"/>
+			<xsd:element name="getTaxAssessmentDataFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<!--========= getTaxAssessmentData ===========-->
+	<wsdl:message name="getTaxAssessmentDataRequestMsg">
+		<wsdl:part name="getTaxAssessmentDataParameters" element="tns:getTaxAssessmentDataRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getTaxAssessmentDataResponseMsg">
+		<wsdl:part name="getTaxAssessmentDataParameters" element="tns:getTaxAssessmentDataResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getTaxAssessmentDataFaultMsg">
+		<wsdl:part name="getTaxAssessmentDataParameters" element="tns:getTaxAssessmentDataFault"/>
+	</wsdl:message>
+
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="TaxAssessmentDataServicePortType">
+		<!--========= getTaxAssessmentData ===========-->
+		<wsdl:operation name="getTaxAssessmentData">
+			<wsdl:input name="getTaxAssessmentDataRequest" message="tns:getTaxAssessmentDataRequestMsg"/>
+			<wsdl:output name="getTaxAssessmentDataResponse" message="tns:getTaxAssessmentDataResponseMsg"/>
+			<wsdl:fault name="getTaxAssessmentDataFault" message="tns:getTaxAssessmentDataFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="TaxAssessmentDataServiceHTTPBinding" type="tns:TaxAssessmentDataServicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<!--========= getTaxAssessmentData ===========-->
+		<wsdl:operation name="getTaxAssessmentData">
+			<soap:operation soapAction="http://kszbcss.fgov.be/TaxAssessmentDataService/getTaxAssessmentData"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getTaxAssessmentDataFault">
+				<soap:fault name="getTaxAssessmentDataFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="TaxAssessmentDataService">
+		<wsdl:port name="GetTaxAssessmentDataConsult" binding="tns:TaxAssessmentDataServiceHTTPBinding">
+			<soap:address location="https://bcssksz-services-test.smals.be:443/SOA4520/TaxAssessmentDataService/consult"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

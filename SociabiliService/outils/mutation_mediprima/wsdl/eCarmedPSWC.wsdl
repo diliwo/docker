@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================-->
+<!--=   Service : ECarmed                      -->
+<!--=   Filename : eCarmedPSWC.wsdl                      -->
+<!--=   Author : Alain Tilmant                      -->
+<!--=   Owner : BCSS                      -->
+<!--=   Date : 2014-07-04                      -->
+<!--=  Status : Planned                       -->
+<!--=   Description :gestion des couvertures financieres de soin de santé                      -->
+<!--=  Current Version : 1.0                      -->
+<!--=   Revision History :                      -->
+<!--  *    
+20/10/2014 ajout des operations stop et remove 
+			stop()= arreter une decision a une certaine date en specifiiant les periodes pour chaque couverture financiere
+			remove() = close() = annuler une decision complete (suppress)
+ -->
+<!--=============================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="eCarmedService" targetNamespace="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:puo="http://kszbcss.fgov.be/types/ECarmed/v1" xmlns:tns="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<!--xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/ECarmed/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/ECarmedService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"-->
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:puo="http://kszbcss.fgov.be/types/ECarmed/v1" xmlns:tns="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" version="2014-10-20">
+			<xsd:import schemaLocation="eCarmedTypesV4.xsd" namespace="http://kszbcss.fgov.be/types/ECarmed/v1"/>
+			<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="evaluateCarmedRequest" type="puo:OpenCarmedRequestType"/>
+			<xsd:element name="evaluateCarmedResponse" type="puo:EvaluateCarmedResponseType"/>
+			<xsd:element name="evaluateCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="openCarmedRequest" type="puo:OpenCarmedRequestType"/>
+			<xsd:element name="openCarmedResponse" type="puo:OpenCarmedResponseType"/>
+			<xsd:element name="openCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="modifyCarmedRequest" type="puo:ModifyCarmedRequestType"/>
+			<xsd:element name="modifyCarmedResponse" type="puo:ModifyCarmedResponseType"/>
+			<xsd:element name="modifyCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="evaluateModifiedCarmedRequest" type="puo:ModifyCarmedRequestType"/>
+			<xsd:element name="evaluateModifiedCarmedResponse" type="puo:ModifyCarmedResponseType"/>
+			<xsd:element name="evaluateModifiedCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="closeCarmedRequest" type="puo:CloseCarmedRequestType"/>
+			<xsd:element name="closeCarmedResponse" type="puo:CloseCarmedResponseType"/>
+			<xsd:element name="closeCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="removeCarmedRequest" type="puo:CloseCarmedRequestType"/>
+			<xsd:element name="removeCarmedResponse" type="puo:CloseCarmedResponseType"/>
+			<xsd:element name="removeCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="stopCarmedRequest" type="puo:StopCarmedRequestType"/>
+			<xsd:element name="stopCarmedResponse" type="puo:StopCarmedResponseType"/>
+			<xsd:element name="stopCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultCarmedRequest" type="puo:ConsultCarmedRequestType"/>
+			<xsd:element name="consultCarmedResponse" type="puo:ConsultCarmedResponseType"/>
+			<xsd:element name="consultCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultCarmedHistoryRequest" type="puo:ConsultCarmedRequestType"/>
+			<xsd:element name="consultCarmedHistoryResponse" type="puo:ConsultCarmedResponseType"/>
+			<xsd:element name="consultCarmedHistoryFault" type="common:CBSSFaultType"/>
+			<xsd:element name="queryCarmedManagerRequest" type="puo:ConsultCarmedRequestType"/>
+			<xsd:element name="queryCarmedManagerResponse" type="puo:QueryCarmedManagerResponseType"/>
+			<xsd:element name="queryCarmedManagerFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultCarmedByVersionRequest" type="puo:ConsultCarmedByVersionRequestType"/>
+			<xsd:element name="consultCarmedByVersionResponse" type="puo:ConsultCarmedByVersionResponseType"/>
+			<xsd:element name="consultCarmedByVersionFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="evaluateCarmedRequestMsg">
+		<wsdl:part name="evaluateCarmedRequestParameters" element="tns:evaluateCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="evaluateCarmedResponseMsg">
+		<wsdl:part name="evaluateCarmedResponseParameters" element="tns:evaluateCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="evaluateCarmedFaultMsg">
+		<wsdl:part name="evaluateCarmedFaultParameters" element="tns:evaluateCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="openCarmedRequestMsg">
+		<wsdl:part name="openCarmedRequestParameters" element="tns:openCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="openCarmedResponseMsg">
+		<wsdl:part name="openCarmedResponseParameters" element="tns:openCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="openCarmedFaultMsg">
+		<wsdl:part name="openCarmedFaultParameters" element="tns:openCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="modifyCarmedRequestMsg">
+		<wsdl:part name="modifyCarmedRequestParameters" element="tns:modifyCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="modifyCarmedResponseMsg">
+		<wsdl:part name="modifyCarmedResponseParameters" element="tns:modifyCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="modifyCarmedFaultMsg">
+		<wsdl:part name="modifyCarmedFaultParameters" element="tns:modifyCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="evaluateModifiedCarmedRequestMsg">
+		<wsdl:part name="evaluateModifiedCarmedRequestParameters" element="tns:evaluateModifiedCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="evaluateModifiedCarmedResponseMsg">
+		<wsdl:part name="evaluateModifiedCarmedResponseParameters" element="tns:evaluateModifiedCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="evaluateModifiedCarmedFaultMsg">
+		<wsdl:part name="evaluateModifiedCarmedFaultParameters" element="tns:evaluateModifiedCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="closeCarmedRequestMsg">
+		<wsdl:part name="closeCarmedRequestParameters" element="tns:closeCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="closeCarmedResponseMsg">
+		<wsdl:part name="closeCarmedResponseParameters" element="tns:closeCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="closeCarmedFaultMsg">
+		<wsdl:part name="closeCarmedFaultParameters" element="tns:closeCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="removeCarmedRequestMsg">
+		<wsdl:part name="removeCarmedRequestParameters" element="tns:removeCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="removeCarmedResponseMsg">
+		<wsdl:part name="removeCarmedResponseParameters" element="tns:removeCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="removeCarmedFaultMsg">
+		<wsdl:part name="removeCarmedFaultParameters" element="tns:removeCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="stopCarmedRequestMsg">
+		<wsdl:part name="stopCarmedRequestParameters" element="tns:stopCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="stopCarmedResponseMsg">
+		<wsdl:part name="stopCarmedResponseParameters" element="tns:stopCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="stopCarmedFaultMsg">
+		<wsdl:part name="stopCarmedFaultParameters" element="tns:stopCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedRequestMsg">
+		<wsdl:part name="consultCarmedRequestParameters" element="tns:consultCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedResponseMsg">
+		<wsdl:part name="consultCarmedResponseParameters" element="tns:consultCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedFaultMsg">
+		<wsdl:part name="consultCarmedFaultParameters" element="tns:consultCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedHistoryRequestMsg">
+		<wsdl:part name="consultCarmedHistoryRequestParameters" element="tns:consultCarmedHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedHistoryResponseMsg">
+		<wsdl:part name="consultCarmedHistoryResponseParameters" element="tns:consultCarmedHistoryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedHistoryFaultMsg">
+		<wsdl:part name="consultCarmedHistoryFaultParameters" element="tns:consultCarmedHistoryFault"/>
+	</wsdl:message>
+	<wsdl:message name="queryCarmedManagerRequestMsg">
+		<wsdl:part name="queryCarmedManagerRequestParameters" element="tns:queryCarmedManagerRequest"/>
+	</wsdl:message>
+	<wsdl:message name="queryCarmedManagerResponseMsg">
+		<wsdl:part name="queryCarmedManagerResponseParameters" element="tns:queryCarmedManagerResponse"/>
+	</wsdl:message>
+	<wsdl:message name="queryCarmedManagerFaultMsg">
+		<wsdl:part name="queryCarmedManagerFaultParameters" element="tns:queryCarmedManagerFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedByVersionRequestMsg">
+		<wsdl:part name="consultCarmedByVersionRequestParameters" element="tns:consultCarmedByVersionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedByVersionResponseMsg">
+		<wsdl:part name="consultCarmedByVersionResponseParameters" element="tns:consultCarmedByVersionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedByVersionFaultMsg">
+		<wsdl:part name="consultCarmedByVersionFaultParameters" element="tns:consultCarmedByVersionFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="ECarmedPortType">
+		<wsdl:operation name="evaluateCarmed">
+			<wsdl:input name="evaluateCarmedRequest" message="tns:evaluateCarmedRequestMsg"/>
+			<wsdl:output name="evaluateCarmedResponse" message="tns:evaluateCarmedResponseMsg"/>
+			<wsdl:fault name="evaluateCarmedFault" message="tns:evaluateCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="openCarmed">
+			<wsdl:input name="openCarmedRequest" message="tns:openCarmedRequestMsg"/>
+			<wsdl:output name="openCarmedResponse" message="tns:openCarmedResponseMsg"/>
+			<wsdl:fault name="openCarmedFault" message="tns:openCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyCarmed">
+			<wsdl:input name="modifyCarmedRequest" message="tns:modifyCarmedRequestMsg"/>
+			<wsdl:output name="modifyCarmedResponse" message="tns:modifyCarmedResponseMsg"/>
+			<wsdl:fault name="modifyCarmedFault" message="tns:modifyCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="evaluateModifiedCarmed">
+			<wsdl:input name="evaluateModifiedCarmedRequest" message="tns:evaluateModifiedCarmedRequestMsg"/>
+			<wsdl:output name="evaluateModifiedCarmedResponse" message="tns:evaluateModifiedCarmedResponseMsg"/>
+			<wsdl:fault name="evaluateModifiedCarmedFault" message="tns:evaluateModifiedCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="closeCarmed">
+			<wsdl:input name="closeCarmedRequest" message="tns:closeCarmedRequestMsg"/>
+			<wsdl:output name="closeCarmedResponse" message="tns:closeCarmedResponseMsg"/>
+			<wsdl:fault name="closeCarmedFault" message="tns:closeCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeCarmed">
+			<wsdl:input name="removeCarmedRequest" message="tns:removeCarmedRequestMsg"/>
+			<wsdl:output name="removeCarmedResponse" message="tns:removeCarmedResponseMsg"/>
+			<wsdl:fault name="removeCarmedFault" message="tns:removeCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="stopCarmed">
+			<wsdl:input name="stopCarmedRequest" message="tns:stopCarmedRequestMsg"/>
+			<wsdl:output name="stopCarmedResponse" message="tns:stopCarmedResponseMsg"/>
+			<wsdl:fault name="stopCarmedFault" message="tns:stopCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmed">
+			<wsdl:input name="consultCarmedRequest" message="tns:consultCarmedRequestMsg"/>
+			<wsdl:output name="consultCarmedResponse" message="tns:consultCarmedResponseMsg"/>
+			<wsdl:fault name="consultCarmedFault" message="tns:consultCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedHistory">
+			<wsdl:input name="consultCarmedHistoryRequest" message="tns:consultCarmedHistoryRequestMsg"/>
+			<wsdl:output name="consultCarmedHistoryResponse" message="tns:consultCarmedHistoryResponseMsg"/>
+			<wsdl:fault name="consultCarmedHistoryFault" message="tns:consultCarmedHistoryFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="queryCarmedManager">
+			<wsdl:input name="queryCarmedManagerRequest" message="tns:queryCarmedManagerRequestMsg"/>
+			<wsdl:output name="queryCarmedManagerResponse" message="tns:queryCarmedManagerResponseMsg"/>
+			<wsdl:fault name="queryCarmedManagerFault" message="tns:queryCarmedManagerFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedByVersion">
+			<wsdl:input name="consultCarmedByVersionRequest" message="tns:consultCarmedByVersionRequestMsg"/>
+			<wsdl:output name="consultCarmedByVersionResponse" message="tns:consultCarmedByVersionResponseMsg"/>
+			<wsdl:fault name="consultCarmedByVersionFault" message="tns:consultCarmedByVersionFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="ECarmedHTTPBinding" type="tns:ECarmedPortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="evaluateCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/evaluateCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="evaluateCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="evaluateCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="openCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/openCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="openCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="openCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/modifyCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="modifyCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="modifyCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="evaluateModifiedCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/evaluateModifiedCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="evaluateModifiedCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="evaluateModifiedCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="closeCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/closeCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="closeCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="closeCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/removeCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="removeCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="removeCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="stopCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/stopCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="stopCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="stopCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/consultCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedHistory">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/consultCarmedHistory"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultCarmedHistoryFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultCarmedHistoryFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="queryCarmedManager">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/queryCarmedManager"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="queryCarmedManagerFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="queryCarmedManagerFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedByVersion">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/consultCarmedByVersion"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultCarmedByVersionFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultCarmedByVersionFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="ECarmedService">
+		<wsdl:port name="ECarmedManageCarmed" binding="tns:ECarmedHTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://bcssksz-services-prod.smals.be:443/SOA4520/ECarmedService/manageCarmed"/>
+			<!--Environnement de developpement : https://b2b-test.ksz-bcss.fgov.be:4520/ECarmedService/manageCarmed-->
+			<!--Environnement d'acceptation : https://b2b-acpt.ksz-bcss.fgov.be:4520/ECarmedService/manageCarmed-->
+			<!--Environnement de production : https://b2b.ksz-bcss.fgov.be:4520/ECarmedService/manageCarmed-->
+			<!--    pour LES CPAS
+			environnement dvlp :  https=//bcssksz-services-test.smals.be:443/SOA4520/ECarmedService/manageCarmed  
+			environnement acpt:  https=//bcssksz-services-acpt.smals.be:443/SOA4520/ECarmedService/manageCarmed 
+			environnement prod : https=//bcssksz-services-prod.smals.be:443/SOA4520/ECarmedService/manageCarmed 
+-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===================================================================== -->
+<!-- * File Name : DolsisMessages.xsd -->
+<!-- * Author : Alain Tilmant, Willem Salembier -->
+<!-- * Owner : CBSS / Smals -->
+<!-- * Domain : -->
+<!-- * Creation date : 27/10/2011 -->
+<!-- * Last revision date : 19/11/2014 -->
+<!-- * Description : support a la web-app DOLSIS like Genesis -->
+<!-- * Status : Model -->
+<!-- * Current Version : 1.7 -->
+<!-- ===================================================================== -->
+<xsd:schema version="1.7" targetNamespace="http://socialsecurity.be/dolsis/messages/v1" xmlns="http://socialsecurity.be/dolsis/messages/v1" attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:cbss="http://kszbcss.fgov.be/types/common/v3" xmlns:common="http://socialsecurity.be/dolsis/types/v1" xmlns:crr="http://socialsecurity.be/dolsis/contractualrelationshipregistry/types/v1" xmlns:pr="http://socialsecurity.be/dolsis/presenceregistration/types/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../../../../fgov/kszbcss/types/common/v3/CommonV3.xsd"/>
+  <xsd:import namespace="http://socialsecurity.be/dolsis/types/v1" schemaLocation="../../types/v1/DolsisTypes.xsd"/>
+  <xsd:import namespace="http://socialsecurity.be/dolsis/contractualrelationshipregistry/types/v1" schemaLocation="../../contractualrelationshipregistry/types/v1/ContractualRelationshipRegistryTypes.xsd"/>
+  <xsd:import namespace="http://socialsecurity.be/dolsis/presenceregistration/types/v1" schemaLocation="../../presenceregistration/types/v1/PresenceRegistrationTypes.xsd"/>
+  <!-- Case 3 - findEmployersByWorker -->
+  <xsd:complexType name="FindEmployersByWorkerRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Find the employers a person has worked for.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="EmployersByWorkerCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindEmployersByWorkerResponseType">
+    <xsd:annotation>
+      <xsd:documentation>Returns the list of employers the person has worked for.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindEmployersByWorkerRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="EmployersByWorker" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EmployersByWorkerCriteria">
+    <xsd:annotation>
+      <xsd:documentation>Search based on worker social security number and optional period filter.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="ssin" type="cbss:SsinType"/>
+          <xsd:element name="scope" type="common:CentralPersonnelFileSearchScope" default="active">
+            <xsd:annotation>
+              <xsd:appinfo>v0.6: renamed all scope to active</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="period" type="cbss:PeriodType" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EmployersByWorker">
+    <xsd:sequence>
+      <xsd:element name="person" type="common:Person"/>
+      <xsd:element name="employment" type="EmployersByWorkerRecord" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmployersByWorkerRecord">
+    <xsd:complexContent>
+      <xsd:extension base="common:EmploymentRecord">
+        <xsd:sequence>
+          <xsd:element name="employer" type="common:Employer"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Case 4 - getEmploymentDetail -->
+  <xsd:complexType name="GetEmploymentDetailRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Retrieve all details for the employment of a worker at a single employer</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="EmploymentDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetEmploymentDetailResponseType">
+    <xsd:annotation>
+      <xsd:documentation>Full details of the employment</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetEmploymentDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="EmploymentDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EmploymentDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType changed</xsd:appinfo>
+      <xsd:documentation>Search based on identification of worker, employer and quarter</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="nossRegistrationNumber" type="common:NOSSRegistrationNbr"/>
+          <xsd:element name="ssin" type="cbss:SsinType"/>
+          <xsd:element name="quarter" type="common:Quarter"/>
+          <xsd:element name="nbrOfQuarters" type="NumberOfQuarters" minOccurs="0" default="1"/>
+          <xsd:element name="employmentRecords" type="xsd:boolean" minOccurs="0" default="true">
+            <xsd:annotation>
+              <xsd:appinfo>v1.4: added boolean employmentRecords</xsd:appinfo>
+              <xsd:documentation>Boolean indicating whether RIP should be consulted</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="dmfaRecords" type="xsd:boolean" minOccurs="0" default="true">
+            <xsd:annotation>
+              <xsd:appinfo>v1.4: added boolean dmfaRecords</xsd:appinfo>
+              <xsd:documentation>Boolean indicating whether DMFA should be consulted</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="NumberOfQuarters">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: simpleType added</xsd:appinfo>
+      <xsd:documentation>The number of quarters to return information for (up to 4)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="1"/>
+      <xsd:maxInclusive value="4"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="EmploymentDetail">
+    <xsd:sequence>
+      <xsd:element name="person" type="common:Person" minOccurs="0"/>
+      <xsd:element name="employer" type="common:Employer"/>
+      <xsd:element name="employmentRecord" type="common:EmploymentRecord" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="employmentRecordStatus" type="cbss:StatusType">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added to inform incomplete information</xsd:appinfo>
+          <xsd:documentation>Normal status is DATA_FOUND/MSG00000/OK or NO_DATA_FOUND/MSG00000/OK. Status is NO_DATA_FOUND/MSG00000/OK if user has no access to employment data. Status is NO_RESULT/DOLS0023/TOO_MANY_RIP_RESULTS when there are more than
+            2000 results.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dmfaRecord" type="common:DmfaNaturalPersonDeclarationRecord" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: changed DmfaRecord to DmfaNaturalPersonDeclarationRecord</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dmfaRecordStatus" type="cbss:StatusType">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: added to inform incomplete information</xsd:appinfo>
+          <xsd:documentation>Normal status is DATA_FOUND/MSG00000/OK or NO_DATA_FOUND/MSG00000/OK. Status is NO_DATA_FOUND/DOLS0024/INVALID_REGNR when nossRegistrationNbr is invalid for DMFA consultation. Status is NO_DATA_FOUND/MSG00000/OK if user has no
+            access to dmfa data.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 5 - GetEmployerDetail -->
+  <xsd:complexType name="GetEmployerDetailRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Get all details about an employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="EmployerDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetEmployerDetailResponseType">
+    <xsd:annotation>
+      <xsd:documentation>The employer data from the NOSS employer registry</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetEmployerDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="EmployerDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EmployerDetailCriteria">
+    <xsd:annotation>
+      <xsd:documentation>Search based on identification number of employer</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:choice>
+          <xsd:element name="nossRegistrationNbr" type="common:NOSSRegistrationNbr"/>
+          <xsd:element name="cbeNumber" type="cbss:CbeNumberType">
+            <xsd:annotation>
+              <xsd:appinfo>v0.6: renamed companyId to cbeNumber</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="ssin" type="cbss:SsinType"/>
+          <xsd:element name="vatNumber" type="common:VatNumber"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EmployerDetail">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer"/>
+      <xsd:element name="additionalData" type="common:EmployerAdditionalData"/>
+      <xsd:element name="socialSecretariat" type="common:EmployerSocialSecretariat" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: should be optional element</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="representative" type="common:EmployerRepresentative" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 6 - Find Employers -->
+  <xsd:complexType name="FindEmployersRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Find employers by phonetic or regional search criteria</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="EmployerCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindEmployersResponseType">
+    <xsd:annotation>
+      <xsd:documentation>Returns a summary list of employers.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindEmployersRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="Employers" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EmployerCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: renamed from EmployerSearchCriteria for consistence</xsd:appinfo>
+      <xsd:documentation>Search based on phonetic or regional criteria.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="scope" type="EmployerSearchScope"/>
+          <xsd:choice>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="address" type="xsd:string"/>
+          </xsd:choice>
+          <xsd:element name="zipCode" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="regionScope" type="RegionScope"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="EmployerSearchScope">
+    <xsd:annotation>
+      <xsd:documentation>The partition of the NOSS employer registry to search</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="noss">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: Deprecated. Replaced by noss-active</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="noss-legacy">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: Deprecated. Replaced by noss-deleted</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="noss-pla">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: Deprecated. Replaced by ossss</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="noss-active">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="noss-deleted">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ossss">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: enumeration added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RegionScope">
+    <xsd:annotation>
+      <xsd:documentation>The regions to search for.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Belgium"/>
+      <xsd:enumeration value="BelgianZipCode"/>
+      <xsd:enumeration value="Foreign"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Employers">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 7 - findWorkersByEmployer -->
+  <xsd:complexType name="FindWorkersByEmployerRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Find workers for a single employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="WorkersByEmployerCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindWorkersByEmployerResponseType">
+    <xsd:annotation>
+      <xsd:documentation>Returns the employment records of the employed workers (if search result not too big)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindWorkersByEmployerRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="WorkersByEmployer" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="WorkersByEmployerCriteria">
+    <xsd:annotation>
+      <xsd:documentation>Search based on employer identification, optional period and optional search filters.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="nossRegistrationNbr" type="common:NOSSRegistrationNbr"/>
+          <xsd:element name="scope" type="common:CentralPersonnelFileSearchScope"/>
+          <xsd:element name="period" type="cbss:PeriodType" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="WorkersByEmployer">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer"/>
+      <xsd:element name="employment" type="WorkersByEmployerRecord" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="WorkersByEmployerRecord">
+    <xsd:complexContent>
+      <xsd:extension base="common:EmploymentRecord">
+        <xsd:sequence>
+          <xsd:element name="person" type="common:PersonSummary"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Case 8 - findDmfaRecordsByEmployer -->
+  <xsd:complexType name="FindDmfaRecordsByEmployerRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Find the DMFA records of an employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="DmfaRecordCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindDmfaRecordsByEmployerResponseType">
+    <xsd:annotation>
+      <xsd:documentation>The DMFA records (person related) of a single employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindDmfaRecordsByEmployerRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="DmfaRecordsByEmployer" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaRecordCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: renamed from DmfaRecordsCriteria</xsd:appinfo>
+      <xsd:documentation>Search based on employer identification number, quarter and optional filters</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="nossRegistrationNbr" type="common:NOSSRegistrationNbr"/>
+          <xsd:element name="quarter" type="common:Quarter"/>
+          <xsd:element name="curatorship" type="common:Curatorship"/>
+          <xsd:element name="filter" type="DmfaRecordFilter" minOccurs="0"/>
+          <xsd:element name="offset" type="xsd:string" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v0.14: added offset to page large DMFA results to avoid performance problems within DMFA queries</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaRecordsByEmployer">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer"/>
+      <xsd:element name="record" type="common:DmfaNaturalPersonDeclarationRecord" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: changed QualifiedDmfaRecord to DmfaNaturalPersonDeclarationRecord</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nextOffset" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: added to avoid performance problems with DMFA queries</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaRecordFilter">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: renamed from DmfaRecordsFilter</xsd:appinfo>
+      <xsd:documentation>Filters to reduce the number of searched DMFA records</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="workerType" type="DmfaWorkerType"/>
+        <xsd:element name="contractType" type="common:ContractType"/>
+        <xsd:element name="workerStatus" type="common:WorkerStatus" default="seasonal_worker">
+          <xsd:annotation>
+            <xsd:appinfo>v0.6: type changed from boolean to enum for foward changes</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="numberUnemployedDays" type="xsd:int"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="DmfaWorkerType">
+    <xsd:annotation>
+      <xsd:documentation>Nature of a worker</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="labourer"/>
+      <xsd:enumeration value="employee"/>
+      <xsd:enumeration value="student"/>
+      <xsd:enumeration value="earlyRetirement"/>
+      <xsd:enumeration value="dismissedStatutoryWorker"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- Case 9: getDmfaStatistics -->
+  <xsd:complexType name="GetDmfaStatisticsByEmployerRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.7: new operation</xsd:appinfo>
+      <xsd:documentation>Get the DMFA statistics overview of an employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="DmfaRecordCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetDmfaStatisticsByEmployerResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.7: new operation</xsd:appinfo>
+      <xsd:documentation>The DMFA statistics overview of a single employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetDmfaStatisticsByEmployerRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="DmfaStatisticsByEmployer" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaStatisticsByEmployer">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer"/>
+      <xsd:element name="curatorship" type="common:Curatorship">
+        <xsd:annotation>
+          <xsd:documentation>
+            <xsd:appinfo>v0.18: added curatorship field</xsd:appinfo>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="totalWorkerRecords" type="xsd:double"/>
+      <xsd:element name="totalPartTime" type="xsd:double"/>
+      <xsd:element name="totalWorkMan" type="xsd:double"/>
+      <xsd:element name="totalEmployees" type="xsd:double"/>
+      <xsd:element name="totalStudents" type="xsd:double"/>
+      <xsd:element name="totalServiceNbrOfDays" type="xsd:double"/>
+      <xsd:element name="totalEarlyRetirement" type="xsd:double"/>
+      <xsd:element name="totalDismissedStatutoryWorkers" type="xsd:double"/>
+      <xsd:element name="totalAuthorizedAbsencesNbrOfDays" type="xsd:double"/>
+      <xsd:element name="totalEconomicalUnemploymentNbrOfDays" type="xsd:double"/>
+      <xsd:element name="totalBadWeatherTemporaryUnemploymentNbrOfDays" type="xsd:double"/>
+      <xsd:element name="totalOtherTemporaryUnemploymentNbrOfDays" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 10 - findDmfaContributionsUnrelatedToNaturalPerson -->
+  <xsd:complexType name="FindDmfaContributionsUnrelatedToNaturalPersonRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: renamed operation</xsd:appinfo>
+      <xsd:documentation>Find the DMFA records (not related to persons) of an employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="DmfaContributionUnrelatedToNPCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindDmfaContributionsUnrelatedToNaturalPersonResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: renamed operation</xsd:appinfo>
+      <xsd:documentation>The DMFA records (not related to persons) of a single employer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindDmfaContributionsUnrelatedToNaturalPersonRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="DmfaContributionsUnrelatedToNP" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaContributionUnrelatedToNPCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v0.6: renamed from WorkerUnrelatedDmfaRecordsCriteria</xsd:appinfo>
+      <xsd:documentation>Search DMFA contribution not related to natureal person</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="nossRegistrationNbr" type="common:NOSSRegistrationNbr"/>
+          <xsd:element name="startQuarter" type="common:Quarter"/>
+          <xsd:element name="endQuarter" type="common:Quarter"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DmfaContributionsUnrelatedToNP">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer"/>
+      <xsd:element name="record" type="common:DmfaUnrelatedToNaturalPersonDeclarationRecord" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:appinfo>v0.6: changed type from NonPersonalDmfaRecord to DmfaUnrelatedToNaturalPersonDeclarationRecord</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 11: getPostedWorkerDetail -->
+  <xsd:complexType name="GetPostedWorkerDetailRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Searches the details of a foreign worker in Limosa by ssin.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostedWorkerDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetPostedWorkerDetailResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.7: split belgian client into economical/individual cfr genesis, added paging support, renamed postingDocumentParticipation</xsd:appinfo>
+      <xsd:documentation>The details of the foreign worker in Limosa.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetPostedWorkerDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostedWorkerDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostedWorkerDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:documentation>
+        <xsd:appinfo>v0.7: added offsets for paging</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="ssin" type="cbss:SsinType"/>
+            <xsd:element name="id" type="xsd:long"/>
+          </xsd:choice>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="foreignEmployerRelationOffset" type="xsd:int" minOccurs="0" default="0"/>
+          <xsd:element name="individualBelgianClientRelationOffset" type="xsd:int" minOccurs="0" default="0"/>
+          <xsd:element name="economicalBelgianClientRelationOffset" type="xsd:int" minOccurs="0" default="0"/>
+          <xsd:element name="documentParticipationOffset" type="xsd:int" minOccurs="0" default="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostedWorkerDetail">
+    <xsd:sequence>
+      <xsd:element name="person" type="common:Person"/>
+      <xsd:element name="address" type="common:Address" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Current address is always returned. All address information is returned when addressHistory flag set to true.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="identifier" type="common:LimosaIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="foreignEmployerRelations" type="common:PostingRelationPagingList"/>
+      <xsd:element name="individualBelgianClientRelations" type="common:PostingRelationPagingList"/>
+      <xsd:element name="economicalBelgianClientRelations" type="common:PostingRelationPagingList"/>
+      <xsd:element name="documentParticipations" type="common:PostingDocumentParticipationPagingList"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 12: findPostedWorkers -->
+  <xsd:complexType name="FindPostedWorkersRequestType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostedWorkerCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindPostedWorkersResponseType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindPostedWorkersRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostedWorkers" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostedWorkerCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v1.2: complexType changed</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="cbeNumber" type="cbss:CbeNumberType">
+              <xsd:annotation>
+                <xsd:appinfo>v1.2: added cbeNumber (for searching self-employed foreign workers by CBE number)</xsd:appinfo>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:sequence>
+              <xsd:element name="id" type="xsd:string"/>
+              <xsd:element name="type" type="common:LimosaIdentifierType" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:appinfo>v0.14: optional, because of removed value 'all' which indicates no filter applies</xsd:appinfo>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="lastName" type="xsd:string"/>
+              <xsd:element name="nationality" type="common:CountryCode"/>
+              <xsd:element name="scope" type="common:LimosaSearchScope"/>
+              <xsd:element name="participationType" type="common:PostedWorkerParticipationType" minOccurs="0"/>
+              <xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="currentCity" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="currentZipCode" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="birthDate" type="cbss:IncompleteDateType" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:appinfo>v1.2: changed type from xsd:date to cbss:IncompleteDate to accept incomplete birth dates</xsd:appinfo>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:choice>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostedWorkers">
+    <xsd:sequence>
+      <xsd:element name="person" type="common:Person" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 13: getForeignEmployerDetail -->
+  <xsd:complexType name="GetForeignEmployerDetailRequestType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="ForeignEmployerDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetForeignEmployerDetailResponseType">
+    <xsd:annotation>
+      <xsd:documentation>
+        <xsd:appinfo>added paging support, renamed postingDocumentParticipation</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetForeignEmployerDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="ForeignEmployerDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ForeignEmployerDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:documentation>
+        <xsd:appinfo>added offsets for paging</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="id" type="xsd:long"/>
+            <xsd:element name="nossRegistrationNbr" type="common:NOSSRegistrationNbr"/>
+            <xsd:element name="cbeNumber" type="cbss:CbeNumberType"/>
+            <xsd:element name="feeNumber" type="common:FeeNumber"/>
+          </xsd:choice>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="postedWorkerRelationOffset" type="xsd:int" minOccurs="0" default="0"/>
+          <xsd:element name="individualBelgianClientRelationOffset" type="xsd:int" minOccurs="0" default="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added offset for relations with Belgian clients (individuals)</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="economicalBelgianClientRelationOffset" type="xsd:int" minOccurs="0" default="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added offset for relations with Belgian clients (economical entities)</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="documentParticipationOffset" type="xsd:int" minOccurs="0" default="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ForeignEmployerDetail">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer"/>
+      <xsd:element name="alias" type="common:Alias" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="identifier" type="common:LimosaIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="activity" type="common:Activity" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="address" type="common:Address" maxOccurs="unbounded"/>
+      <xsd:element name="contactData" type="common:ContactData" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="postedWorkerRelations" type="common:PostingRelationPagingList"/>
+      <xsd:element name="individualBelgianClientRelations" type="common:PostingRelationPagingList" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+          <xsd:documentation>Optional for backward compatibility</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="economicalBelgianClientRelations" type="common:PostingRelationPagingList" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+          <xsd:documentation>Optional for backward compatibility</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="documentParticipations" type="common:PostingDocumentParticipationPagingList"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 14: findForeignEmployers -->
+  <xsd:complexType name="FindForeignEmployersRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Find employers by phonetic or regional search criteria</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="ForeignEmployerCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindForeignEmployersResponseType">
+    <xsd:annotation>
+      <xsd:documentation>Returns a summary list of employers.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindForeignEmployersRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="ForeignEmployers" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ForeignEmployerCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v1.2: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v1.2: the search now supports new identifier criteria</xsd:appinfo>
+      <xsd:documentation>Search based on identifier, phonetic or regional criteria.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:annotation>
+              <xsd:appinfo>v1.2: added choice</xsd:appinfo>
+            </xsd:annotation>
+            <xsd:element name="ssin" type="cbss:SsinType">
+              <xsd:annotation>
+                <xsd:appinfo>v1.2: added ssin (for searching self-employed foreign employers by Social Security number)</xsd:appinfo>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:sequence>
+              <xsd:element name="id" type="xsd:string"/>
+              <xsd:element name="type" type="common:LimosaIdentifierType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="name" type="xsd:string"/>
+              <xsd:element name="country" type="common:CountryCode"/>
+              <xsd:element name="scope" type="common:LimosaSearchScope"/>
+              <xsd:element name="participationType" type="common:ForeignEmployerParticipationType" minOccurs="0"/>
+              <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="zipCode" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:choice>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ForeignEmployers">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 15: getPostingBelgianClientDetail -->
+  <xsd:complexType name="GetPostingBelgianClientDetailRequestType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostingBelgianClientDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetPostingBelgianClientDetailResponseType">
+    <xsd:annotation>
+      <xsd:documentation>
+        <xsd:appinfo>added paging support, renamed postingDocumentParticipation</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetPostingBelgianClientDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostingBelgianClientDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingBelgianClientDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:documentation>
+        <xsd:appinfo>added offsets for paging</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="id" type="xsd:long"/>
+            <xsd:element name="nossRegistrationNbr" type="common:NOSSRegistrationNbr"/>
+            <xsd:element name="cbeNumber" type="cbss:CbeNumberType"/>
+            <xsd:element name="ssin" type="cbss:SsinType"/>
+          </xsd:choice>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="postedWorkerRelationOffset" type="xsd:int" minOccurs="0" default="0"/>
+          <xsd:element name="foreignEmployerRelationOffset" type="xsd:int" minOccurs="0" default="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added offset for relations with foreign employers</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="documentParticipationOffset" type="xsd:int" minOccurs="0" default="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingBelgianClientDetail">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="person" type="common:Person"/>
+        <xsd:element name="employer" type="common:Employer"/>
+      </xsd:choice>
+      <xsd:element name="alias" type="common:Alias" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="identifier" type="common:LimosaIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="activity" type="common:Activity" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="address" type="common:Address" maxOccurs="unbounded"/>
+      <xsd:element name="contactData" type="common:ContactData" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="postedWorkerRelations" type="common:PostingRelationPagingList"/>
+      <xsd:element name="foreignEmployerRelations" type="common:PostingRelationPagingList" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: element added</xsd:appinfo>
+          <xsd:documentation>Optional for backward compatibility</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="documentParticipations" type="common:PostingDocumentParticipationPagingList"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 16: findPostingBelgianClients -->
+  <xsd:complexType name="FindPostingBelgianClientsRequestType">
+    <xsd:annotation>
+      <xsd:documentation>Find employers by phonetic or regional search criteria</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostingBelgianClientCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindPostingBelgianClientsResponseType">
+    <xsd:annotation>
+      <xsd:documentation>Returns a summary list of employers.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindPostingBelgianClientsRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostingBelgianClients" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingBelgianClientCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v1.2: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v1.2: the search now supports new identifier criteria</xsd:appinfo>
+      <xsd:documentation>Search based on phonetic or regional criteria.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:annotation>
+              <xsd:appinfo>v1.2: added choice</xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+              <xsd:element name="id" type="xsd:string"/>
+              <xsd:element name="type" type="common:LimosaIdentifierType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="name" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:appinfo>v0.14: name replaces lastName</xsd:appinfo>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="country" type="common:CountryCode"/>
+              <xsd:element name="scope" type="common:LimosaSearchScope"/>
+              <xsd:element name="participationType" type="common:BelgianClientParticipationType" minOccurs="0"/>
+              <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="zipCode" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:choice>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingBelgianClients">
+    <xsd:sequence>
+      <xsd:element name="employer" type="common:Employer" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="employerStatus" type="cbss:StatusType">
+        <xsd:annotation>
+          <xsd:appinfo>v0.11: added to inform incomplete information about the belgian users (employer) results</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="person" type="common:Person" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="personStatus" type="cbss:StatusType">
+        <xsd:annotation>
+          <xsd:appinfo>v0.11: added to inform incomplete information about the belgian user (physical person) results</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 17: findPostingPlaceOfWork: -->
+  <xsd:complexType name="FindPostingPlaceOfWorkRequestType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostingPlaceOfWorkCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindPostingPlaceOfWorkResponseType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindPostingPlaceOfWorkRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostingPlaceOfWork" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingPlaceOfWorkCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="nossRegistrationNbr" type="common:NOSSRegistrationNbr"/>
+            <xsd:element name="cbeNumber" type="cbss:CbeNumberType"/>
+            <xsd:sequence>
+              <xsd:element name="country" type="common:CountryCode" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:appinfo>v0.16: should be optional because not required field in Genesis</xsd:appinfo>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="zipCode" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:choice>
+          <xsd:element name="type" type="common:PostingPlaceOfWorkType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v0.14: should be optional</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingPlaceOfWork">
+    <xsd:sequence>
+      <xsd:element name="pow" type="common:PostingPlaceOfWork" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:appinfo>v0.7: merged types PostingPlaceOfWork and PostingPlaceOfWorkSummary</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 18: GetPostingPlaceOfWorkDetail -->
+  <xsd:complexType name="GetPostingPlaceOfWorkDetailRequestType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostingPlaceOfWorkDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetPostingPlaceOfWorkDetailResponseType">
+    <xsd:annotation>
+      <xsd:documentation>
+        <xsd:appinfo>added paging support, renamed participation to documentRelation</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetPostingPlaceOfWorkDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostingPlaceOfWorkDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingPlaceOfWorkDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:documentation>
+        <xsd:appinfo>added offsets for paging</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:long"/>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="documentRelationOffset" type="xsd:int" minOccurs="0" default="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingPlaceOfWorkDetail">
+    <xsd:sequence>
+      <xsd:element name="placeOfWork" type="common:PostingPlaceOfWork"/>
+      <xsd:element name="documentRelations" type="common:PostingDocumentRelationPagingList">
+        <xsd:annotation>
+          <xsd:appinfo>v0.7: renamed for consistency across operations</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 19: findPostingDocuments -->
+  <xsd:complexType name="FindPostingDocumentsRequestType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostingDocumentCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindPostingDocumentsResponseType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindPostingDocumentsRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostingDocuments" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocumentCriteria">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="documentNbr" type="xsd:string"/>
+            <xsd:sequence>
+              <xsd:element name="ssin" type="cbss:SsinType"/>
+              <xsd:element name="documentType" type="common:PostingDocumentType" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocuments">
+    <xsd:sequence>
+      <xsd:element name="document" type="common:PostingDocumentSummary" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 20: getPostingDocumentDetail -->
+  <xsd:complexType name="GetPostingDocumentDetailRequestType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PostingDocumentDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetPostingDocumentDetailResponseType">
+    <xsd:annotation>
+      <xsd:documentation>
+        <xsd:appinfo>v0.7: removed type PostingDocument for consistence with other operations, added missing relations</xsd:appinfo>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetPostingDocumentDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PostingDocumentDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocumentDetailCriteria">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:long"/>
+          <xsd:element name="ssin" type="cbss:SsinType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v0.22: added as required field if role = Agent</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PostingDocumentDetail">
+    <xsd:sequence>
+      <xsd:element name="summary" type="common:PostingDocumentSummary"/>
+      <xsd:element name="supplier" type="common:PostingDocumentSupplier">
+        <xsd:annotation>
+          <xsd:appinfo>v0.14: moved from common:PostingDocumentSummary</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="documentStatus" type="common:PostingDocumentStatus" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="postedWorkerParticipation" type="common:PostingDocumentParticipation" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="foreignEmployerParticipation" type="common:PostingDocumentParticipation" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="individualBelgianClientParticipation" type="common:PostingDocumentParticipation" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="economicalBelgianClientParticipation" type="common:PostingDocumentParticipation" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="partnerInstitutionParticipation" type="common:PostingDocumentParticipation" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:appinfo>v1.2: element added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="placeOfWorkRelation" type="common:PostingPlaceOfWorkRelation" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="NOSSFaultType">
+    <xsd:annotation>
+      <xsd:documentation>fault business</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="informationCustomer" type="cbss:InformationCustomerType"/>
+      <xsd:element name="informationSupplier" type="cbss:InformationSupplierType"/>
+      <xsd:element name="detail" type="cbss:MessageType" maxOccurs="30"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 21: findPartnerInstitutions -->
+  <xsd:complexType name="FindPartnerInstitutionsRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+      <xsd:documentation>Find partner institutions by phonetic or regional search criteria</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PartnerInstitutionCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindPartnerInstitutionsResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+      <xsd:documentation>Returns a summary list of partner institutions.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindPartnerInstitutionsRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PartnerInstitutions" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PartnerInstitutionCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+      <xsd:documentation>Search based on phonetic or regional criteria.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="country" type="common:CountryCode"/>
+          <xsd:element name="type" type="common:PartnerInstitutionType" minOccurs="0"/>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PartnerInstitutions">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="partnerInstitution" type="common:PartnerInstitution" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 22: getPartnerInstitutionDetail -->
+  <xsd:complexType name="GetPartnerInstitutionDetailRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PartnerInstitutionDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetPartnerInstitutionDetailResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetPartnerInstitutionDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PartnerInstitutionDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PartnerInstitutionDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType changed</xsd:appinfo>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:long"/>
+          <xsd:element name="postingPeriod" type="common:OpenPeriod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:appinfo>v1.6: added search period</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="documentParticipationOffset" type="xsd:int" minOccurs="0" default="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PartnerInstitutionDetail">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="partnerInstitution" type="common:PartnerInstitution"/>
+      <xsd:element name="alias" type="common:Alias" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="identifier" type="common:LimosaIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="address" type="common:Address" maxOccurs="unbounded"/>
+      <xsd:element name="contactData" type="common:ContactData" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="documentParticipations" type="common:PostingDocumentParticipationPagingList"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 23: GetContractualRelationshipDeclarationDetail -->
+  <xsd:complexType name="GetContractualRelationshipDeclarationDetailRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="ContractualRelationshipDeclarationDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetContractualRelationshipDeclarationDetailResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetContractualRelationshipDeclarationDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="ContractualRelationshipDeclarationDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ContractualRelationshipDeclarationDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:choice>
+          <xsd:element name="declarationId" type="crr:DeclarationId"/>
+          <xsd:element name="contractId" type="crr:ContractId"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ContractualRelationshipDeclarationDetail">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="declaration" type="crr:Declaration"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 24: findContractualRelationshipDeclarations -->
+  <xsd:complexType name="FindContractualRelationshipDeclarationsRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>Find ContractualRelationshipRegistry declarations by participants or by placeOfWork</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="ContractualRelationshipDeclarationCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindContractualRelationshipDeclarationsResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>Returns a summary list of ContractualRelationshipRegistry declarations.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindContractualRelationshipDeclarationsRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="ContractualRelationshipDeclarations" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ContractualRelationshipDeclarationCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+      <xsd:documentation>Search based on participant or placeOfWork criteria.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:choice>
+          <xsd:element name="declarationByParticipantCriteria" type="ContractualRelationshipDeclarationByParticipantCriteria"/>
+          <xsd:element name="declarationByPlaceOfWorkCriteria" type="ContractualRelationshipDeclarationByPlaceOfWorkCriteria"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ContractualRelationshipDeclarationByParticipantCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="participantCriteria" type="ContractualRelationshipParticipantCriteria" maxOccurs="2"/>
+      <xsd:element name="additionalCriteria" type="ContractualRelationshipAdditionalCriteria"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContractualRelationshipDeclarationByPlaceOfWorkCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="zipCode" type="xsd:string"/>
+      <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="street" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="additionalCriteria" type="ContractualRelationshipAdditionalCriteria"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContractualRelationshipAdditionalCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="workSectorCode" type="common:WorkSectorCode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: criterion added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="worksGlobalProjectPurposeCode" type="crr:WorksGlobalProjectPurposeCode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.6: criterion added</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="declarationStatus" type="ContractualRelationshipDeclarationStatus" minOccurs="0"/>
+      <xsd:element name="isConstructionWorkWithAsbestos" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Indicates if the construction work involves asbestos works
+            0/false = No
+            1/true = Yes</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="isObligedToRegister" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Indicates if the workers of a site are obliged to register their presence on the site. Depends on the total cost of the works
+            0/false = No
+            1/true = Yes</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="intervalSearchType" type="ContractualRelationshipIntervalSearchType" minOccurs="0"/>
+      <xsd:element name="intervalSearchStartDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Interval search start date</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="intervalSearchEndDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Interval search end date</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ContractualRelationshipDeclarationStatus">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Global status of the declaration
+        active = Declaration is active
+        closed = Declaration is closed</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="active"/>
+      <xsd:enumeration value="closed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ContractualRelationshipIntervalSearchType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: simpleType added</xsd:appinfo>
+      <xsd:documentation>Search declaration based on an interval of date
+        bySentDate = Search declaration by sent date
+        byWorkStartDate = Search declaration by work start date
+        atLeastOneDayActive = Search declaration at least one day active</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="bySentDate"/>
+      <xsd:enumeration value="byWorkStartDate"/>
+      <xsd:enumeration value="atLeastOneDayActive"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="ContractualRelationshipParticipantCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="participantQualityCode" type="crr:ParticipantQualityCode" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element name="cbeNumber" type="cbss:CbeNumberType"/>
+        <xsd:element name="nossRegistrationNumber" type="common:NOSSRegistrationNbr"/>
+        <xsd:element name="actor30BisTerId" type="crr:Actor30BisTerId"/>
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="zipCode" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="countryCode" type="common:CountryCode" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContractualRelationshipDeclarations">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="declaration" type="crr:DeclarationSummary" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 25: GetPresenceRegistrationDetail -->
+  <xsd:complexType name="GetPresenceRegistrationDetailRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PresenceRegistrationDetailCriteria"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="GetPresenceRegistrationDetailResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="GetPresenceRegistrationDetailRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PresenceRegistrationDetail" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PresenceRegistrationDetailCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:choice>
+          <xsd:element name="presenceRegistrationId" type="pr:PresenceRegistrationId"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PresenceRegistrationDetail">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="presenceRegistration" type="pr:PresenceRegistration"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Case 26: findPresenceRegistrations -->
+  <xsd:complexType name="FindPresenceRegistrationsRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+      <xsd:documentation>Find presence registrations</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestType">
+        <xsd:sequence>
+          <xsd:element name="criteria" type="PresenceRegistrationCriteria">
+            <xsd:annotation>
+              <xsd:documentation>Criteria for findPresenceRegistrations</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FindPresenceRegistrationsResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+      <xsd:documentation>Returns a list of presence registrations.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="FindPresenceRegistrationsRequestType">
+        <xsd:sequence>
+          <xsd:element name="status" type="cbss:StatusType"/>
+          <xsd:element name="result" type="PresenceRegistrations" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PresenceRegistrationCriteria">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+      <xsd:documentation>Search based on presence registration criteria.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSearchCriteriaType">
+        <xsd:sequence>
+          <xsd:element name="ssin" type="cbss:SsinType" minOccurs="0"/>
+          <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0"/>
+          <xsd:element name="postingDocumentNbr" type="xsd:string" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Currently not supported by the original data source</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="contractualRelationshipDeclarationId" type="crr:DeclarationId" minOccurs="0"/>
+          <xsd:element name="registrationPeriod" type="cbss:PeriodType" minOccurs="0"/>
+          <xsd:element name="creationPeriod" type="common:OpenPeriod" minOccurs="0"/>
+          <xsd:element name="status" type="pr:PresenceRegistrationStatus" minOccurs="0"/>
+          <xsd:element name="validationRemarkCode" type="pr:ValidationRemarkCode" minOccurs="0"/>
+          <xsd:element name="workSectorCode" type="common:WorkSectorCode" minOccurs="0"/>
+          <xsd:element name="offset" type="xsd:int" minOccurs="0" default="0">
+            <xsd:annotation>
+              <xsd:documentation>The page offset (zero based: 0 for page 1, 1 for page 2, ...). Each page contains [fetchSize] results</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="fetchSize" minOccurs="0" default="10">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:int">
+                <xsd:minInclusive value="1"/>
+                <xsd:maxInclusive value="2000"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="sortCriterion" type="PresenceRegistrationSortCriterion" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The field and direction by which the results are sorted, default is by id asc</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PresenceRegistrationSortField">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: simpleType added</xsd:appinfo>
+      <xsd:documentation>Sort field for a presence registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="presence_registration_id"/>
+      <xsd:enumeration value="registration_date"/>
+      <xsd:enumeration value="creation_date"/>
+      <xsd:enumeration value="last_validation_status"/>
+      <xsd:enumeration value="contractual_relationship_declaration_id"/>
+      <xsd:enumeration value="cbe_number"/>
+      <xsd:enumeration value="channel"/>
+      <xsd:enumeration value="sender_user_id"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="PresenceRegistrationSortCriterion">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+      <xsd:documentation>Sort criterion for a presence registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="PresenceRegistrationSortField">
+        <xsd:attribute default="asc" name="direction" type="SortDirection"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SortDirection">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: simpleType added</xsd:appinfo>
+      <xsd:documentation>Sort direction</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="asc"/>
+      <xsd:enumeration value="desc"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="PresenceRegistrations">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: complexType added</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="common:PagingList">
+        <xsd:sequence>
+          <xsd:element name="presenceRegistration" type="pr:PresenceRegistration" maxOccurs="2000">
+            <xsd:annotation>
+              <xsd:documentation>List of presence registrations</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- abstract types -->
+  <xsd:complexType abstract="true" name="AbstractRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.11: added securityContext, v0.14: added informationSupplier/CBSS from deprecated AbstractResponseType</xsd:appinfo>
+      <xsd:documentation>Base complex type for all request messages.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="informationCustomer" type="cbss:InformationCustomerType"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element name="informationSupplier" type="cbss:InformationSupplierType"/>
+        <xsd:element name="informationCBSS" type="cbss:InformationCBSSType"/>
+      </xsd:choice>
+      <xsd:element name="securityContext" type="SecurityContextType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SecurityContextType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.11: new complex type</xsd:appinfo>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="service" type="ServiceType">
+        <xsd:annotation>
+          <xsd:documentation>A further qualification of the service consumer performing the data consultation (eg department of the institution with CBE number from informationConsumer).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="legalContext" type="cbss:LegalContextType">
+        <xsd:annotation>
+          <xsd:documentation>The purpose of the data consultation</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="role" type="SecurityRole">
+        <xsd:annotation>
+          <xsd:documentation>The role assigned to the service consumer.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="forceDataAccess" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Consumers who are required to integrate into the CBSS registries prior to data consultation, must explicitly communicate this by setting this value.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ServiceType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.11: new complex type</xsd:appinfo>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="SecurityRole">
+    <xsd:annotation>
+      <xsd:appinfo>v0.11: new complex type</xsd:appinfo>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Agent"/>
+      <xsd:enumeration value="Inspector"/>
+      <xsd:enumeration value="Monitoring"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType abstract="true" name="AbstractSearchCriteriaType">
+    <xsd:annotation>
+      <xsd:appinfo>v0.9: new abstract base type for all criteria objects</xsd:appinfo>
+      <xsd:documentation>Base complex type for all criteria messages.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+</xsd:schema>

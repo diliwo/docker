@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===================================================================== -->
+<!-- * File Name : Dolsis.xsd -->
+<!-- * Author : Alain Tilmant, Willem Salembier -->
+<!-- * Owner : CBSS / Smals -->
+<!-- * Domain : -->
+<!-- * Creation date : 27/10/2011 -->
+<!-- * Last revision date : 14/10/2014 -->
+<!-- * Description : support a la web-app DOLSIS like Genesis -->
+<!-- * Status : Model -->
+<!-- * Current Version : 1.7 -->
+<!-- ===================================================================== -->
+<xsd:schema version="1.7" targetNamespace="http://socialsecurity.be/dolsis/v1" xmlns="http://socialsecurity.be/dolsis/v1" attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:m="http://socialsecurity.be/dolsis/messages/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://socialsecurity.be/dolsis/messages/v1" schemaLocation="../messages/v1/DolsisMessages.xsd"/>
+  <!-- Case 3 -->
+  <xsd:element name="findEmployersByWorkerRequest" type="m:FindEmployersByWorkerRequestType"/>
+  <xsd:element name="findEmployersByWorkerResponse" type="m:FindEmployersByWorkerResponseType"/>
+  <!-- Case 4 -->
+  <xsd:element name="getEmploymentDetailRequest" type="m:GetEmploymentDetailRequestType"/>
+  <xsd:element name="getEmploymentDetailResponse" type="m:GetEmploymentDetailResponseType"/>
+  <!-- Case 5 -->
+  <xsd:element name="getEmployerDetailRequest" type="m:GetEmployerDetailRequestType"/>
+  <xsd:element name="getEmployerDetailResponse" type="m:GetEmployerDetailResponseType"/>
+  <!-- Case 6 -->
+  <xsd:element name="findEmployersRequest" type="m:FindEmployersRequestType"/>
+  <xsd:element name="findEmployersResponse" type="m:FindEmployersResponseType"/>
+  <!-- Case 7 -->
+  <xsd:element name="findWorkersByEmployerRequest" type="m:FindWorkersByEmployerRequestType"/>
+  <xsd:element name="findWorkersByEmployerResponse" type="m:FindWorkersByEmployerResponseType"/>
+  <!-- Case 8 -->
+  <xsd:element name="findDmfaRecordsByEmployerRequest" type="m:FindDmfaRecordsByEmployerRequestType"/>
+  <xsd:element name="findDmfaRecordsByEmployerResponse" type="m:FindDmfaRecordsByEmployerResponseType"/>
+  <!-- Case 9 -->
+  <xsd:element name="getDmfaStatisticsByEmployerRequest" type="m:GetDmfaStatisticsByEmployerRequestType"/>
+  <xsd:element name="getDmfaStatisticsByEmployerResponse" type="m:GetDmfaStatisticsByEmployerResponseType"/>
+  <!-- Case 10 -->
+  <xsd:element name="findDmfaContributionsUnrelatedToNaturalPersonRequest" type="m:FindDmfaContributionsUnrelatedToNaturalPersonRequestType"/>
+  <xsd:element name="findDmfaContributionsUnrelatedToNaturalPersonResponse" type="m:FindDmfaContributionsUnrelatedToNaturalPersonResponseType"/>
+  <!-- Case 11 -->
+  <xsd:element name="getPostedWorkerDetailRequest" type="m:GetPostedWorkerDetailRequestType"/>
+  <xsd:element name="getPostedWorkerDetailResponse" type="m:GetPostedWorkerDetailResponseType"/>
+  <!-- Case 12 -->
+  <xsd:element name="findPostedWorkersRequest" type="m:FindPostedWorkersRequestType"/>
+  <xsd:element name="findPostedWorkersResponse" type="m:FindPostedWorkersResponseType"/>
+  <!-- Case 13 -->
+  <xsd:element name="getForeignEmployerDetailRequest" type="m:GetForeignEmployerDetailRequestType"/>
+  <xsd:element name="getForeignEmployerDetailResponse" type="m:GetForeignEmployerDetailResponseType"/>
+  <!-- Case 14 -->
+  <xsd:element name="findForeignEmployersRequest" type="m:FindForeignEmployersRequestType"/>
+  <xsd:element name="findForeignEmployersResponse" type="m:FindForeignEmployersResponseType"/>
+  <!-- Case 15 -->
+  <xsd:element name="getPostingBelgianClientDetailRequest" type="m:GetPostingBelgianClientDetailRequestType"/>
+  <xsd:element name="getPostingBelgianClientDetailResponse" type="m:GetPostingBelgianClientDetailResponseType"/>
+  <!-- Case 16 -->
+  <xsd:element name="findPostingBelgianClientsRequest" type="m:FindPostingBelgianClientsRequestType"/>
+  <xsd:element name="findPostingBelgianClientsResponse" type="m:FindPostingBelgianClientsResponseType"/>
+  <!-- Case 17 -->
+  <xsd:element name="findPostingPlaceOfWorkRequest" type="m:FindPostingPlaceOfWorkRequestType"/>
+  <xsd:element name="findPostingPlaceOfWorkResponse" type="m:FindPostingPlaceOfWorkResponseType"/>
+  <!-- Case 18 -->
+  <xsd:element name="getPostingPlaceOfWorkDetailRequest" type="m:GetPostingPlaceOfWorkDetailRequestType"/>
+  <xsd:element name="getPostingPlaceOfWorkDetailResponse" type="m:GetPostingPlaceOfWorkDetailResponseType"/>
+  <!-- Case 19 -->
+  <xsd:element name="findPostingDocumentsRequest" type="m:FindPostingDocumentsRequestType"/>
+  <xsd:element name="findPostingDocumentsResponse" type="m:FindPostingDocumentsResponseType"/>
+  <!-- Case 20 -->
+  <xsd:element name="getPostingDocumentDetailRequest" type="m:GetPostingDocumentDetailRequestType"/>
+  <xsd:element name="getPostingDocumentDetailResponse" type="m:GetPostingDocumentDetailResponseType"/>
+  <xsd:element name="nossFault" type="m:NOSSFaultType"/>
+  <!-- Case 21 -->
+  <xsd:element name="findPartnerInstitutionsRequest" type="m:FindPartnerInstitutionsRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="findPartnerInstitutionsResponse" type="m:FindPartnerInstitutionsResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <!-- Case 22 -->
+  <xsd:element name="getPartnerInstitutionDetailRequest" type="m:GetPartnerInstitutionDetailRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="getPartnerInstitutionDetailResponse" type="m:GetPartnerInstitutionDetailResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.2: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <!-- Case 23 -->
+  <xsd:element name="getContractualRelationshipDeclarationDetailRequest" type="m:GetContractualRelationshipDeclarationDetailRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="getContractualRelationshipDeclarationDetailResponse" type="m:GetContractualRelationshipDeclarationDetailResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <!-- Case 24 -->
+  <xsd:element name="findContractualRelationshipDeclarationsRequest" type="m:FindContractualRelationshipDeclarationsRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="findContractualRelationshipDeclarationsResponse" type="m:FindContractualRelationshipDeclarationsResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.5: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <!-- Case 25 -->
+  <xsd:element name="getPresenceRegistrationDetailRequest" type="m:GetPresenceRegistrationDetailRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="getPresenceRegistrationDetailResponse" type="m:GetPresenceRegistrationDetailResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <!-- Case 26 -->
+  <xsd:element name="findPresenceRegistrationsRequest" type="m:FindPresenceRegistrationsRequestType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="findPresenceRegistrationsResponse" type="m:FindPresenceRegistrationsResponseType">
+    <xsd:annotation>
+      <xsd:appinfo>v1.6: element added</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>

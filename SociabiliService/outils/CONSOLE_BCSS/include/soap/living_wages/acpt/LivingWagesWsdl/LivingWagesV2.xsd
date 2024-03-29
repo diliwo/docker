@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :               LivingWages.xsd
+         * Author :                 Peter Van den Bosch
+         * Owner :                   KSZ / CBSS
+         * Creation date :           24-09-10
+         * Last revision date :      29-08-30
+         * Status :                  Planned
+         * Description :             WSDL for getting the information  about living wage periods for a given person from PCSA's and this in 2 different ways:
+without grouping by PCSA and with for each PCSA the living wage periods attributed to that person.
+         * Current version :         2.0
+         * Revision History : 
+============================================================================================================= -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://kszbcss.fgov.be/types/LivingWages/v2" xmlns:com="http://kszbcss.fgov.be/types/common/v3" targetNamespace="http://kszbcss.fgov.be/types/LivingWages/v2" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../be/fgov/kszbcss/types/common/CommonV3.xsd"/>
+	<xsd:complexType name="GetLivingWagePeriodsPerPCSARequestType">
+		<xsd:complexContent>
+			<xsd:extension base="com:BaseRequestType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="LivingWagesCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GetLivingWagePeriodsPerPCSAResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="com:BaseResponseType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="LivingWagesCriteriaType"/>
+					<xsd:element name="status" type="com:StatusType"/>
+					<xsd:element name="livingWagePeriodsPerPCSA" type="LivingWagePeriodsPerPCSAType" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GetLivingWagePeriodsRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="com:BaseRequestType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="LivingWagesCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GetLivingWagePeriodsResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="com:BaseResponseType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="LivingWagesCriteriaType"/>
+					<xsd:element name="status" type="com:StatusType"/>
+					<xsd:element name="livingWagePeriod" type="com:PeriodType" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GetLivingWagesRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="com:BaseRequestType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="LivingWagesCriteriaType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GetLivingWagesResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="com:BaseResponseType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="LivingWagesCriteriaType"/>
+					<xsd:element name="status" type="com:StatusType"/>
+					<xsd:element name="livingWages" type="LivingWageType" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="LivingWagePeriodsPerPCSAType">
+		<xsd:annotation>
+			<xsd:documentation>The living wage periods grouped by PCSA</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="pcsaCbeNumber" type="com:EnterpriseNumberType"/>
+			<xsd:element name="livingWagePeriod" type="com:PeriodType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LivingWagesCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="com:SsinType"/>
+			<xsd:element name="period" type="com:OpenPeriodType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LivingWageType">
+		<xsd:annotation>
+			<xsd:documentation>The living wage periods grouped by PCSA</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="pcsaCbeNumber" type="com:EnterpriseNumberType"/>
+			<xsd:element name="category" type="LivingWageCategoryType"/>
+			<xsd:element name="livingWagePeriod" type="com:PeriodType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LivingWageCategoryType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="LIVING_WAGE"/>
+			<xsd:enumeration value="EQUIVALENT_LIVING_WAGE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

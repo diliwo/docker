@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/SocialRateInvestigationService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:puo="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1" xmlns:tns="http://kszbcss.fgov.be/intf/SocialRateInvestigationService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" version="2013-09-05">
+			<xsd:import schemaLocation="SocialRateInvestigationTypesV1.xsd" namespace="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1"/>
+			<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultExchangedDataRequest" type="puo:ConsultExchangedDataRequestType"/>
+			<xsd:element name="consultExchangedDataResponse" type="puo:ConsultExchangedDataResponseType"/>
+			<xsd:element name="consultExchangedDataFault" type="common:CBSSFaultType"/>
+		</xsd:schema>

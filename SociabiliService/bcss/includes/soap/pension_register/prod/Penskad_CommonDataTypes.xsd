@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by BANQUE CARREFOUR DE LA SECURITE SOCIALE (BANQUE CARREFOUR DE LA SECURITE SOCIALE) -->
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by KSZ-BCSS (KSZ-BCSS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ksz-bcss.fgov.be/XSD/SSDN/PensionRegister" targetNamespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/PensionRegister" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="BaseDate">
+		<xs:restriction base="String">
+			<xs:pattern value="[1-2][0-9]{3}\-[0-1][0-9]\-[0-3][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Char">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+			<xs:pattern value="."/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CompanyId">
+		<xs:restriction base="xs:long">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Date">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Digit">
+		<xs:restriction base="xs:long">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentReference">
+		<xs:restriction base="xs:long">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Gender">
+		<xs:restriction base="xs:long">
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Immatriculation">
+		<xs:restriction base="xs:long">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="499999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Integer">
+		<xs:restriction base="xs:long"/>
+	</xs:simpleType>
+	<xs:simpleType name="LanguageCode">
+		<xs:restriction base="xs:long">
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PensionFileId">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+			<xs:pattern value="[a-zA-Z0-9\-*./ ]{0,14}[a-zA-Z0-9\-*./]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Percentage">
+		<xs:restriction base="xs:decimal">
+			<xs:maxInclusive value="99.9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PosRealAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0.0"/>
+			<xs:maxInclusive value="99999999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RealAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="-99999999999999999"/>
+			<xs:maxInclusive value="99999999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="SevenDigits">
+		<xs:restriction base="xs:long">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TechnicalNumber">
+		<xs:restriction base="xs:long">
+			<xs:minInclusive value="100001"/>
+			<xs:maxInclusive value="499999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YearMonth">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{4}-\d{2}-00"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ElementType">
+		<xs:annotation>
+			<xs:documentation>R01 : Element Type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:enumeration value="C2"/>
+				<xs:enumeration value="C3"/>
+				<xs:enumeration value="C1"/>
+				<xs:enumeration value="C4"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentType">
+		<xs:annotation>
+			<xs:documentation>R02 : Document Type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Char">
+				<xs:enumeration value="D"/>
+				<xs:enumeration value="C"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="LayoutVersion">
+		<xs:annotation>
+			<xs:documentation>R03 : Layout Version</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Integer"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentReference" type="DocumentReference">
+		<xs:annotation>
+			<xs:documentation>R04 : Document Reference</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DebtorInstitutionImmatriculation" type="Immatriculation">
+		<xs:annotation>
+			<xs:documentation>R05 : Debtor Institution Immatriculation Number</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentCreationDate" type="Date">
+		<xs:annotation>
+			<xs:documentation>R06 : Document Creation Date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Name">
+		<xs:annotation>
+			<xs:documentation>R10 : Name of the Beneficiary</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="48"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FirstName">
+		<xs:annotation>
+			<xs:documentation>R11 : First Name of the Beneficiary</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="12"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="BirthDate" type="BaseDate">
+		<xs:annotation>
+			<xs:documentation>R12 : Birth Date of the Beneficiary</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BirthPlace" type="SevenDigits">
+		<xs:annotation>
+			<xs:documentation>R13 : Birth Place of the Beneficiary</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Street">
+		<xs:annotation>
+			<xs:documentation>R14 : Street (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="32"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Number">
+		<xs:annotation>
+			<xs:documentation>R15 : Number (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="4"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Box">
+		<xs:annotation>
+			<xs:documentation>R16 : Box (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="4"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PostalCode">
+		<xs:annotation>
+			<xs:documentation>R17 : Postal Code (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="10"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="LocalityCode" type="SevenDigits">
+		<xs:annotation>
+			<xs:documentation>R18 : Locality Code (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CountryCode" type="SevenDigits">
+		<xs:annotation>
+			<xs:documentation>R19 : Country Code (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Locality">
+		<xs:annotation>
+			<xs:documentation>R20 : Locality (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="40"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Country">
+		<xs:annotation>
+			<xs:documentation>R21 : Country (Address of the Beneficiary)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="40"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Gender" type="Gender">
+		<xs:annotation>
+			<xs:documentation>R22 : Gender of the Beneficiary</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LanguageCode" type="LanguageCode">
+		<xs:annotation>
+			<xs:documentation>R23 : Language Code of the Beneficiary</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PensionFileId" type="PensionFileId">
+		<xs:annotation>
+			<xs:documentation>R24 : Pension FileId</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Periodicity">
+		<xs:annotation>
+			<xs:documentation>R25 : Periodicity of the Right</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Char">
+				<xs:enumeration value="3"/>
+				<xs:enumeration value="K"/>
+				<xs:enumeration value="J"/>
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="4"/>
+				<xs:enumeration value="6"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="E"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PensionStartDate" type="BaseDate">
+		<xs:annotation>
+			<xs:documentation>R26 : Pension Start Date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RightStartDate" type="BaseDate">
+		<xs:annotation>
+			<xs:documentation>R27 : Right Start Date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PensionType">
+		<xs:annotation>
+			<xs:documentation>R28 : Pension Type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="4"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="3"/>
+				<xs:enumeration value="5"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AdministrativeSituation">
+		<xs:annotation>
+			<xs:documentation>R29 : Administrative Situation</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="4"/>
+				<xs:enumeration value="8"/>
+				<xs:enumeration value="6"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="3"/>
+				<xs:enumeration value="7"/>
+				<xs:enumeration value="5"/>
+				<xs:enumeration value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EmployerType">
+		<xs:annotation>
+			<xs:documentation>R30 : Employer Type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FamilyChargeType">
+		<xs:annotation>
+			<xs:documentation>R31 : Family Charge Type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AdvantageCode">
+		<xs:annotation>
+			<xs:documentation>R32 : Advantage Code</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:maxLength value="2"/>
+				<xs:pattern value="[A-Z0-9 ]{1,2}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AdvantageType">
+		<xs:annotation>
+			<xs:documentation>R33 : Advantage Type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:enumeration value="32"/>
+				<xs:enumeration value="21"/>
+				<xs:enumeration value="22"/>
+				<xs:enumeration value="11"/>
+				<xs:enumeration value="31"/>
+				<xs:enumeration value="12"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="HouseholdCode">
+		<xs:annotation>
+			<xs:documentation>R34 : Household Code</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="RightOrigin">
+		<xs:annotation>
+			<xs:documentation>R35 : Right Origin</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="3"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="RightModificationStartDate" type="Date">
+		<xs:annotation>
+			<xs:documentation>R36 : Right Modification Start Date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RightCloseDate" type="Date">
+		<xs:annotation>
+			<xs:documentation>R38 : Right Close Date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GrossAmount" type="PosRealAmount">
+		<xs:annotation>
+			<xs:documentation>R39 : Gross Amount</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrecomptableAmount" type="PosRealAmount">
+		<xs:annotation>
+			<xs:documentation>R40 : Precomptable Amount</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Currency">
+		<xs:annotation>
+			<xs:documentation>R41 : Currency</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="IndexType">
+		<xs:annotation>
+			<xs:documentation>R42 : Index Type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="4"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="3"/>
+				<xs:enumeration value="5"/>
+				<xs:enumeration value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Index" type="PosRealAmount">
+		<xs:annotation>
+			<xs:documentation>R43 : Index</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MonthOfPayment" type="YearMonth">
+		<xs:annotation>
+			<xs:documentation>R44 : Month of Payment</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StartMonth" type="YearMonth">
+		<xs:annotation>
+			<xs:documentation>R45 : Start Month of Payment Period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="EndMonth" type="YearMonth">
+		<xs:annotation>
+			<xs:documentation>R46 : End Month of Payment Period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DependentSpouseCode">
+		<xs:annotation>
+			<xs:documentation>R47 : Dependent Spouse Code</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String">
+				<xs:enumeration value="3"/>
+				<xs:enumeration value="5"/>
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="9"/>
+				<xs:enumeration value="4"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TotalDependentChildren" type="Digit">
+		<xs:annotation>
+			<xs:documentation>R48 : Total Dependent Children</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TotalDependentOthers" type="Digit">
+		<xs:annotation>
+			<xs:documentation>R49 : Total Dependent Others</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ExceptionCode">
+		<xs:annotation>
+			<xs:documentation>R51 : Exception Code</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="String"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AmiTaxCode">
+		<xs:annotation>
+			<xs:documentation>R52: Ami Tax Code</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="Digit">
+				<xs:enumeration value="2"/>
+				<xs:enumeration value="4"/>
+				<xs:enumeration value="9"/>
+				<xs:enumeration value="1"/>
+				<xs:enumeration value="3"/>
+				<xs:enumeration value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AmiAmount" type="RealAmount">
+		<xs:annotation>
+			<xs:documentation>R54 : Ami Amount</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SolidarityAmount" type="RealAmount">
+		<xs:annotation>
+			<xs:documentation>R56 : Solidarity Amount</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SolidarityPercentage" type="Percentage">
+		<xs:annotation>
+			<xs:documentation>R57 : Solidarity Percentage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrecomptePercentage" type="Percentage">
+		<xs:annotation>
+			<xs:documentation>R58 : Precompte Percentage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PensionDemandDate" type="xs:date">
+		<xs:annotation>
+			<xs:documentation>R59 : Pension Demand Date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PensionDemandRefusalDate" type="xs:date">
+		<xs:annotation>
+			<xs:documentation>R60 : Refusal Date of the Pension Demand</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DebtorInstitutionCompanyId" type="CompanyId">
+		<xs:annotation>
+			<xs:documentation>R70 : Debtor Institution CompanyId</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrincipalMonthOfPayment" type="YearMonth">
+		<xs:annotation>
+			<xs:documentation>R71 : Principal Month of Payment</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DeclaratorCompanyId" type="CompanyId">
+		<xs:annotation>
+			<xs:documentation>R72 : Declarator CompanyId</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TechnicalNumber" type="TechnicalNumber">
+		<xs:annotation>
+			<xs:documentation>Technical Number (Intern PK)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InstitutionNameFR" type="String">
+		<xs:annotation>
+			<xs:documentation>Name of the Institution - FR</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InstitutionNameNL" type="String">
+		<xs:annotation>
+			<xs:documentation>Name of the Institution - NL</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InstitutionNameDE" type="String">
+		<xs:annotation>
+			<xs:documentation>Name of the Institution - DE</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

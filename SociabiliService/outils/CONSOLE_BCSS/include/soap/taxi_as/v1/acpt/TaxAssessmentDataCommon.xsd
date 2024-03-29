@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================================================
+* File Name :				TaxAssessmentDataCommon.xsd
+* Author:					Tom Puttemans
+* Owner					CBSS
+* Description : 			Common types used in the web service
+* Revision History :	2013-06-20 Initial version
+=============================================================================================================-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://kszbcss.fgov.be/types/TaxAssessmentDataCommon/v1" targetNamespace="http://kszbcss.fgov.be/types/TaxAssessmentDataCommon/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+  <xsd:complexType name="IpcalItemType">
+    <xsd:sequence>
+      <xsd:element name="code">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[0-9]{4}"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="value">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:totalDigits value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="TaxAssessmentDataSelectionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="NET_INCOME"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="TaxAssessmentDataType">
+    <xsd:sequence>
+      <xsd:element name="incomeYear" type="xsd:gYear"/>
+      <xsd:element name="articleNumber">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="10"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ipcalItems">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ipcalItem" type="IpcalItemType" minOccurs="0" maxOccurs="2000"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

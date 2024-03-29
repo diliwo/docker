@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--============================================= -->
+<!--= Service : DolsisNSSO -->
+<!--= Filename : Dolsis.wsdl -->
+<!--= Author : Willem Salembier -->
+<!--= Owner : Smals -->
+<!--= Date : 14/10/2014 -->
+<!--= Status : Planned -->
+<!--= Description :consultation des bases des donnees de l'ONSS : employeurs et employes support a la web-app DOLSIS like Genesis -->
+<!--= Current Version : 1.7 -->
+<!--============================================= -->
+<wsdl:definitions name="DolsisNSSO" targetNamespace="http://socialsecurity.be/dolsis/v1" xmlns="http://socialsecurity.be/dolsis/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>Version 1.7</wsdl:documentation>
+  <wsp:Policy wsu:Id="X509" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <sp:AsymmetricBinding>
+      <wsp:Policy>
+        <sp:InitiatorToken>
+          <wsp:Policy>
+            <sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssX509V3Token10/>
+              </wsp:Policy>
+            </sp:X509Token>
+          </wsp:Policy>
+        </sp:InitiatorToken>
+        <sp:RecipientToken>
+          <wsp:Policy>
+            <sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+              <wsp:Policy>
+                <sp:WssX509V3Token10/>
+              </wsp:Policy>
+            </sp:X509Token>
+          </wsp:Policy>
+        </sp:RecipientToken>
+        <sp:AlgorithmSuite>
+          <wsp:Policy>
+            <sp:Basic256/>
+          </wsp:Policy>
+        </sp:AlgorithmSuite>
+        <sp:Layout>
+          <wsp:Policy>
+            <sp:Lax/>
+          </wsp:Policy>
+        </sp:Layout>
+        <sp:IncludeTimestamp/>
+        <sp:ProtectTokens/>
+        <sp:OnlySignEntireHeadersAndBody/>
+      </wsp:Policy>
+    </sp:AsymmetricBinding>
+    <sp:Wss10>
+      <wsp:Policy>
+        <sp:MustSupportRefKeyIdentifier/>
+        <sp:MustSupportRefIssuerSerial/>
+      </wsp:Policy>
+    </sp:Wss10>
+    <sp:SignedParts>
+      <sp:Body/>
+    </sp:SignedParts>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://socialsecurity.be/dolsis/v1" schemaLocation="Dolsis.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="FindEmployersByWorkerRequest">
+    <wsdl:part name="body" element="findEmployersByWorkerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindEmployersByWorkerResponse">
+    <wsdl:part name="body" element="findEmployersByWorkerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmploymentDetailRequest">
+    <wsdl:part name="body" element="getEmploymentDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmploymentDetailResponse">
+    <wsdl:part name="body" element="getEmploymentDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmployerDetailRequest">
+    <wsdl:part name="body" element="getEmployerDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmployerDetailResponse">
+    <wsdl:part name="body" element="getEmployerDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindEmployersRequest">
+    <wsdl:part name="body" element="findEmployersRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindEmployersResponse">
+    <wsdl:part name="body" element="findEmployersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindWorkersByEmployerRequest">
+    <wsdl:part name="body" element="findWorkersByEmployerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindWorkersByEmployerResponse">
+    <wsdl:part name="body" element="findWorkersByEmployerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindDmfaRecordsByEmployerRequest">
+    <wsdl:part name="body" element="findDmfaRecordsByEmployerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindDmfaRecordsByEmployerResponse">
+    <wsdl:part name="body" element="findDmfaRecordsByEmployerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDmfaStatisticsByEmployerRequest">
+    <wsdl:part name="body" element="getDmfaStatisticsByEmployerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetDmfaStatisticsByEmployerResponse">
+    <wsdl:part name="body" element="getDmfaStatisticsByEmployerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindDmfaContributionsUnrelatedToNaturalPersonRequest">
+    <wsdl:part name="body" element="findDmfaContributionsUnrelatedToNaturalPersonRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindDmfaContributionsUnrelatedToNaturalPersonResponse">
+    <wsdl:part name="body" element="findDmfaContributionsUnrelatedToNaturalPersonResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostedWorkerDetailRequest">
+    <wsdl:part name="body" element="getPostedWorkerDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostedWorkerDetailResponse">
+    <wsdl:part name="body" element="getPostedWorkerDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostedWorkersRequest">
+    <wsdl:part name="body" element="findPostedWorkersRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostedWorkersResponse">
+    <wsdl:part name="body" element="findPostedWorkersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetForeignEmployerDetailRequest">
+    <wsdl:part name="body" element="getForeignEmployerDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetForeignEmployerDetailResponse">
+    <wsdl:part name="body" element="getForeignEmployerDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindForeignEmployersRequest">
+    <wsdl:part name="body" element="findForeignEmployersRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindForeignEmployersResponse">
+    <wsdl:part name="body" element="findForeignEmployersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostingBelgianClientDetailRequest">
+    <wsdl:part name="body" element="getPostingBelgianClientDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostingBelgianClientDetailResponse">
+    <wsdl:part name="body" element="getPostingBelgianClientDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostingBelgianClientsRequest">
+    <wsdl:part name="body" element="findPostingBelgianClientsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostingBelgianClientsResponse">
+    <wsdl:part name="body" element="findPostingBelgianClientsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostingPlaceOfWorkRequest">
+    <wsdl:part name="body" element="findPostingPlaceOfWorkRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostingPlaceOfWorkResponse">
+    <wsdl:part name="body" element="findPostingPlaceOfWorkResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostingPlaceOfWorkDetailRequest">
+    <wsdl:part name="body" element="getPostingPlaceOfWorkDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostingPlaceOfWorkDetailResponse">
+    <wsdl:part name="body" element="getPostingPlaceOfWorkDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostingDocumentsRequest">
+    <wsdl:part name="body" element="findPostingDocumentsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindPostingDocumentsResponse">
+    <wsdl:part name="body" element="findPostingDocumentsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostingDocumentDetailRequest">
+    <wsdl:part name="body" element="getPostingDocumentDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostingDocumentDetailResponse">
+    <wsdl:part name="body" element="getPostingDocumentDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindPartnerInstitutionsRequest">
+    <wsdl:part name="body" element="findPartnerInstitutionsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindPartnerInstitutionsResponse">
+    <wsdl:part name="body" element="findPartnerInstitutionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPartnerInstitutionDetailRequest">
+    <wsdl:part name="body" element="getPartnerInstitutionDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetPartnerInstitutionDetailResponse">
+    <wsdl:part name="body" element="getPartnerInstitutionDetailResponse"/>
+  </wsdl:message>
+  <!-- Case 23 -->
+  <wsdl:message name="GetContractualRelationshipDeclarationDetailRequest">
+    <wsdl:part name="body" element="getContractualRelationshipDeclarationDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetContractualRelationshipDeclarationDetailResponse">
+    <wsdl:part name="body" element="getContractualRelationshipDeclarationDetailResponse"/>
+  </wsdl:message>
+  <!-- Case 24 -->
+  <wsdl:message name="FindContractualRelationshipDeclarationsRequest">
+    <wsdl:part name="body" element="findContractualRelationshipDeclarationsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindContractualRelationshipDeclarationsResponse">
+    <wsdl:part name="body" element="findContractualRelationshipDeclarationsResponse"/>
+  </wsdl:message>
+  <!-- Case 25 -->
+  <wsdl:message name="GetPresenceRegistrationDetailRequest">
+    <wsdl:part name="body" element="getPresenceRegistrationDetailRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetPresenceRegistrationDetailResponse">
+    <wsdl:part name="body" element="getPresenceRegistrationDetailResponse"/>
+  </wsdl:message>
+  <!-- Case 26 -->
+  <wsdl:message name="FindPresenceRegistrationsRequest">
+    <wsdl:part name="body" element="findPresenceRegistrationsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="FindPresenceRegistrationsResponse">
+    <wsdl:part name="body" element="findPresenceRegistrationsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="nossFault">
+    <wsdl:part name="body" element="nossFault"/>
+  </wsdl:message>
+  <wsdl:portType name="DolsisNSSOPortType">
+    <wsdl:operation name="findEmployersByWorker">
+      <wsdl:input message="FindEmployersByWorkerRequest"/>
+      <wsdl:output message="FindEmployersByWorkerResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getEmploymentDetail">
+      <wsdl:input message="GetEmploymentDetailRequest"/>
+      <wsdl:output message="GetEmploymentDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getEmployerDetail">
+      <wsdl:input message="GetEmployerDetailRequest"/>
+      <wsdl:output message="GetEmployerDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findEmployers">
+      <wsdl:input message="FindEmployersRequest"/>
+      <wsdl:output message="FindEmployersResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findWorkersByEmployer">
+      <wsdl:input message="FindWorkersByEmployerRequest"/>
+      <wsdl:output message="FindWorkersByEmployerResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findDmfaRecordsByEmployer">
+      <wsdl:input message="FindDmfaRecordsByEmployerRequest"/>
+      <wsdl:output message="FindDmfaRecordsByEmployerResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getDmfaStatisticsByEmployer">
+      <wsdl:input message="GetDmfaStatisticsByEmployerRequest"/>
+      <wsdl:output message="GetDmfaStatisticsByEmployerResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findDmfaContributionsUnrelatedToNaturalPerson">
+      <wsdl:input message="FindDmfaContributionsUnrelatedToNaturalPersonRequest"/>
+      <wsdl:output message="FindDmfaContributionsUnrelatedToNaturalPersonResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPostedWorkerDetail">
+      <wsdl:input message="GetPostedWorkerDetailRequest"/>
+      <wsdl:output message="GetPostedWorkerDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findPostedWorkers">
+      <wsdl:input message="FindPostedWorkersRequest"/>
+      <wsdl:output message="FindPostedWorkersResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getForeignEmployerDetail">
+      <wsdl:input message="GetForeignEmployerDetailRequest"/>
+      <wsdl:output message="GetForeignEmployerDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findForeignEmployers">
+      <wsdl:input message="FindForeignEmployersRequest"/>
+      <wsdl:output message="FindForeignEmployersResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPostingBelgianClientDetail">
+      <wsdl:input message="GetPostingBelgianClientDetailRequest"/>
+      <wsdl:output message="GetPostingBelgianClientDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findPostingBelgianClients">
+      <wsdl:input message="FindPostingBelgianClientsRequest"/>
+      <wsdl:output message="FindPostingBelgianClientsResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findPostingPlaceOfWork">
+      <wsdl:input message="FindPostingPlaceOfWorkRequest"/>
+      <wsdl:output message="FindPostingPlaceOfWorkResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPostingPlaceOfWorkDetail">
+      <wsdl:input message="GetPostingPlaceOfWorkDetailRequest"/>
+      <wsdl:output message="GetPostingPlaceOfWorkDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findPostingDocuments">
+      <wsdl:input message="FindPostingDocumentsRequest"/>
+      <wsdl:output message="FindPostingDocumentsResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPostingDocumentDetail">
+      <wsdl:input message="GetPostingDocumentDetailRequest"/>
+      <wsdl:output message="GetPostingDocumentDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findPartnerInstitutions">
+      <wsdl:documentation>v1.2: operation added</wsdl:documentation>
+      <wsdl:input message="FindPartnerInstitutionsRequest"/>
+      <wsdl:output message="FindPartnerInstitutionsResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPartnerInstitutionDetail">
+      <wsdl:documentation>v1.2: operation added</wsdl:documentation>
+      <wsdl:input message="GetPartnerInstitutionDetailRequest"/>
+      <wsdl:output message="GetPartnerInstitutionDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getContractualRelationshipDeclarationDetail">
+      <wsdl:documentation>v1.5: operation added</wsdl:documentation>
+      <wsdl:input message="GetContractualRelationshipDeclarationDetailRequest"/>
+      <wsdl:output message="GetContractualRelationshipDeclarationDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findContractualRelationshipDeclarations">
+      <wsdl:documentation>v1.5: operation added</wsdl:documentation>
+      <wsdl:input message="FindContractualRelationshipDeclarationsRequest"/>
+      <wsdl:output message="FindContractualRelationshipDeclarationsResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPresenceRegistrationDetail">
+      <wsdl:documentation>v1.6: operation added</wsdl:documentation>
+      <wsdl:input message="GetPresenceRegistrationDetailRequest"/>
+      <wsdl:output message="GetPresenceRegistrationDetailResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="findPresenceRegistrations">
+      <wsdl:documentation>v1.6: operation added</wsdl:documentation>
+      <wsdl:input message="FindPresenceRegistrationsRequest"/>
+      <wsdl:output message="FindPresenceRegistrationsResponse"/>
+      <wsdl:fault name="fault" message="nossFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DolsisNSSOSOAPBinding" type="DolsisNSSOPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="findEmployersByWorker">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findEmployersByWorker"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getEmploymentDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getEmploymentDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getEmployerDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getEmployerDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findEmployers">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findEmployers"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findWorkersByEmployer">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findWorkersByEmployer"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findDmfaRecordsByEmployer">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findDmfaRecordsByEmployer"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDmfaStatisticsByEmployer">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getDmfaStatisticsByEmployer"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findDmfaContributionsUnrelatedToNaturalPerson">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findDmfaContributionsUnrelatedToNaturalPerson"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPostedWorkerDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getPostedWorkerDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findPostedWorkers">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findPostedWorkers"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getForeignEmployerDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getForeignEmployerDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findForeignEmployers">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findForeignEmployers"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPostingBelgianClientDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getPostingBelgianClientDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findPostingBelgianClients">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findPostingBelgianClients"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findPostingPlaceOfWork">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findPostingPlaceOfWork"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPostingPlaceOfWorkDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getPostingPlaceOfWorkDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findPostingDocuments">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findPostingDocuments"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPostingDocumentDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getPostingDocumentDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findPartnerInstitutions">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findPartnerInstitutions"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPartnerInstitutionDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getPartnerInstitutionDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getContractualRelationshipDeclarationDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getContractualRelationshipDeclarationDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findContractualRelationshipDeclarations">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findContractualRelationshipDeclarations"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPresenceRegistrationDetail">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/getPresenceRegistrationDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findPresenceRegistrations">
+      <soap:operation soapAction="http://socialsecurity.be/dolsis/v1/findPresenceRegistrations"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <wsp:PolicyReference URI="#X509" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DolsisNSSOService">
+    <wsdl:port name="DolsisNSSOSOAP11" binding="DolsisNSSOSOAPBinding">
+      <soap:address location="https://REPLACE_WITH_ACTUAL_URL"/>
+    </wsdl:port>
+    <!--Environnement de developpement : https://svcns-int.smals.be/DolsisNSSO/v1 -->
+    <!--Environnement d'acceptation : https://svcns-acpt.smals.be/DolsisNSSO/v1 -->
+    <!--Environnement de production : https://svcns.smals.be/DolsisNSSO/v1 -->
+  </wsdl:service>
+</wsdl:definitions>

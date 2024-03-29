@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================================================
+         * File Name :               LivingWages.wsdl
+         * Author :                  Bruno Bouko
+         * Owner :                   KSZ / CBSS
+         * Creation date :           24-09-10
+         * Last revision date :      24-09-10
+         * Status :                  Planned
+         * Description :             WSDL for getting the information  about living wage periods for a given person from PCSA's and this in 2 different ways:
+without grouping by PCSA and with for each PCSA the living wage periods attributed to that person.
+         * Current version :         0.2
+         * Revision History : 		2013-05-24 added LivingWagePeriodsPerPCSA as an operation instead of separate wsdl
+		 *                                     added seperate operations for consultation of flanders and belgium
+============================================================================================================= -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://kszbcss.fgov.be/intf/LivingWagesService/v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LivingWagesService" targetNamespace="http://kszbcss.fgov.be/intf/LivingWagesService/v2">
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" 
+			xmlns:com="http://kszbcss.fgov.be/types/common/v3" xmlns:lw="http://kszbcss.fgov.be/types/LivingWages/v2" targetNamespace="http://kszbcss.fgov.be/intf/LivingWagesService/v2">
+			<xsd:import namespace="http://kszbcss.fgov.be/types/LivingWages/v2" schemaLocation="LivingWagesV2.xsd"/>
+			<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../be/fgov/kszbcss/types/common/CommonV3.xsd"/>
+			<xsd:element name="getLivingWagePeriodsRequest" type="lw:GetLivingWagePeriodsRequestType"/>
+			<xsd:element name="getLivingWagePeriodsResponse" type="lw:GetLivingWagePeriodsResponseType"/>
+			<xsd:element name="getLivingWagePeriodsPerPCSARequest" type="lw:GetLivingWagePeriodsPerPCSARequestType"/>
+			<xsd:element name="getLivingWagePeriodsPerPCSAResponse" type="lw:GetLivingWagePeriodsPerPCSAResponseType"/>
+			<xsd:element name="getLivingWagesRequest" type="lw:GetLivingWagesRequestType"/>
+			<xsd:element name="getLivingWagesResponse" type="lw:GetLivingWagesResponseType"/>
+			<xsd:element name="getLivingWagePeriodsFlandersRequest" type="lw:GetLivingWagePeriodsRequestType"/>
+			<xsd:element name="getLivingWagePeriodsFlandersResponse" type="lw:GetLivingWagePeriodsResponseType"/>
+			<xsd:element name="getLivingWagePeriodsPerPCSAFlandersRequest" type="lw:GetLivingWagePeriodsPerPCSARequestType"/>
+			<xsd:element name="getLivingWagePeriodsPerPCSAFlandersResponse" type="lw:GetLivingWagePeriodsPerPCSAResponseType"/>
+			<xsd:element name="livingWagesFault" type="com:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="getLivingWagePeriodsRequestMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsRequest" name="getLivingWagePeriodsRequestParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagePeriodsResponseMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsResponse" name="getLivingWagePeriodsResponseParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagePeriodsPerPCSARequestMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsPerPCSARequest" name="getLivingWagePeriodsPerPCSARequestParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagePeriodsPerPCSAResponseMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsPerPCSAResponse" name="getLivingWagePeriodsPerPCSAResponseParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagesRequestMsg">
+		<wsdl:part element="tns:getLivingWagesRequest" name="getLivingWagesRequestParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagesResponseMsg">
+		<wsdl:part element="tns:getLivingWagesResponse" name="getLivingWagesResponseParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagePeriodsFlandersRequestMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsFlandersRequest" name="getLivingWagePeriodsFlandersRequestParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagePeriodsFlandersResponseMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsFlandersResponse" name="getLivingWagePeriodsFlandersResponseParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagePeriodsPerPCSAFlandersRequestMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsPerPCSAFlandersRequest" name="getLivingWagePeriodsPerPCSAFlandersRequestParameters"/>
+	</wsdl:message>
+	<wsdl:message name="getLivingWagePeriodsPerPCSAFlandersResponseMsg">
+		<wsdl:part element="tns:getLivingWagePeriodsPerPCSAFlandersResponse" name="getLivingWagePeriodsPerPCSAFlandersResponseParameters"/>
+	</wsdl:message>
+	<wsdl:message name="livingWagesFaultMsg">
+		<wsdl:part element="tns:livingWagesFault" name="livingWagesFaultParameters"/>
+	</wsdl:message>
+	<wsdl:portType name="LivingWagesPortType">
+		<wsdl:operation name="getLivingWagePeriods">
+			<wsdl:input message="tns:getLivingWagePeriodsRequestMsg" name="getLivingWagePeriodsRequest"/>
+			<wsdl:output message="tns:getLivingWagePeriodsResponseMsg" name="getLivingWagePeriodsResponse"/>
+			<wsdl:fault message="tns:livingWagesFaultMsg" name="livingWagesFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWagePeriodsPerPCSA">
+			<wsdl:input message="tns:getLivingWagePeriodsPerPCSARequestMsg" name="getLivingWagePeriodsPerPCSARequest"/>
+			<wsdl:output message="tns:getLivingWagePeriodsPerPCSAResponseMsg" name="getLivingWagePeriodsPerPCSAResponse"/>
+			<wsdl:fault message="tns:livingWagesFaultMsg" name="livingWagesFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWagePeriodsFlanders">
+			<wsdl:input message="tns:getLivingWagePeriodsFlandersRequestMsg" name="getLivingWagePeriodsFlandersRequest"/>
+			<wsdl:output message="tns:getLivingWagePeriodsFlandersResponseMsg" name="getLivingWagePeriodsFlandersResponse"/>
+			<wsdl:fault message="tns:livingWagesFaultMsg" name="livingWagesFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWagePeriodsPerPCSAFlanders">
+			<wsdl:input message="tns:getLivingWagePeriodsPerPCSAFlandersRequestMsg" name="getLivingWagePeriodsPerPCSAFlandersRequest"/>
+			<wsdl:output message="tns:getLivingWagePeriodsPerPCSAFlandersResponseMsg" name="getLivingWagePeriodsPerPCSAFlandersResponse"/>
+			<wsdl:fault message="tns:livingWagesFaultMsg" name="livingWagesFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWages">
+			<wsdl:input message="tns:getLivingWagesRequestMsg" name="getLivingWagesRequest"/>
+			<wsdl:output message="tns:getLivingWagesResponseMsg" name="getLivingWagesResponse"/>
+			<wsdl:fault message="tns:livingWagesFaultMsg" name="livingWagesFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="LivingWagesServiceHTTPBinding" type="tns:LivingWagesPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getLivingWagePeriods">
+			<soap:operation soapAction="http://kszbcss.fgov.be/LivingWagesService/getLivingWagePeriods"/>
+			<wsdl:input name="getLivingWagePeriodsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getLivingWagePeriodsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="livingWagesFault">
+				<soap:fault name="livingWagesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWagePeriodsPerPCSA">
+			<soap:operation soapAction="http://kszbcss.fgov.be/LivingWagesService/getLivingWagePeriodsPerPCSA"/>
+			<wsdl:input name="getLivingWagePeriodsPerPCSARequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getLivingWagePeriodsPerPCSAResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="livingWagesFault">
+				<soap:fault name="livingWagesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWagePeriodsFlanders">
+			<soap:operation soapAction="http://kszbcss.fgov.be/LivingWagesService/getLivingWagePeriodsFlanders"/>
+			<wsdl:input name="getLivingWagePeriodsFlandersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getLivingWagePeriodsFlandersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="livingWagesFault">
+				<soap:fault name="livingWagesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWagePeriodsPerPCSAFlanders">
+			<soap:operation soapAction="http://kszbcss.fgov.be/LivingWagesService/getLivingWagePeriodsPerPCSAFlanders"/>
+			<wsdl:input name="getLivingWagePeriodsPerPCSAFlandersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getLivingWagePeriodsPerPCSAFlandersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="livingWagesFault">
+				<soap:fault name="livingWagesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLivingWages">
+			<soap:operation soapAction="http://kszbcss.fgov.be/LivingWagesService/getLivingWages"/>
+			<wsdl:input name="getLivingWagesRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getLivingWagesResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="livingWagesFault">
+				<soap:fault name="livingWagesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LivingWagesService">
+		<wsdl:port binding="tns:LivingWagesServiceHTTPBinding" name="LivingWagesService">
+			<soap:address location="https://bcssksz-services-test.smals.be:443/SOA4520/LivingWagesService/v2/consult"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

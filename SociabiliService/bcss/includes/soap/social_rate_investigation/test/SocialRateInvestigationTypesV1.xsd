@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :             SocialRateInvestigationTypesV1.xsd
+         * Author :                  Alain Tilmant
+         * Owner :                  KSZ / CBSS
+         * Creation date :        10/2013
+       
+         * Status :                  Planned
+         * Description :           Give the historic information of a SSIN about the Social Tarif. It gives the information about the final customer, his heads of households end the protected persons bounded to him in a period
+         * Current version :      0.1
+         * Revision History : 
+	06/05/2013 : (ATI) ajouter les types ConsultExchangedDataRequest and Response 
+							completer avec partie SPF Economie
+ 05/09/2013 : operation consultExchangedData
+04/10/2014 : changement sur base de schema FEDICT qui a modifie celui du SPF Economie
+17/12/2013 : changement suite modification du schema de la BCSS
+21/01/2014 : ajout des legal context du service
+28/04/2014 : correction de la frappe : update vs udate
+============================================================================================================= -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1" xmlns:puo="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1" xmlns:soctar="http://fsb.belgium.be/soctar/schema/v2_00" xmlns:cbss="http://kszbcss.fgov.be/types/SoctarType/v1" targetNamespace="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2014-04-28 ">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="CommonV3.xsd"/>
+	<xsd:import namespace="http://fsb.belgium.be/soctar/schema/v2_00" schemaLocation="soctar/SoctarTypes.xsd"/>
+	<xsd:import namespace="http://kszbcss.fgov.be/types/SoctarType/v1" schemaLocation="cbss/SoctarTypeV1.xsd"/>
+	<xsd:complexType name="AbstractRequestCustomerType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Base complex type for all request messages.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xsd:element name="legalContext" type="common:LegalContextType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AbstractResponseCustomerType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Base complex type for all response messages.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xsd:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xsd:element name="legalContext" type="puo:LegalContextSocialRateType"/>
+			<!--<xsd:element name="status" type="common:StatusType"/>-->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CriterionType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType"/>
+			<xsd:element name="temporalCriteria" type="puo:QuaterType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultExchangedDataRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="puo:AbstractRequestCustomerType">
+				<xsd:sequence>
+					<xsd:element name="criterion" type="CriterionType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConsultExchangedDataResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="puo:AbstractResponseCustomerType">
+				<xsd:sequence>
+					<xsd:element name="criterion" type="CriterionType"/>
+					<xsd:element name="status" type="common:StatusType"/>
+					<xsd:element name="result" type="SocialRateInvestigationResultType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Soctar Request Type -->
+	<xsd:complexType name="SoctarCriteriaType">
+		<xsd:sequence>
+			<xsd:element name="ssin" type="common:SsinType">
+				<xsd:annotation>
+					<xsd:documentation>SSIN from the person for who we want to consult the data</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="QuaterType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[2][0][0-1][0-4][Q][1-4]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="SocialRateInvestigationResultType">
+		<xsd:sequence>
+			<xsd:element name="cbss" type="cbss:ResultType" minOccurs="0"/>
+			<xsd:element name="soctar" type="soctar:CitizenCompleteStatusReply" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--      -->
+	<xsd:simpleType name="LegalContextSocialRateType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Check Social Rate"/>
+			<xsd:enumeration value="Update Administrative data"/>
+			<xsd:enumeration value="Paper Attest Delivery"/>
+			<xsd:enumeration value="Social Rate Investigation"/>
+			<xsd:enumeration value="CBSS Validation"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,25 @@
+{
+    "Pentaho":
+    {
+        "Hostname" : "SRV-DVLDB02",
+        "ProgramFolderPath" : "D:\\App\\ETL\\pdi-ce-7.1.0.0-12\\data-integration",
+        "JobFileName" : "MigrationSqlToPostgres.kjb",
+        "JobFolderPath" : "D:\\Temp\\MigrationPostgresReferent"
+    },
+    "Postgres":
+    {
+        "Hostname":"SRV-DVLDB02",
+        "DatabaseName" : "ReferentInt",
+        "Username" : "postgres",
+        "Password" : "admin",
+        "PortNumber":"5432"
+    },
+    "Sql" : 
+    {
+        "Hostname" : "SRV-DVLDB02",
+        "DatabaseName" : "ReferentInt",
+        "Username" : "referent",
+        "Password" : "referent",
+        "PortNumber":"1433"
+    }
+}

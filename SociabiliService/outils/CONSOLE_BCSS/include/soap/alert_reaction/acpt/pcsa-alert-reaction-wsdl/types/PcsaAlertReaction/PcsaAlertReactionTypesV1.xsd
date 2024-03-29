@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ========================================================================
+       	 * Owner :               KSZ / CBSS
+         * Creation date :       2017-05-28
+         * Description :         Type definitions for the EnterpriseRegister web service.
+		 * Current version :		1.1
+         * Revision History : 	1.0 - 2017-10-23: Initial version
+										1.1 - 2017-11-22: Modify motivationResponses (mandatory -> optional)
+======================================================================== -->
+<xsd:schema xmlns="http://kszbcss.fgov.be/types/PcsaAlertReaction/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="http://kszbcss.fgov.be/types/common/v3" targetNamespace="http://kszbcss.fgov.be/types/PcsaAlertReaction/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2017-10-23">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../../types/common/CommonV3.xsd"/>
+	<xsd:complexType name="MotivateDecisionRequestType">
+		<xsd:complexContent>
+			<xsd:extension base="common:BaseRequestType">
+				<xsd:sequence>
+					<xsd:element name="motivations" type="MotivationsType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MotivateDecisionResponseType">
+		<xsd:complexContent>
+			<xsd:extension base="common:BaseRequestType">
+				<xsd:sequence>
+					<xsd:element name="motivations" type="MotivationsType"/>
+					<xsd:element name="status" type="common:StatusOkType"/>
+					<xsd:element name="motivationResponses" type="MotivationResponsesType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--=========================== MotivationsRequest Complex Types ===========================-->
+	<xsd:complexType name="MotivationsType">
+		<xsd:sequence>
+			<xsd:element name="motivation" type="MotivationType" maxOccurs="20"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MotivationType">
+		<xsd:sequence>
+			<xsd:element name="alertId" type="AlertIdType"/>
+			<xsd:element name="formNumber" type="FormNrType"/>
+			<xsd:element name="code" type="MotivationCodeType"/>
+			<xsd:element name="comment" type="CommentType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=========================== MotivationsResponse Complex Types =========================-->
+	<xsd:complexType name="MotivationResponsesType">
+		<xsd:sequence>
+			<xsd:element name="motivationResponse" type="MotivationResponseType" maxOccurs="20"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MotivationResponseType">
+		<xsd:sequence>
+			<xsd:element name="alertId" type="AlertIdType"/>
+			<xsd:element name="status" type="MotivationStatusType"/>
+			<xsd:element name="error" type="MotivationErrorType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=========================== MotivationsRequest SimpleTypes ===========================-->
+	<xsd:simpleType name="AlertIdType">
+		<xsd:annotation>
+			<xsd:documentation>Alert unique ID</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:long">
+			<xsd:minInclusive value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FormNrType">
+		<xsd:annotation>
+			<xsd:documentation>The number  of the form concerned by the alert. This number is the SPP IS reference number (as given when the form was submitted)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:long">
+			<xsd:minInclusive value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MotivationCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Code of the current motivation given by the PCSW/OCMW</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:minInclusive value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CommentType">
+		<xsd:annotation>
+			<xsd:documentation>The comment provided by the PCSW for this alert.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MotivationStatusType">
+		<xsd:annotation>
+			<xsd:documentation>Result of updating : OK or ERROR, and if ERROR, show the failure messages</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OK"/>
+			<xsd:enumeration value="ERROR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="MotivationErrorType">
+		<xsd:annotation>
+			<xsd:documentation>Error status</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="code" type="MotivationErrorCodeType"/>
+			<xsd:sequence>
+				<xsd:element name="message" maxOccurs="4">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="MotivationErrorMessageType">
+								<xsd:attribute name="lang" type="MessageLangType" use="required"/>
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="MotivationErrorCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Code of the error</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MotivationErrorMessageType">
+		<xsd:annotation>
+			<xsd:documentation>A message in a given language</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MessageLangType">
+		<xsd:annotation>
+			<xsd:documentation>List of recognized languages</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:language">
+			<xsd:enumeration value="NL"/>
+			<xsd:enumeration value="FR"/>
+			<xsd:enumeration value="DE"/>
+			<xsd:enumeration value="EN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

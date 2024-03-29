@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================-->
+<!--=   Service : ECarmed                      -->
+<!--=   Filename : eCarmedConsult.wsdl                      -->
+<!--=   Author : Alain Tilmant                      -->
+<!--=   Owner : BCSS                      -->
+<!--=   Date : 2012-03-30                      -->
+<!--=  Status : Planned                       -->
+<!--=   Description :Consultation des cartes medicales par la CAAMI, ...                      -->
+<!--=  Current Version : 1.0                      -->
+<!--=   Revision History :                      -->
+<!--  *                      -->
+<!--=============================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="eCarmedService" targetNamespace="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/ECarmed/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/ECarmedService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<!--xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/ECarmed/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/ECarmedService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"-->
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/ECarmed/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/ECarmedService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+			<xsd:import schemaLocation="eCarmedTypesV3.xsd" namespace="http://kszbcss.fgov.be/types/ECarmed/v1"/>
+			<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultCarmedRequest" type="puo:ConsultCarmedRequestType"/>
+			<xsd:element name="consultCarmedResponse" type="puo:ConsultCarmedResponseType"/>
+			<xsd:element name="consultCarmedFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultCarmedHistoryRequest" type="puo:ConsultCarmedRequestType"/>
+			<xsd:element name="consultCarmedHistoryResponse" type="puo:ConsultCarmedResponseType"/>
+			<xsd:element name="consultCarmedHistoryFault" type="common:CBSSFaultType"/>
+			<xsd:element name="consultCarmedAtAgreementDateRequest" type="puo:ConsultCarmedAtAgreementDateRequestType"/>
+			<xsd:element name="consultCarmedAtAgreementDateResponse" type="puo:ConsultCarmedAtAgreementDateResponseType"/>
+			<xsd:element name="consultCarmedAtAgreementDateFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="consultCarmedRequestMsg">
+		<wsdl:part name="consultCarmedRequestParameters" element="tns:consultCarmedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedResponseMsg">
+		<wsdl:part name="consultCarmedResponseParameters" element="tns:consultCarmedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedFaultMsg">
+		<wsdl:part name="consultCarmedFaultParameters" element="tns:consultCarmedFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedHistoryRequestMsg">
+		<wsdl:part name="consultCarmedHistoryRequestParameters" element="tns:consultCarmedHistoryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedHistoryResponseMsg">
+		<wsdl:part name="consultCarmedHistoryResponseParameters" element="tns:consultCarmedHistoryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedHistoryFaultMsg">
+		<wsdl:part name="consultCarmedHistoryFaultParameters" element="tns:consultCarmedHistoryFault"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedAtAgreementDateRequestMsg">
+		<wsdl:part name="consultCarmedAtAgreementDateRequestParameters" element="tns:consultCarmedAtAgreementDateRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedAtAgreementDateResponseMsg">
+		<wsdl:part name="consultCarmedAtAgreementDateResponseParameters" element="tns:consultCarmedAtAgreementDateResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultCarmedAtAgreementDateFaultMsg">
+		<wsdl:part name="consultCarmedAtAgreementDateFaultParameters" element="tns:consultCarmedAtAgreementDateFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="ECarmedPortType">
+		<wsdl:operation name="consultCarmed">
+			<wsdl:input name="consultCarmedRequest" message="tns:consultCarmedRequestMsg"/>
+			<wsdl:output name="consultCarmedResponse" message="tns:consultCarmedResponseMsg"/>
+			<wsdl:fault name="consultCarmedFault" message="tns:consultCarmedFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedHistory">
+			<wsdl:input name="consultCarmedHistoryRequest" message="tns:consultCarmedHistoryRequestMsg"/>
+			<wsdl:output name="consultCarmedHistoryResponse" message="tns:consultCarmedHistoryResponseMsg"/>
+			<wsdl:fault name="consultCarmedHistoryFault" message="tns:consultCarmedHistoryFaultMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedAtAgreementDate">
+			<wsdl:input name="consultCarmedAtAgreementDateRequest" message="tns:consultCarmedAtAgreementDateRequestMsg"/>
+			<wsdl:output name="consultCarmedAtAgreementDateResponse" message="tns:consultCarmedAtAgreementDateResponseMsg"/>
+			<wsdl:fault name="consultCarmedAtAgreementDateFault" message="tns:consultCarmedAtAgreementDateFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="ECarmedHTTPBinding" type="tns:ECarmedPortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultCarmed">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/consultCarmed"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultCarmedFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultCarmedFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedHistory">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/consultCarmedHistory"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultCarmedHistoryFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultCarmedHistoryFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="consultCarmedAtAgreementDate">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/ECarmedService/consultCarmedAtAgreementDate"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultCarmedAtAgreementDateFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultCarmedAtAgreementDateFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="ECarmedService">
+		<wsdl:port name="ECarmedConsultCarmed" binding="tns:ECarmedHTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://b2b-test.ksz-bcss.fgov.be:4520/ECarmedService/consultCarmed"/>
+			<!--Environnement de developpement : https://b2b-test.ksz-bcss.fgov.be:4520/ECarmed/consultCarmed-->
+			<!--Environnement d'acceptation : https://b2b-acpt.ksz-bcss.fgov.be:4520/ECarmed/consultCarmed-->
+			<!--Environnement de production : https://b2b.ksz-bcss.fgov.be:4520/ECarmed/consultCarmed-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

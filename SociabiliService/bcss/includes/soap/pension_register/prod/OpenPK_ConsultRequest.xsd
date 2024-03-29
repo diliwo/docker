@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by BANQUE CARREFOUR DE LA SECURITE SOCIALE (BANQUE CARREFOUR DE LA SECURITE SOCIALE) -->
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by KSZ-BCSS (KSZ-BCSS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://www.ksz-bcss.fgov.be/XSD/SSDN/Common" xmlns="http://www.ksz-bcss.fgov.be/XSD/SSDN/PensionRegister" targetNamespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/PensionRegister" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/Common" schemaLocation="../Common/NamespaceRoot.xsd"/>
+	<xs:include schemaLocation="Penskad_CommonDataTypes.xsd"/>
+	<xs:element name="Penskad_OpenPK_ConsultRequest" type="Penskad_OpenPK_ConsultRequestType">
+		<xs:annotation>
+			<xs:documentation>Request for a Pension Consultation</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ConsultationPeriodType">
+		<xs:annotation>
+			<xs:documentation>Type of the consultation period.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StartDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Start date of the consultation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>End date of the consultation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Penskad_OpenPK_ConsultRequestType">
+		<xs:annotation>
+			<xs:documentation>Request type for consultation of the pension register.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TargetSSIN" type="common:t_SSIN">
+				<xs:annotation>
+					<xs:documentation>The SSIN for which information is requested</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Period" type="ConsultationPeriodType">
+				<xs:annotation>
+					<xs:documentation>Period for which information is requested</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequestedData">
+				<xs:annotation>
+					<xs:documentation>Indicates which data are supposed to be supplied in the answer.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Pillar">
+							<xs:annotation>
+								<xs:documentation>Indicates if legal and/or extralegal pension information is requested</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="FirstOnly"/>
+									<xs:enumeration value="SecondOnly"/>
+									<xs:enumeration value="FirstSecond"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="RequestedInformation">
+							<xs:annotation>
+								<xs:documentation>Specify which information is requested regarding rights and payments</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="RightsOnly"/>
+									<xs:enumeration value="RightsMinimumPayments"/>
+									<xs:enumeration value="RightsMaximumPayments"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Focus" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Reference period or Month of payment</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="ReferencePeriod"/>
+									<xs:enumeration value="MonthOfPayment"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Language">
+				<xs:annotation>
+					<xs:documentation>Language</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="2"/>
+						<xs:enumeration value="NL"/>
+						<xs:enumeration value="FR"/>
+						<xs:enumeration value="DE"/>
+						<xs:enumeration value="EN"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

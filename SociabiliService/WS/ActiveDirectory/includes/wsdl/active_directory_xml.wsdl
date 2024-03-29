@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<definitions name="ActiveDirectory" targetNamespace="urn:ActiveDirectory" xmlns:tns="urn:ActiveDirectory"  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+	<message name="authentification">
+		<part name="login" type="xsd:string" />
+		<part name="password" type="xsd:string" />
+	</message>
+	<message name="authentificationResponse">
+		<part name="return" type="xsd:boolean" />
+	</message>
+	<message name="getGroupesParSamaccountname">
+		<part name="samaccountname" type="xsd:string" />
+	</message>
+	<message name="getGroupesParSamaccountnameResponse">
+		<part name="xml" type="xsd:string" />
+	</message>
+	<message name="getGroupesParMachine">
+		<part name="machine" type="xsd:string" />
+	</message>
+	<message name="getGroupesParMachineResponse">
+		<part name="xml" type="xsd:string" />
+	</message>
+	<message name="getMembresParGroupe">
+		<part name="groupe" type="xsd:string" />
+	</message>
+	<message name="getMembresParGroupeResponse">
+		<part name="xml" type="xsd:string" />
+	</message>
+	<message name="getEmailParSamaccountname">
+		<part name="samaccountname" type="xsd:string" />
+	</message>
+	<message name="getEmailParSamaccountnameResponse">
+		<part name="xml" type="xsd:string" />
+	</message>
+
+	<portType name="ActiveDirectoryPort">
+		<operation name="authentification">
+			<input message="tns:authentification" />
+			<output message="tns:authentificationResponse" />
+		</operation>
+		<operation name="getGroupesParSamaccountname">
+			<input message="tns:getGroupesParSamaccountname" />
+			<output message="tns:getGroupesParSamaccountnameResponse" />
+		</operation>
+		<operation name="getGroupesParMachine">
+			<input message="tns:getGroupesParMachine" />
+			<output message="tns:getGroupesParMachineResponse" />
+		</operation>
+		<operation name="getMembresParGroupe">
+			<input message="tns:getMembresParGroupe" />
+			<output message="tns:getMembresParGroupeResponse" />
+		</operation>
+		<operation name="getEmailParSamaccountname">
+			<input message="tns:getEmailParSamaccountname" />
+			<output message="tns:getEmailParSamaccountnameResponse" />
+		</operation>
+	</portType>
+
+	<binding name="ActiveDirectoryBinding" type="tns:ActiveDirectoryPort">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="authentification">
+			<soap:operation soapAction="urn:ActiveDirectoryAction" />
+				<input>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</input>
+				<output>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</output>
+		</operation>
+		<operation name="getGroupesParSamaccountname">
+			<soap:operation soapAction="urn:ActiveDirectoryAction" />
+				<input>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</input>
+				<output>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</output>
+		</operation>
+		<operation name="getGroupesParMachine">
+			<soap:operation soapAction="urn:ActiveDirectoryAction" />
+				<input>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</input>
+				<output>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</output>
+		</operation>
+		<operation name="getMembresParGroupe">
+			<soap:operation soapAction="urn:ActiveDirectoryAction" />
+				<input>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</input>
+				<output>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</output>
+		</operation>
+		<operation name="getEmailParSamaccountname">
+			<soap:operation soapAction="urn:ActiveDirectoryAction" />
+				<input>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</input>
+				<output>
+					<soap:body use="encoded" namespace="urn:ActiveDirectory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+				</output>
+		</operation>
+	</binding>
+
+	<service name="ActiveDirectoryWebservice">
+		<port name="ActiveDirectoryPort" binding="tns:ActiveDirectoryBinding">
+			<soap:address location="http://srv-d-wb01-aux1030/ws/ActiveDirectory/xml.php" />
+		</port>
+	</service>
+
+</definitions>

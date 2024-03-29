@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 sp1 (http://www.altova.com) by Pierre Carabin (SPF Economie) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CitizenCompleteStatus="http://economie.fgov.be/soctar/entity/v2/CitizenCompleteStatus" xmlns:HouseHoldData="http://economie.fgov.be/soctar/entity/v2/HouseHoldData" xmlns:HouseHoldMember="http://economie.fgov.be/soctar/entity/v2/HouseHoldMember" xmlns:Match="http://economie.fgov.be/soctar/entity/v2/Match" xmlns:Status="http://economie.fgov.be/soctar/entity/v2/Status" targetNamespace="http://economie.fgov.be/soctar/entity/v2/CitizenCompleteStatus" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Definitions of citizen complete status types.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://economie.fgov.be/soctar/entity/v2/Match" schemaLocation="./Match.xsd"/>
+	<xs:import namespace="http://economie.fgov.be/soctar/entity/v2/HouseHoldData" schemaLocation="./HouseHoldData.xsd"/>
+	<xs:import namespace="http://economie.fgov.be/soctar/entity/v2/HouseHoldMember" schemaLocation="./HouseHoldMember.xsd"/>
+	<xs:import namespace="http://economie.fgov.be/soctar/entity/v2/Status" schemaLocation="./Status.xsd"/>
+	<xs:complexType name="MatchList">
+		<xs:annotation>
+			<xs:documentation>
+				The matches list.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Match" type="Match:Match" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						The citizen contract match object.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HouseHoldMembers">
+		<xs:annotation>
+			<xs:documentation>
+				The members of the household.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HouseHoldMember" type="HouseHoldMember:HouseHoldMember" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						The citizen member of the household
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CitizenCompleteStatus">
+		<xs:annotation>
+			<xs:documentation>
+				Complete information regarding a given citizen
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HouseholdData" type="HouseHoldData:HouseHoldData" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The household NR data common to all members of the household
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HouseholdMembers" type="CitizenCompleteStatus:HouseHoldMembers" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The household composition
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MatchList" type="CitizenCompleteStatus:MatchList" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The list of contracts matched with a member of the household.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rnReferenceDate" type="xs:date" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A national registry reference date displays the date when NR data and data from the suppliers were last updated. The format of the date is yyyy-MM-dd.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="supplierReferenceDate" type="xs:date" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						A supplier reference date displays the date when occurred the last communication from the FPS ECONOMY to the suppliers. The format of the date is yyyy-MM-ddy.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bcssReferenceDate" type="xs:date" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The BCSS reference date displays the date when the last communication of social rights from the BCSS to the FPS ECONOMY. The format of the date is yyyy-MM-ddy.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="Status:Status" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates the overall status of the treatment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CitizenCompleteStatus" type="CitizenCompleteStatus:CitizenCompleteStatus">
+		<xs:annotation>
+			<xs:documentation>
+				Root element holding a citizen status reply.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

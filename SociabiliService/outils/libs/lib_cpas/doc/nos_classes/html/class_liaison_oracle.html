@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Librairies PHP du CPAS de Charleroi: Référence de la classe LiaisonOracle</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.7.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Librairies PHP du CPAS de Charleroi&#160;<span id="projectnumber">1.0</span></div>
+   <div id="projectbrief">Ensemble des classes et outils PHP utilisés par le service informatique du CPAS de Charleroi dans le but de centraliser et ré-utiliser un maximum de code.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li><a href="classes.html"><span>Index&#160;des&#160;structures&#160;de&#160;données</span></a></li>
+      <li><a href="functions.html"><span>Champs&#160;de&#160;donnée</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pri-attribs">Attributs privés</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe LiaisonOracle</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="LiaisonOracle" -->
+<p>Cette classe permet de se connecter et d'envoyer des requetes sur les DB Oracle.  
+<a href="#_details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#a12397488fa3f1d65359d56f9dadf04cc">__construct</a> ($environnement=&quot;prod&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur de la classe <a class="el" href="class_liaison_oracle.html" title="Cette classe permet de se connecter et d&#39;envoyer des requetes sur les DB Oracle.">LiaisonOracle</a>.  <a href="#a12397488fa3f1d65359d56f9dadf04cc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#ab548dec0fbc3c58026e3030d145bc64e">Info</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de faire un dump de l'objet en html.  <a href="#ab548dec0fbc3c58026e3030d145bc64e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#af0cfb8dd7935f4da6ead75db6075b832">recuperer_tableau_requete</a> ($requete, $mode=5)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de récupérer un tableau html du résultat de la requete.  <a href="#af0cfb8dd7935f4da6ead75db6075b832"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#a2d129c98e422451d80d0c140dade656c">modifier_champ_demande_avec_log</a> ($nom_champ, $valeur, $id_demande, $id_utilisateur)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de modifier un champ de la table demande en logguant cette opération avec l'ancienne valeur du champ, utilisé pour la correction des demandes en fonction des données du 400.  <a href="#a2d129c98e422451d80d0c140dade656c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#a86377f9481fcbaaba3c61426a2fa1b61">envoyer_requete</a> ($requete, $mode=5)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de récupérer le résultat de la requete.  <a href="#a86377f9481fcbaaba3c61426a2fa1b61"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#ad8b6f6b34facba27af2876fdee972d1f">recuperer_decision_par_numero_de_decision</a> ($numero_de_decision)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de récupérer une demande dans la DB Oracle sur base de son numéro de décision 400. Les dates date_du, date_au et date de séance sont castée au format YYMMDD pour faciliter les comparaisons avec le 400.  <a href="#ad8b6f6b34facba27af2876fdee972d1f"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = ''</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette variable contient le user à utiliser pour la connection. Est chargée dans le constructeur.  <a href="#a598ca4e71b15a1313ec95f0df1027ca5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#a607686ef9f99ea7c42f4f3dd3dbb2b0d">$password</a> = ''</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette variable contient le password à utiliser pour la connection. Est chargée dans le constructeur.  <a href="#a607686ef9f99ea7c42f4f3dd3dbb2b0d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#aa710a37c968d2e3fa4a1e3c730489294">$tns</a> = ''</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette variable contient le nom du domaine à utiliser pour la connection. Est chargée dans le constructeur.  <a href="#aa710a37c968d2e3fa4a1e3c730489294"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#af10158dd74b75f1d337e83102d6b82ce">$charset</a> = ''</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette variable défini le charset à utiliser pour la connection. Est chargée dans le constructeur.  <a href="#af10158dd74b75f1d337e83102d6b82ce"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_liaison_oracle.html#aa720998827fe9e92a5fe573a62edc0b8">$connexion</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette variable contient la connexion active. Est chargée dans le constructeur.  <a href="#aa720998827fe9e92a5fe573a62edc0b8"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<div class="textblock"><p>Cette classe permet de se connecter et d'envoyer des requetes sur les DB Oracle. </p>
+<p>Cette classe permet de centraliser les variables de connexion et de faire abstraction de la librairie utilisée pour la connection (ici OCI). </p>
+<dl class="date"><dt><b>Date:</b></dt><dd>Mars 2013 </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>1.0 </dd></dl>
+<dl class="author"><dt><b>Auteur:</b></dt><dd>Thomas Favay </dd></dl>
+</div><hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a12397488fa3f1d65359d56f9dadf04cc"></a><!-- doxytag: member="LiaisonOracle::__construct" ref="a12397488fa3f1d65359d56f9dadf04cc" args="($environnement=&quot;prod&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__construct </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>environnement</em> = <code>&quot;prod&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructeur de la classe <a class="el" href="class_liaison_oracle.html" title="Cette classe permet de se connecter et d&#39;envoyer des requetes sur les DB Oracle.">LiaisonOracle</a>. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$environnement</td><td>L'environnement désiré : </p>
+<ul>
+<li>prod ou production </li>
+<li>test </li>
+<li>dev </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Une connexion active sur une DB Oracle. </dd></dl>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a86377f9481fcbaaba3c61426a2fa1b61"></a><!-- doxytag: member="LiaisonOracle::envoyer_requete" ref="a86377f9481fcbaaba3c61426a2fa1b61" args="($requete, $mode=5)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">envoyer_requete </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>requete</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>5</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de récupérer le résultat de la requete. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$requete</td><td>La requete SQL </td></tr>
+    <tr><td class="paramname">$mode</td><td>Le mode OCI de la requete, par défaut 5 = OCI_ASSOC + OCI_RETURN_NULLS </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Un tableau contenant les index : <ul>
+<li>["resultat"] = un array contenant tous les records renvoyées. </li>
+<li>["erreur"] = Booléen signalant si une erreur a été rencontrée. </li>
+<li>["message"] = Un éventuel message, par exemple pour décrire l'erreur rencontrée. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab548dec0fbc3c58026e3030d145bc64e"></a><!-- doxytag: member="LiaisonOracle::Info" ref="ab548dec0fbc3c58026e3030d145bc64e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Info </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de faire un dump de l'objet en html. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2d129c98e422451d80d0c140dade656c"></a><!-- doxytag: member="LiaisonOracle::modifier_champ_demande_avec_log" ref="a2d129c98e422451d80d0c140dade656c" args="($nom_champ, $valeur, $id_demande, $id_utilisateur)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modifier_champ_demande_avec_log </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>nom_champ</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>valeur</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>id_demande</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>id_utilisateur</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de modifier un champ de la table demande en logguant cette opération avec l'ancienne valeur du champ, utilisé pour la correction des demandes en fonction des données du 400. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$nom_champ</td><td>Le nom du champ à modifier. </td></tr>
+    <tr><td class="paramname">$valeur</td><td>La nouvelle valeur pour le champ. </td></tr>
+    <tr><td class="paramname">$id_demande</td><td>L'id de la demande à modifier. </td></tr>
+    <tr><td class="paramname">$id_utilisateur</td><td>L'id de l'utilisateur à l'origine de la modification. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad8b6f6b34facba27af2876fdee972d1f"></a><!-- doxytag: member="LiaisonOracle::recuperer_decision_par_numero_de_decision" ref="ad8b6f6b34facba27af2876fdee972d1f" args="($numero_de_decision)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">recuperer_decision_par_numero_de_decision </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>numero_de_decision</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de récupérer une demande dans la DB Oracle sur base de son numéro de décision 400. Les dates date_du, date_au et date de séance sont castée au format YYMMDD pour faciliter les comparaisons avec le 400. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$numero_de_decision</td><td>Le numdec de la décision dans le 400. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Un tableau contenant les index : <ul>
+<li>["resultat"] = un array contenant tous les records renvoyées. </li>
+<li>["erreur"] = Booléen signalant si une erreur a été rencontrée. </li>
+<li>["message"] = Un éventuel message, par exemple pour décrire l'erreur rencontrée. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af0cfb8dd7935f4da6ead75db6075b832"></a><!-- doxytag: member="LiaisonOracle::recuperer_tableau_requete" ref="af0cfb8dd7935f4da6ead75db6075b832" args="($requete, $mode=5)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">recuperer_tableau_requete </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>requete</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>5</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de récupérer un tableau html du résultat de la requete. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$requete</td><td>La requete SQL </td></tr>
+    <tr><td class="paramname">$mode</td><td>Le mode OCI de la requete, par défaut 5 = OCI_ASSOC + OCI_RETURN_NULLS </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Un tableau contenant les index : <ul>
+<li>["tableau"] = le code html du tableau représentant les résultats. </li>
+<li>["resultat"] = un array contenant tous les records renvoyées. </li>
+<li>["erreur"] = Booléen signalant si une erreur a été rencontrée. </li>
+<li>["message"] = Un éventuel message, par exemple pour décrire l'erreur rencontrée. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<hr/><h2>Documentation des champs</h2>
+<a class="anchor" id="af10158dd74b75f1d337e83102d6b82ce"></a><!-- doxytag: member="LiaisonOracle::$charset" ref="af10158dd74b75f1d337e83102d6b82ce" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$charset = ''<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cette variable défini le charset à utiliser pour la connection. Est chargée dans le constructeur. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa720998827fe9e92a5fe573a62edc0b8"></a><!-- doxytag: member="LiaisonOracle::$connexion" ref="aa720998827fe9e92a5fe573a62edc0b8" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$connexion<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cette variable contient la connexion active. Est chargée dans le constructeur. </p>
+
+</div>
+</div>
+<a class="anchor" id="a607686ef9f99ea7c42f4f3dd3dbb2b0d"></a><!-- doxytag: member="LiaisonOracle::$password" ref="a607686ef9f99ea7c42f4f3dd3dbb2b0d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$password = ''<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cette variable contient le password à utiliser pour la connection. Est chargée dans le constructeur. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa710a37c968d2e3fa4a1e3c730489294"></a><!-- doxytag: member="LiaisonOracle::$tns" ref="aa710a37c968d2e3fa4a1e3c730489294" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$tns = ''<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cette variable contient le nom du domaine à utiliser pour la connection. Est chargée dans le constructeur. </p>
+
+</div>
+</div>
+<a class="anchor" id="a598ca4e71b15a1313ec95f0df1027ca5"></a><!-- doxytag: member="LiaisonOracle::$user" ref="a598ca4e71b15a1313ec95f0df1027ca5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$user = ''<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cette variable contient le user à utiliser pour la connection. Est chargée dans le constructeur. </p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>W:/libPhpCpas/fichiers/<a class="el" href="_liaison_oracle_8class_8php.html">LiaisonOracle.class.php</a></li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Structures de données</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address class="footer"><small>Généré le Thu Mar 28 2013 11:25:06 pour Librairies PHP du CPAS de Charleroi par&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
+</body>
+</html>

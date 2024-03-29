@@ -1,0 +1,19 @@
+{
+  "rdbms": {
+    "MSSQL": {
+      "databaseName": "${SqlDatabaseName}",
+      "pluginId": "MSSQL",
+      "usingDoubleDigit": false,
+      "accessType": 0,
+      "hostname": "${SqlHostname}",
+      "password": "${SqlPassword}",
+      "pluginName": "MS SQL Server",
+      "port": "${SqlPortNumber}",
+      "attributes": {
+        "PORT_NUMBER": "${SqlPortNumber}"
+      },
+      "username": "${SqlUsername}"
+    }
+  },
+  "name": "SQM MS"
+}

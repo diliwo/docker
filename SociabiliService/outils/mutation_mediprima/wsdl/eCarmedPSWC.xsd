@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:puo="http://kszbcss.fgov.be/types/ECarmed/v1" xmlns:tns="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://kszbcss.fgov.be/intf/ECarmedService/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2014-10-20">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/ECarmed/v1" schemaLocation="eCarmedTypesV4.xsd"/>
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="CommonV3.xsd"/>
+	<!--========= xsd element ===========-->
+	<xsd:element name="evaluateCarmedRequest" type="puo:OpenCarmedRequestType"/>
+	<xsd:element name="evaluateCarmedResponse" type="puo:EvaluateCarmedResponseType"/>
+	<xsd:element name="evaluateCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="openCarmedRequest" type="puo:OpenCarmedRequestType"/>
+	<xsd:element name="openCarmedResponse" type="puo:OpenCarmedResponseType"/>
+	<xsd:element name="openCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="modifyCarmedRequest" type="puo:ModifyCarmedRequestType"/>
+	<xsd:element name="modifyCarmedResponse" type="puo:ModifyCarmedResponseType"/>
+	<xsd:element name="modifyCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="evaluateModifiedCarmedRequest" type="puo:ModifyCarmedRequestType"/>
+	<xsd:element name="evaluateModifiedCarmedResponse" type="puo:ModifyCarmedResponseType"/>
+	<xsd:element name="evaluateModifiedCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="closeCarmedRequest" type="puo:CloseCarmedRequestType"/>
+	<xsd:element name="closeCarmedResponse" type="puo:CloseCarmedResponseType"/>
+	<xsd:element name="closeCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="removeCarmedRequest" type="puo:CloseCarmedRequestType"/>
+	<xsd:element name="removeCarmedResponse" type="puo:CloseCarmedResponseType"/>
+	<xsd:element name="removeCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="stopCarmedRequest" type="puo:StopCarmedRequestType"/>
+	<xsd:element name="stopCarmedResponse" type="puo:StopCarmedResponseType"/>
+	<xsd:element name="stopCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultCarmedRequest" type="puo:ConsultCarmedRequestType"/>
+	<xsd:element name="consultCarmedResponse" type="puo:ConsultCarmedResponseType"/>
+	<xsd:element name="consultCarmedFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultCarmedHistoryRequest" type="puo:ConsultCarmedRequestType"/>
+	<xsd:element name="consultCarmedHistoryResponse" type="puo:ConsultCarmedResponseType"/>
+	<xsd:element name="consultCarmedHistoryFault" type="common:CBSSFaultType"/>
+	<xsd:element name="queryCarmedManagerRequest" type="puo:ConsultCarmedRequestType"/>
+	<xsd:element name="queryCarmedManagerResponse" type="puo:QueryCarmedManagerResponseType"/>
+	<xsd:element name="queryCarmedManagerFault" type="common:CBSSFaultType"/>
+	<xsd:element name="consultCarmedByVersionRequest" type="puo:ConsultCarmedByVersionRequestType"/>
+	<xsd:element name="consultCarmedByVersionResponse" type="puo:ConsultCarmedByVersionResponseType"/>
+	<xsd:element name="consultCarmedByVersionFault" type="common:CBSSFaultType"/>
+</xsd:schema>

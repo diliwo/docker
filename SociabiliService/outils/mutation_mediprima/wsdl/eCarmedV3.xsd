@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- =====================================================================
+* File Name             : eCarmed.xsd
+* Author                  : ATI
+* Owner                  : smals/BCSS
+* Domain				: 
+* Creation date        : 9/11/2011
+* Last revision date :  
+* Description           :  support au XS eCarmed
+* Status                   : Model 
+* Current Version     : 1.0
+* Revision History
+*   quatre fonctions pour le CPAS gestionnaire
+* 		- evaluationCarmed
+* 		- openCarmed
+* 		- modifyCarmed
+*       - closeCarmed	
+* puis les consultations
+* 		- consultCarmed
+*      - consultHistoryCarmed
+* pour les autres CPAS
+*		- queryCarmedManager
+* pour les prestataires de soin
+*		- consultCarmedIntervention
+ 8/03/2012 : ajout consultCarmedAtAgreementDate pour la CAAMI
+
+-->
+<xs:schema xmlns="http://kszbcss.fgov.be/intf/ECarmedService/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ecm="http://kszbcss.fgov.be/types/ECarmed/v1" xmlns:ns1="http://kszbcss.fgov.be/types/ECarmed/v1" targetNamespace="http://kszbcss.fgov.be/intf/ECarmedService/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://kszbcss.fgov.be/types/ECarmed/v1" schemaLocation="eCarmedTypesV3.xsd"/>
+	<xs:element name="evaluateCarmedRequest" type="ecm:OpenCarmedRequestType"/>
+	<xs:element name="evaluateCarmedResponse" type="ecm:EvaluateCarmedResponseType"/>
+	<xs:element name="openCarmedRequest" type="ecm:OpenCarmedRequestType"/>
+	<xs:element name="openCarmedResponse" type="ecm:OpenCarmedResponseType"/>
+	<xs:element name="modifyCarmedRequest" type="ecm:ModifyCarmedRequestType"/>
+	<xs:element name="modifyCarmedResponse" type="ecm:ModifyCarmedResponseType"/>
+	<xs:element name="closeCarmedRequest" type="ecm:CloseCarmedRequestType"/>
+	<xs:element name="closeCarmedResponse" type="ecm:CloseCarmedResponseType"/>
+	<xs:element name="consultCarmedRequest" type="ecm:ConsultCarmedRequestType"/>
+	<xs:element name="consultCarmedResponse" type="ecm:ConsultCarmedResponseType"/>
+	<xs:element name="queryCarmedManagerRequest" type="ecm:ConsultCarmedRequestType"/>
+	<xs:element name="queryCarmedManagerResponse" type="ecm:QueryCarmedManagerResponseType"/>
+	<xs:element name="consultCarmedInterventionRequest" type="ecm:ConsultCarmedInterventionRequestType"/>
+	<xs:element name="consultCarmedInterventionResponse" type="ecm:ConsultCarmedInterventionResponseType"/>
+	<xs:element name="consultCarmedHistoryRequest" type="ecm:ConsultCarmedRequestType"/>
+	<xs:element name="consultCarmedHistoryResponse" type="ecm:ConsultCarmedResponseType"/>
+	<xs:element name="consultCarmedAtAgreementDateRequest" type="ecm:ConsultCarmedAtAgreementDateRequestType"/>
+	<xs:element name="consultCarmedAtAgreementDateResponse" type="ecm:ConsultCarmedAtAgreementDateResponseType"/>
+</xs:schema>

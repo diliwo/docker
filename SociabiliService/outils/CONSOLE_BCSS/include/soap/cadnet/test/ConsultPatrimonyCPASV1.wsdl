@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================================================
+* File Name : ConsultPatrimonyCPASV1.wsdl
+* Author: Julien Mispelaere 
+* Owner                     CBSS
+* Creation date :           17/06/2011
+* Laste revision date :     17/06/2011
+* Status:                   Planned
+* Description :             webservices BCSS pour web app "ConsultPatrimony"
+* Current Version  :        0.1
+* Revision History :
+=============================================================================================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://kszbcss.fgov.be/intf/ConsultPatrimonyCPASService/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ConsultPatrimonCPASService" targetNamespace="http://kszbcss.fgov.be/intf/ConsultPatrimonyCPASService/v1">
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:cp="http://kszbcss.fgov.be/types/ConsultPatrimonyCPAS/v1" targetNamespace="http://kszbcss.fgov.be/intf/ConsultPatrimonyCPASService/v1">
+			<xsd:import namespace="http://kszbcss.fgov.be/types/ConsultPatrimonyCPAS/v1" schemaLocation="ConsultPatrimonyCPASV1.xsd"/>
+			<xsd:element name="findPropertiesRequest" type="cp:FindPropertiesRequestType"/>
+			<xsd:element name="findPropertiesResponse" type="cp:FindPropertiesResponseType"/>
+			<xsd:element name="findPropertiesFault" type="cp:FindPropertiesFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="findPropertiesRequestMsg">
+		<wsdl:part element="tns:findPropertiesRequest" name="findPropertiesRequestParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findPropertiesResponseMsg">
+		<wsdl:part element="tns:findPropertiesResponse" name="findPropertiesResponseParameters"/>
+	</wsdl:message>
+	<wsdl:message name="findPropertiesFaultMsg">
+		<wsdl:part element="tns:findPropertiesFault" name="findPropertiesFaultParameters"/>
+	</wsdl:message>
+	<wsdl:portType name="ConsultPatrimonyCPASPortType">
+		<wsdl:operation name="findProperties">
+			<wsdl:input message="tns:findPropertiesRequestMsg" name="findPropertiesRequest"/>
+			<wsdl:output message="tns:findPropertiesResponseMsg" name="findPropertiesResponse"/>
+			<wsdl:fault message="tns:findPropertiesFaultMsg" name="findPropertiesFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ConsultPatrimonyCPASServiceHTTPBinding" type="tns:ConsultPatrimonyCPASPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findProperties">
+			<soap:operation soapAction="http://kszbcss.fgov.be/ConsultPatrimonyCPASService/findProperties"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="findPropertiesFault">
+				<soap:fault name="findPropertiesFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ConsultPatrimonyCPASService">
+		<wsdl:port binding="tns:ConsultPatrimonyCPASServiceHTTPBinding" name="ConsultPatrimonyCPASService">
+			<soap:address location="https://bcssksz-services-test.smals.be:443/SOA4520/ConsultPatrimonyCPASService/findProperties"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

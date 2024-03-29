@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><title></title>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="search.css"/>
+<script type="text/javascript" src="search.js"></script>
+</head>
+<body class="SRPage">
+<div id="SRIndex">
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRResult" id="SR_members">
+ <div class="SREntry">
+  <a id="Item0" onkeydown="return searchResults.Nav(event,0)" onkeypress="return searchResults.Nav(event,0)" onkeyup="return searchResults.Nav(event,0)" class="SRSymbol" href="../classad_l_d_a_p_groups.html#abb0a76eb1b987c398e76372207d65e0d" target="_parent">members</a>
+  <span class="SRScope">adLDAPGroups</span>
+ </div>
+</div>
+<div class="SRResult" id="SR_modify">
+ <div class="SREntry">
+  <a id="Item1" onkeydown="return searchResults.Nav(event,1)" onkeypress="return searchResults.Nav(event,1)" onkeyup="return searchResults.Nav(event,1)" class="SRSymbol" href="javascript:searchResults.Toggle('SR_modify')">modify</a>
+  <div class="SRChildren">
+    <a id="Item1_c0" onkeydown="return searchResults.NavChild(event,1,0)" onkeypress="return searchResults.NavChild(event,1,0)" onkeyup="return searchResults.NavChild(event,1,0)" class="SRScope" href="../classad_l_d_a_p_contacts.html#aeb6e00afd5be0b65f324b33f9c3d37a0" target="_parent">adLDAPContacts::modify()</a>
+    <a id="Item1_c1" onkeydown="return searchResults.NavChild(event,1,1)" onkeypress="return searchResults.NavChild(event,1,1)" onkeyup="return searchResults.NavChild(event,1,1)" class="SRScope" href="../classad_l_d_a_p_users.html#a16d872eb627ff8eacd1e2c8672cc84b4" target="_parent">adLDAPUsers::modify()</a>
+  </div>
+ </div>
+</div>
+<div class="SRResult" id="SR_move">
+ <div class="SREntry">
+  <a id="Item2" onkeydown="return searchResults.Nav(event,2)" onkeypress="return searchResults.Nav(event,2)" onkeyup="return searchResults.Nav(event,2)" class="SRSymbol" href="../classad_l_d_a_p_users.html#acec9f864597638e2e67bed6a9189ce33" target="_parent">move</a>
+  <span class="SRScope">adLDAPUsers</span>
+ </div>
+</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+<script type="text/javascript"><!--
+document.getElementById("Loading").style.display="none";
+document.getElementById("NoMatches").style.display="none";
+var searchResults = new SearchResults("searchResults");
+searchResults.Search();
+--></script>
+</div>
+</body>
+</html>

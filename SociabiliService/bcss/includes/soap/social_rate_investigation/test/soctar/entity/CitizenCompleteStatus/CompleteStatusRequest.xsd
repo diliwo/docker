@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CompleteStatusRequest="http://economie.fgov.be/soctar/entity/v2/CompleteStatusRequest" targetNamespace="http://economie.fgov.be/soctar/entity/v2/CompleteStatusRequest" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Definitions of citizen status request.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CompleteStatusRequest">
+		<xs:annotation>
+			<xs:documentation>
+				The request of citizen status.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ssin">
+				<xs:annotation>
+					<xs:documentation>
+						A national registry person ssin. This is a string, consists only of numeric characters and it must be
+						11 characters long.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]{11}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CompleteStatusRequest" type="CompleteStatusRequest:CompleteStatusRequest">
+		<xs:annotation>
+			<xs:documentation>
+				Root element holding a citizen status request.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

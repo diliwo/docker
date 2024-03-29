@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by BANQUE CARREFOUR DE LA SECURITE SOCIALE (BANQUE CARREFOUR DE LA SECURITE SOCIALE) -->
+<xs:schema targetNamespace="http://www.ksz-bcss.fgov.be/XSD/SSDN/ReferenceManagerFacade" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://www.ksz-bcss.fgov.be/XSD/SSDN/ReferenceManagerFacade" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://www.ksz-bcss.fgov.be/XSD/SSDN/Common">
+	<xs:include schemaLocation="ReferenceManagerDataTypes.xsd"/>
+	<xs:element name="ReferenceManagerRequest">
+		<xs:annotation>
+			<xs:documentation>The request for the ReferenceManager service.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ConsultOtherSectorsCriteria" type="ConsultOtherSectorsCriteriaType">
+					<xs:annotation>
+						<xs:documentation>Search criteria used for the consultation of sectors, other than the own sector. (L609-stream)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

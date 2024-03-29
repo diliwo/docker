@@ -1,0 +1,39 @@
+    <div id="center-area" class="margin10">  
+        <h1 class="titre-centrer" >Gestion FPPARMEURO</h1>  
+        <br>
+        <div id='alerts'></div>                 
+        <form class="form-inline titre-centrer" id="selection_table">  
+            <div class="col-lg-10 col-md-10">         
+                <div class="form-group">                    
+                    <label for="listTables">Table concernée: </label>
+                    <select class="form-control" id="listTables">
+                        <option selected="selected"></option>
+                        <?php
+
+                            foreach($tablesFPPARMEURO as $tableFPPARMEURO){
+
+                                echo("<option value=".$tableFPPARMEURO->nseq1." >".$tableFPPARMEURO->nseq1." ".$tableFPPARMEURO->infor1."</option>");
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div> 
+            <div class="col-lg-2 col-md-2"> 
+                <div class="form-group ">         
+                    <button type="button" class="btn btn-default" id="bAjouterTable" data-toggle="modal" data-target="#tableManagement">Ajouter une table</button> 
+                </div> 
+            </div>
+        </form>
+        <BR>        
+        <div id="contenu_tableau">
+        </div>
+        <form class="margin10">
+            <div class="form-group">
+                <button type="button" class="btn btn-default" id="bAjouter" data-toggle="modal" data-target="#recordManagement">Ajouter</button> 
+                <button type="button" class="btn btn-default" id="bSupprimer" >Suppression</button> 
+                <button type="button" class="btn btn-default" id="bEnvoiSelection" disable>Sélection multiple</button>                 
+            </div>
+        </form>
+    </div>
+        
+                    

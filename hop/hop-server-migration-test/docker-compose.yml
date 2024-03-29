@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  simple-hop:
+    image: apache/hop:latest  # Replace <tag> with the specific Apache Hop version
+    container_name: hop-server
+    volumes:
+      - ./hop-mount:/files/  # Replace with your actual local directory path
+    environment:
+      HOP_LOG_LEVEL: "Basic"
+      HOP_FILE_PATH: "/files/parallel-workflow.hwf"
+      HOP_PROJECT_FOLDER: "/files/"
+      # HOP_PROJECT_NAME: "project-a"
+      # HOP_ENVIRONMENT_NAME: "project-a-test"
+      HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS: "/files/project-config.json"
+      HOP_RUN_CONFIG: "local"
+      # HOP_RUN_PARAMETERS: "PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1"
+    stdin_open: true  # Equivalent to -it in Docker run (interactive terminal)
+    tty: true         # Keeps the terminal open
+    #restart: "no"  # Since --rm is used in the Docker run command

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================
+* Service : 			UnemploymentDataService
+* Filename : 			UnemploymentDataServiceV1.wsdl
+* Author : 				Wouter Deroey / Peter Van den Bosch
+* Owner : 				BCSS
+* Description :		Webservice BCSS for Consultation Of Unemployment Data RVA for OCMW/CPAS (UnemploymentDataService)
+* Revision History :	2012-04-16 Modified port name and soap:address
+                                2012-02-28 Creation of first version of WSDL
+=============================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="UnemploymentDataService" targetNamespace="http://kszbcss.fgov.be/intf/UnemploymentDataService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:UnemploymentDataService="http://kszbcss.fgov.be/types/UnemploymentDataService/v1" xmlns:tns="http://kszbcss.fgov.be/intf/UnemploymentDataService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/UnemploymentDataService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:UnemploymentDataService="http://kszbcss.fgov.be/types/UnemploymentDataService/v1" xmlns:tns="http://kszbcss.fgov.be/intf/UnemploymentDataService/v1">
+			<xsd:import schemaLocation="UnemploymentDataServiceV1.xsd" namespace="http://kszbcss.fgov.be/types/UnemploymentDataService/v1"/>
+			<xsd:import schemaLocation="be/fgov/kszbcss/types/common/CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= getPayedSums ===========-->
+			<xsd:element name="getPayedSumsRequest" type="UnemploymentDataService:GetPayedSumsRequestType"/>
+			<xsd:element name="getPayedSumsResponse" type="UnemploymentDataService:GetPayedSumsResponseType"/>
+			<xsd:element name="getPayedSumsFault" type="common:CBSSFaultType"/>
+			<!--========= GetSituation ===========-->
+			<xsd:element name="getSituationRequest" type="UnemploymentDataService:GetSituationRequestType"/>
+			<xsd:element name="getSituationResponse" type="UnemploymentDataService:GetSituationResponseType"/>
+			<xsd:element name="getSituationFault" type="common:CBSSFaultType"/>
+			<!--========= GetPayedActivationSums ===========-->
+			<xsd:element name="getPayedActivationSumsRequest" type="UnemploymentDataService:GetPayedActivationSumsRequestType"/>
+			<xsd:element name="getPayedActivationSumsResponse" type="UnemploymentDataService:GetPayedActivationSumsResponseType"/>
+			<xsd:element name="getPayedActivationSumsFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<!--========= getPayedSums ===========-->
+	<wsdl:message name="getPayedSumsRequestMsg">
+		<wsdl:part name="getPayedSumsParameters" element="tns:getPayedSumsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getPayedSumsResponseMsg">
+		<wsdl:part name="getPayedSumsParameters" element="tns:getPayedSumsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getPayedSumsFaultMsg">
+		<wsdl:part name="getPayedSumsParameters" element="tns:getPayedSumsFault"/>
+	</wsdl:message>
+	<!--========= getSituation ===========-->
+	<wsdl:message name="getSituationRequestMsg">
+		<wsdl:part name="getSituationParameters" element="tns:getSituationRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getSituationResponseMsg">
+		<wsdl:part name="getSituationParameters" element="tns:getSituationResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getSituationFaultMsg">
+		<wsdl:part name="getSituationParameters" element="tns:getSituationFault"/>
+	</wsdl:message>
+	<!--========= getPayedActivationSums ===========-->
+	<wsdl:message name="getPayedActivationSumsRequestMsg">
+		<wsdl:part name="getPayedActivationSumsParameters" element="tns:getPayedActivationSumsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getPayedActivationSumsResponseMsg">
+		<wsdl:part name="getPayedActivationSumsParameters" element="tns:getPayedActivationSumsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getPayedActivationSumsFaultMsg">
+		<wsdl:part name="getPayedActivationSumsParameters" element="tns:getPayedActivationSumsFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="UnemploymentDataServicePortType">
+		<!--========= getPayedSums ===========-->
+		<wsdl:operation name="getPayedSums">
+			<wsdl:input name="getPayedSumsRequest" message="tns:getPayedSumsRequestMsg"/>
+			<wsdl:output name="getPayedSumsResponse" message="tns:getPayedSumsResponseMsg"/>
+			<wsdl:fault name="getPayedSumsFault" message="tns:getPayedSumsFaultMsg"/>
+		</wsdl:operation>
+		<!--========= getSituation ===========-->
+		<wsdl:operation name="getSituation">
+			<wsdl:input name="getSituationRequest" message="tns:getSituationRequestMsg"/>
+			<wsdl:output name="getSituationResponse" message="tns:getSituationResponseMsg"/>
+			<wsdl:fault name="getSituationFault" message="tns:getSituationFaultMsg"/>
+		</wsdl:operation>
+		<!--========= getPayedActivationSums ===========-->
+		<wsdl:operation name="getPayedActivationSums">
+			<wsdl:input name="getPayedActivationSumsRequest" message="tns:getPayedActivationSumsRequestMsg"/>
+			<wsdl:output name="getPayedActivationSumsResponse" message="tns:getPayedActivationSumsResponseMsg"/>
+			<wsdl:fault name="getPayedActivationSumsFault" message="tns:getPayedActivationSumsFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="UnemploymentDataServiceHTTPBinding" type="tns:UnemploymentDataServicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<!--========= getPayedSums ===========-->
+		<wsdl:operation name="getPayedSums">
+			<soap:operation soapAction="http://kszbcss.fgov.be/UnemploymentDataService/getPayedSums"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getPayedSumsFault">
+				<soap:fault name="getPayedSumsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<!--========= getSituation ===========-->
+		<wsdl:operation name="getSituation">
+			<soap:operation soapAction="http://kszbcss.fgov.be/UnemploymentDataService/getSituation"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getSituationFault">
+				<soap:fault name="getSituationFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<!--========= getPayedActivationSums ===========-->
+		<wsdl:operation name="getPayedActivationSums">
+			<soap:operation soapAction="http://kszbcss.fgov.be/UnemploymentDataService/getPayedActivationSums"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="getPayedActivationSumsFault">
+				<soap:fault name="getPayedActivationSumsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="UnemploymentDataService">
+		<wsdl:port name="UnemploymentDataConsult" binding="tns:UnemploymentDataServiceHTTPBinding">
+			<soap:address location="https://bcssksz-services-test.smals.be:443/SOA4520/UnemploymentDataService/consult"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

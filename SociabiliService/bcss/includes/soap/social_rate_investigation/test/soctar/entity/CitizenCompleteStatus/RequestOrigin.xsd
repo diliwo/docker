@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by Annick Buelinckx (UPFRONT SPRL) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:RequestOrigin="http://economie.fgov.be/soctar/entity/v2/RequestOrigin" targetNamespace="http://economie.fgov.be/soctar/entity/v2/RequestOrigin" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Definition for the origin of a request
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="RequestOrigin">
+		<xs:annotation>
+			<xs:documentation>
+				The request of citizen status.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="bcss" type="xs:integer" fixed="0244640631">
+				<xs:annotation>
+					<xs:documentation>
+                        The unique identifier of the BCSS.  This identifier is : 0244640631.
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RequestOrigin" type="RequestOrigin:RequestOrigin">
+		<xs:annotation>
+			<xs:documentation>
+				Root element holding a citizen status request.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

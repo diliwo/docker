@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===================================================================== -->
+<!-- * File Name : dolsisCBSSTypesV1.xsd -->
+<!-- * Author : Alain Tilmant, Willem Salembier -->
+<!-- * Owner : CBSS / Smals -->
+<!-- * Domain : -->
+<!-- * Creation date : 27/10/2011 -->
+<!-- * Last revision date : 18/06/2012 -->
+<!-- * Description : support a la web-app DOLSIS like Genesis -->
+<!-- * Status : Model -->
+<!-- * Current Version : 0.14 -->
+<!-- 04/12/2013 birhdate dans findPersonByPhoneticSearchResponse : IncompleteDate vs date    -->
+<!-- 30/06/2015 rendre firstname optionnel dans la reponse a findPersonByPhoneticSearch() -->
+<!-- 17/07/2015 : ajout information du partner  (version 1.6 du schema ONSS)  -->
+<!-- ===================================================================== -->
+<xsd:schema xmlns="http://kszbcss.fgov.be/types/Dolsis2011/v1" xmlns:common="http://socialsecurity.be/dolsis/types/v1" xmlns:messages="http://socialsecurity.be/dolsis/messages/v1" xmlns:cbss="http://kszbcss.fgov.be/types/common/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://kszbcss.fgov.be/types/Dolsis2011/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2015-07-17_(ONSS 1.6)">
+	<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../../common/v3/CommonV3.xsd"/>
+	<xsd:import namespace="http://socialsecurity.be/dolsis/messages/v1" schemaLocation="../../../../../socialsecurity/dolsis/messages/v1/DolsisMessages.xsd"/>
+	<xsd:import namespace="http://socialsecurity.be/dolsis/types/v1" schemaLocation="../../../../../socialsecurity/dolsis/types/v1/DolsisTypes.xsd"/>
+	<!-- Case 1 - GetPersonBySsin -->
+	<xsd:complexType name="GetPersonDetailRequestType">
+		<xsd:annotation>
+			<xsd:documentation>Find the details of a single person based on his/her social security identification number</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="messages:AbstractRequestType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="PersonDetailCriteria"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GetPersonDetailResponseType">
+		<xsd:annotation>
+			<xsd:documentation>Details of a single person from RN/BIS</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="GetPersonDetailRequestType">
+				<xsd:sequence>
+					<xsd:element name="status" type="cbss:StatusType"/>
+					<xsd:element name="result" type="PersonDetail" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PersonDetailCriteria">
+		<xsd:annotation>
+			<xsd:documentation>Person search based on social security identification number</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="messages:AbstractSearchCriteriaType">
+				<xsd:sequence>
+					<xsd:element name="ssin" type="cbss:SsinType"/>
+					<xsd:element name="familyComposition" type="xsd:boolean" default="true"/>
+					<xsd:element name="addressHistory" type="xsd:boolean" default="true"/>
+					<xsd:element name="photo" type="xsd:boolean" default="false" minOccurs="0">
+						<xsd:annotation>
+							<xsd:appinfo>v1.3: new element</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PersonDetail">
+		<xsd:sequence>
+			<xsd:element name="person" type="common:Person"/>
+			<xsd:element name="addressHistory" type="AddressHistory" minOccurs="0">
+				<xsd:annotation>
+					<xsd:appinfo>v0.15: added type AddressHistory, the current address is the address in previous Person block</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="familyMember" type="common:FamilyMember" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Householder/spouse are always returned. All family members only if familyComposition flag set to true.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="photo" type="PhotoType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:appinfo>v0.22: new element</xsd:appinfo>
+					<xsd:documentation>eID photo of the person in question</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressHistory">
+		<xsd:sequence>
+			<xsd:element name="address" type="common:Address" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>v0.15: new type</xsd:appinfo>
+					<xsd:documentation>Only the previous addresses.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Case 2 - FindPersonByPhoneticSearch -->
+	<xsd:complexType name="FindPersonByPhoneticSearchRequestType">
+		<xsd:annotation>
+			<xsd:documentation>Find persons phonetically by name and birthdate</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="messages:AbstractRequestType">
+				<xsd:sequence>
+					<xsd:element name="criteria" type="PersonByPhoneticSearchCriteria"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FindPersonByPhoneticSearchResponseType">
+		<xsd:annotation>
+			<xsd:documentation>A summary list of matching persons</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="FindPersonByPhoneticSearchRequestType">
+				<xsd:sequence>
+					<xsd:element name="status" type="cbss:StatusType"/>
+					<xsd:element name="result" type="PersonByPhoneticSearch" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PersonByPhoneticSearchCriteria">
+		<xsd:annotation>
+			<xsd:documentation>Search criteria based on lastname, birthday and additional filters </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="messages:AbstractSearchCriteriaType">
+				<xsd:sequence>
+					<xsd:element name="lastName" type="xsd:string"/>
+					<xsd:element name="birthDate" type="cbss:IncompleteDateType">
+						<xsd:annotation>
+							<xsd:appinfo>v0.6: reused bcss type from commons</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="tolerance" type="common:Tolerance"/>
+					<xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="secondName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="gender" type="common:GenderType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PersonByPhoneticSearch">
+		<xsd:sequence>
+			<xsd:element name="person" type="PersonByPhoneticSearchResult" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersonByPhoneticSearchResult">
+		<xsd:annotation>
+			<xsd:appinfo>v0.20: added second name</xsd:appinfo>
+			<xsd:documentation>A result structure with socialsecurity number, name and birthday</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ssin" type="cbss:SsinType"/>
+			<xsd:element name="lastName" type="xsd:string"/>
+			<xsd:element name="firstName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="secondName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="birthDate" type="cbss:IncompleteDateType" minOccurs="0"/>
+			<xsd:element name="gender" type="common:GenderType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:appinfo>v0.6: added element</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="source" type="common:PersonDataSource">
+				<xsd:annotation>
+					<xsd:appinfo>v0.16: added element</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PhotoType">
+		<xsd:annotation>
+			<xsd:appinfo>v0.22: new type</xsd:appinfo>
+			<xsd:documentation>Photo.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="captureDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Capture date of the photo.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="encodedPhoto" type="xsd:base64Binary">
+				<xsd:annotation>
+					<xsd:documentation>Base64 encoded photo.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

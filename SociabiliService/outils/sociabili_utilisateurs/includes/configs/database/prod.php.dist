@@ -1,0 +1,5 @@
+<?php
+
+$login="MO1030";
+$password="mo1030";
+$tn="(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP) (HOST=SRV-A-DB01.cpas.schaerbeek.dom) (PORT=1521)) (CONNECT_DATA=(SID=sociabili)))";

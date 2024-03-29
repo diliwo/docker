@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================================================
+         * File Name :          	PcsaAlertReactionV1.wsdl
+         * Author :             	BCSS KSZ
+         * Owner :              	KSZ / CBSS
+         * Creation date :      	2017-11-08
+         * Status :             	Development
+         * Description :        	Description
+         * Current version :		0.1
+         * Revision History :	2017-11-08: Initial version
+============================================================================================================= -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:tns="http://kszbcss.fgov.be/intf/PcsaAlertReaction/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PcsaAlertReaction" targetNamespace="http://kszbcss.fgov.be/intf/PcsaAlertReaction/v1">
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:par="http://kszbcss.fgov.be/types/PcsaAlertReaction/v1" targetNamespace="http://kszbcss.fgov.be/intf/PcsaAlertReaction/v1" version="2017-11-08">
+			<xsd:import namespace="http://kszbcss.fgov.be/types/PcsaAlertReaction/v1" schemaLocation="../../types/PcsaAlertReaction/PcsaAlertReactionTypesV1.xsd"/>
+			<xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../../types/common/CommonV3.xsd"/>
+			<xsd:element name="motivateDecisionRequest" type="par:MotivateDecisionRequestType"/>
+			<xsd:element name="motivateDecisionResponse" type="par:MotivateDecisionResponseType"/>
+			<xsd:element name="motivateDecisionFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="motivateDecisionRequestMsg">
+		<wsdl:part element="tns:motivateDecisionRequest" name="motivateDecisionRequestParameters"/>
+	</wsdl:message>
+	<wsdl:message name="motivateDecisionResponseMsg">
+		<wsdl:part element="tns:motivateDecisionResponse" name="motivateDecisionParameters"/>
+	</wsdl:message>
+	<wsdl:message name="motivateDecisionFaultMsg">
+		<wsdl:part element="tns:motivateDecisionFault" name="motivateDecisionFaultParameters"/>
+	</wsdl:message>
+	<wsdl:portType name="PcsaAlertReactionPortType">
+		<wsdl:operation name="motivateDecision">
+			<wsdl:input message="tns:motivateDecisionRequestMsg" name="motivateDecisionRequest"/>
+			<wsdl:output message="tns:motivateDecisionResponseMsg" name="motivateDecisionResponse"/>
+			<wsdl:fault message="tns:motivateDecisionFaultMsg" name="motivateDecisionFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PcsaAlertReactionV1ServiceHTTPBinding" type="tns:PcsaAlertReactionPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="motivateDecision">
+			<soap:operation soapAction="http://kszbcss.fgov.be/PcsaAlertReaction/motivateDecision"/>
+			<wsdl:input name="motivateDecisionRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="motivateDecisionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="motivateDecisionFault">
+				<soap:fault name="motivateDecisionFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PcsaAlertReaction">
+		<wsdl:port binding="tns:PcsaAlertReactionV1ServiceHTTPBinding" name="PcsaAlertReactionV1">
+			<soap:address location="https://bcssksz-services-acpt.smals.be:443/SOA4520/PcsaAlertReaction/v1/notify"/>
+			<!-- dvlp  https://b2b-test.ksz-bcss.fgov.be  -->
+			<!-- acpt  https://b2b-acpt.ksz-bcss.fgov.be  -->
+			<!-- prod  https://b2b.ksz-bcss.fgov.be  -->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

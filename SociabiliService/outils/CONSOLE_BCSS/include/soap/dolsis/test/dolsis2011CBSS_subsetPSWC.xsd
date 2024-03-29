@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/Dolsis2011Service/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/Dolsis2011/v1" xmlns:tns="http://kszbcss.fgov.be/intf/Dolsis2011Service/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msgdolsis="http://socialsecurity.be/dolsis/messages/v1" version="2015-02-10">
+			<xsd:import schemaLocation="be/fgov/kszbcss/types/Dolsis2011/v1/dolsisCBSSTypesV1.xsd" namespace="http://kszbcss.fgov.be/types/Dolsis2011/v1"/>
+			<xsd:import schemaLocation="be/fgov/kszbcss/types/common/v3/CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<xsd:import schemaLocation="be/socialsecurity/dolsis/messages/v1/DolsisMessages.xsd" namespace="http://socialsecurity.be/dolsis/messages/v1"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="findEmployersByWorkerRequest" type="msgdolsis:FindEmployersByWorkerRequestType"/>
+			<xsd:element name="findEmployersByWorkerResponse" type="msgdolsis:FindEmployersByWorkerResponseType"/>
+			<xsd:element name="findEmployersByWorkerFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getEmploymentDetailRequest" type="msgdolsis:GetEmploymentDetailRequestType"/>
+			<xsd:element name="getEmploymentDetailResponse" type="msgdolsis:GetEmploymentDetailResponseType"/>
+			<xsd:element name="getEmploymentDetailFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getEmployerDetailRequest" type="msgdolsis:GetEmployerDetailRequestType"/>
+			<xsd:element name="getEmployerDetailResponse" type="msgdolsis:GetEmployerDetailResponseType"/>
+			<xsd:element name="getEmployerDetailFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getPostedWorkerDetailRequest" type="msgdolsis:GetPostedWorkerDetailRequestType"/>
+			<xsd:element name="getPostedWorkerDetailResponse" type="msgdolsis:GetPostedWorkerDetailResponseType"/>
+			<xsd:element name="getPostedWorkerDetailFault" type="common:CBSSFaultType"/>
+			<xsd:element name="findPostedWorkersRequest" type="msgdolsis:FindPostedWorkersRequestType"/>
+			<xsd:element name="findPostedWorkersResponse" type="msgdolsis:FindPostedWorkersResponseType"/>
+			<xsd:element name="findPostedWorkersFault" type="common:CBSSFaultType"/>
+			<xsd:element name="findPostingDocumentsRequest" type="msgdolsis:FindPostingDocumentsRequestType"/>
+			<xsd:element name="findPostingDocumentsResponse" type="msgdolsis:FindPostingDocumentsResponseType"/>
+			<xsd:element name="findPostingDocumentsFault" type="common:CBSSFaultType"/>
+			<xsd:element name="getPostingDocumentDetailRequest" type="msgdolsis:GetPostingDocumentDetailRequestType"/>
+			<xsd:element name="getPostingDocumentDetailResponse" type="msgdolsis:GetPostingDocumentDetailResponseType"/>
+			<xsd:element name="getPostingDocumentDetailFault" type="common:CBSSFaultType"/>
+		</xsd:schema>

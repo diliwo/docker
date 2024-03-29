@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+  #   depends_on:
+  #     - db
+
+  # db:
+  #   image: oracleinanutshell/oracle-xe-11g
+  #   environment:
+  #     - ORACLE_PASSWORD=oracle
+  #   ports:
+  #     - "1521:1521"

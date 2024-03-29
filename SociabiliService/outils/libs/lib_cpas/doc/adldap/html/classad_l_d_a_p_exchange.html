@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>AdLDAP: Référence de la classe adLDAPExchange</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.7.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">AdLDAP&#160;<span id="projectnumber">4.0.4</span></div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="namespaces.html"><span>Espaces&#160;de&#160;nommage</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li><a href="classes.html"><span>Index&#160;des&#160;structures&#160;de&#160;données</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&#160;des&#160;classes</span></a></li>
+      <li><a href="functions.html"><span>Champs&#160;de&#160;donnée</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pro-attribs">Attributs protégés</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe adLDAPExchange</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="adLDAPExchange" --><table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a70cf0429177470b4492f646742182744">__construct</a> (<a class="el" href="classad_l_d_a_p.html">adLDAP</a> $adldap)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a0916f1dfb98dc4bc14336cd388744353">createMailbox</a> ($username, $storageGroup, $emailAddress, $mailNickname=NULL, $useDefaults=TRUE, $baseDn=NULL, $isGUID=false)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a69af77dd6d5ec8cb67500fff9222ad35">addX400</a> ($username, $country, $admd, $pdmd, $org, $surname, $givenName, $isGUID=false)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#ada4dca30d0aa20c69f75194c2056f8ef">addAddress</a> ($username, $emailAddress, $default=FALSE, $isGUID=false)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a639c9e2bc5eb6a450edb4b32e13b1522">deleteAddress</a> ($username, $emailAddress, $isGUID=false)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a42afc931bdf8716ba260bcc775c79ac3">primaryAddress</a> ($username, $emailAddress, $isGUID=false)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#af49d812a06e13e64492cda8f810564fa">contactMailEnable</a> ($distinguishedName, $emailAddress, $mailNickname=NULL)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a8947bf37837634a90084c07d417aad71">servers</a> ($attributes=array('cn','distinguishedname','serialnumber'))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a95cdeac82317fbc1ce2882b3cccdf772">storageGroups</a> ($exchangeServer, $attributes=array('cn','distinguishedname'), $recursive=NULL)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#a7ecfb16db9cad90410d28c308bb0d84d">storageDatabases</a> ($storageGroup, $attributes=array('cn','distinguishedname','displayname'))</td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Attributs protégés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_l_d_a_p_exchange.html#ae9d77f31b9f02aa4167f000938594c2c">$adldap</a></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<div class="textblock"><p>MICROSOFT EXCHANGE FUNCTIONS </p>
+</div><hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a70cf0429177470b4492f646742182744"></a><!-- doxytag: member="adLDAPExchange::__construct" ref="a70cf0429177470b4492f646742182744" args="(adLDAP $adldap)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__construct </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_l_d_a_p.html">adLDAP</a> $&#160;</td>
+          <td class="paramname"><em>adldap</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="ada4dca30d0aa20c69f75194c2056f8ef"></a><!-- doxytag: member="adLDAPExchange::addAddress" ref="ada4dca30d0aa20c69f75194c2056f8ef" args="($username, $emailAddress, $default=FALSE, $isGUID=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">addAddress </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>username</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>emailAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>default</em> = <code>FALSE</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>isGUID</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Add an address to Exchange</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$username</td><td>The username of the user to add the Exchange account to </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$emailAddress</td><td>The email address to add to this user </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$default</td><td>Make this email address the default address, this is a bit more intensive as we have to demote any existing default addresses </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$isGUID</td><td>Is the username passed a GUID or a samAccountName </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a69af77dd6d5ec8cb67500fff9222ad35"></a><!-- doxytag: member="adLDAPExchange::addX400" ref="a69af77dd6d5ec8cb67500fff9222ad35" args="($username, $country, $admd, $pdmd, $org, $surname, $givenName, $isGUID=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">addX400 </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>username</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>country</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>admd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>pdmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>org</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>surname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>givenName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>isGUID</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Add an X400 address to Exchange See <a href="http://tools.ietf.org/html/rfc1685">http://tools.ietf.org/html/rfc1685</a> for more information. An X400 Address looks similar to this X400:c=US;a= ;p=Domain;o=Organization;s=Doe;g=John;</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$username</td><td>The username of the user to add the X400 to to </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$country</td><td>Country </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$admd</td><td>Administration Management Domain </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$pdmd</td><td>Private Management Domain (often your AD domain) </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$org</td><td>Organization </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$surname</td><td>Surname </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$givenName</td><td>Given name </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$isGUID</td><td>Is the username passed a GUID or a samAccountName </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af49d812a06e13e64492cda8f810564fa"></a><!-- doxytag: member="adLDAPExchange::contactMailEnable" ref="af49d812a06e13e64492cda8f810564fa" args="($distinguishedName, $emailAddress, $mailNickname=NULL)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">contactMailEnable </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>distinguishedName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>emailAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>mailNickname</em> = <code>NULL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Mail enable a contact Allows email to be sent to them through Exchange</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$distinguishedName</td><td>The contact to mail enable </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$emailAddress</td><td>The email address to allow emails to be sent through </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$mailNickname</td><td>The mailnickname for the contact in Exchange. If NULL this will be set to the display name </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0916f1dfb98dc4bc14336cd388744353"></a><!-- doxytag: member="adLDAPExchange::createMailbox" ref="a0916f1dfb98dc4bc14336cd388744353" args="($username, $storageGroup, $emailAddress, $mailNickname=NULL, $useDefaults=TRUE, $baseDn=NULL, $isGUID=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">createMailbox </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>username</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>storageGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>emailAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>mailNickname</em> = <code>NULL</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>useDefaults</em> = <code>TRUE</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>baseDn</em> = <code>NULL</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>isGUID</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Create an Exchange account</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$username</td><td>The username of the user to add the Exchange account to </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$storageGroup</td><td>The mailbox, Exchange Storage Group, for the user account, this must be a full CN If the storage group has a different base_dn to the <a class="el" href="classad_l_d_a_p.html">adLDAP</a> configuration, set it using $base_dn </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$emailAddress</td><td>The primary email address to add to this user </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$mailNickname</td><td>The mail nick name. If mail nickname is blank, the username will be used </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$mdbUseDefaults</td><td>Indicates whether the store should use the default quota, rather than the per-mailbox quota. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$baseDn</td><td>Specify an alternative base_dn for the Exchange storage group </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$isGUID</td><td>Is the username passed a GUID or a samAccountName </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a639c9e2bc5eb6a450edb4b32e13b1522"></a><!-- doxytag: member="adLDAPExchange::deleteAddress" ref="a639c9e2bc5eb6a450edb4b32e13b1522" args="($username, $emailAddress, $isGUID=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">deleteAddress </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>username</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>emailAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>isGUID</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Remove an address to Exchange If you remove a default address the account will no longer have a default, we recommend changing the default address first</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$username</td><td>The username of the user to add the Exchange account to </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$emailAddress</td><td>The email address to add to this user </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$isGUID</td><td>Is the username passed a GUID or a samAccountName </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a42afc931bdf8716ba260bcc775c79ac3"></a><!-- doxytag: member="adLDAPExchange::primaryAddress" ref="a42afc931bdf8716ba260bcc775c79ac3" args="($username, $emailAddress, $isGUID=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">primaryAddress </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>username</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>emailAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>isGUID</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Change the default address</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$username</td><td>The username of the user to add the Exchange account to </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$emailAddress</td><td>The email address to make default </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$isGUID</td><td>Is the username passed a GUID or a samAccountName </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8947bf37837634a90084c07d417aad71"></a><!-- doxytag: member="adLDAPExchange::servers" ref="a8947bf37837634a90084c07d417aad71" args="($attributes=array('cn','distinguishedname','serialnumber'))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">servers </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>attributes</em> = <code>array('cn','distinguishedname','serialnumber')</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns a list of Exchange Servers in the ConfigurationNamingContext of the domain</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$attributes</td><td>An array of the AD attributes you wish to return </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>array </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7ecfb16db9cad90410d28c308bb0d84d"></a><!-- doxytag: member="adLDAPExchange::storageDatabases" ref="a7ecfb16db9cad90410d28c308bb0d84d" args="($storageGroup, $attributes=array('cn','distinguishedname','displayname'))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">storageDatabases </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>storageGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>attributes</em> = <code>array('cn','distinguishedname','displayname')</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns a list of Databases within any given storage group in Exchange for a given mail server</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$storageGroup</td><td>The full DN of an Storage Group. You can use exchange_storage_groups() to find the DN </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$attributes</td><td>An array of the AD attributes you wish to return </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>array </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a95cdeac82317fbc1ce2882b3cccdf772"></a><!-- doxytag: member="adLDAPExchange::storageGroups" ref="a95cdeac82317fbc1ce2882b3cccdf772" args="($exchangeServer, $attributes=array('cn','distinguishedname'), $recursive=NULL)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">storageGroups </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>exchangeServer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>attributes</em> = <code>array('cn','distinguishedname')</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>recursive</em> = <code>NULL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns a list of Storage Groups in Exchange for a given mail server</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$exchangeServer</td><td>The full DN of an Exchange server. You can use exchange_servers() to find the DN for your server </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$attributes</td><td>An array of the AD attributes you wish to return </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$recursive</td><td>If enabled this will automatically query the databases within a storage group </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>array </dd></dl>
+
+</div>
+</div>
+<hr/><h2>Documentation des champs</h2>
+<a class="anchor" id="ae9d77f31b9f02aa4167f000938594c2c"></a><!-- doxytag: member="adLDAPExchange::$adldap" ref="ae9d77f31b9f02aa4167f000938594c2c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$adldap<code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>C:/wamp/www/lib_cpas/php/adLDAP/4.0.4/classes/<a class="el" href="ad_l_d_a_p_exchange_8php.html">adLDAPExchange.php</a></li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Structures de données</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Espaces de nommage</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address class="footer"><small>Généré le Fri Apr 12 2013 11:18:52 pour AdLDAP par&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
+</body>
+</html>

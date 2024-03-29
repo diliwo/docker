@@ -1,0 +1,18 @@
+----------------
+| Console BCSS |
+----------------
+
+0.16
+----
+* Consultation des données de nouveaux flux:
+   - SelfEmployedV2
+   - ChildBenefits
+   - PatrimonyService
+   - UnemploymentDataV2
+   - LivingWages
+* Correction de l'url des fichiers WSDL des flux suivants:
+   - Handiflux 
+   - PensionRegister
+* Correction des formulaires pour la consultation des flux:
+   - SelfEmployedV1 (méthode CareerAndContributions + Contributions)
+* Divers correctifs

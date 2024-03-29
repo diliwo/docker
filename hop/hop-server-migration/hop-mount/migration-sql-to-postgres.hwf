@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+  <name>migration-sql-to-postgres</name>
+  <name_sync_with_filename>Y</name_sync_with_filename>
+  <description/>
+  <extended_description/>
+  <workflow_version/>
+  <workflow_status>0</workflow_status>
+  <created_user>-</created_user>
+  <created_date>2023/07/19 10:35:47.565</created_date>
+  <modified_user>-</modified_user>
+  <modified_date>2023/07/19 10:35:47.565</modified_date>
+  <parameters>
+    <parameter>
+      <name>PgDatabaseName</name>
+      <default_value>referenttest</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PgHostname</name>
+      <default_value>172.31.26.108</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PgPassword</name>
+      <default_value>admin</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PgPortNumber</name>
+      <default_value>5432</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PgUsername</name>
+      <default_value>postgres</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>SqlDatabaseName</name>
+      <default_value>ReferentAcc</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>SqlHostname</name>
+      <default_value>172.31.26.154</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>SqlInstanceName</name>
+      <default_value>MSSQLServer</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>SqlPassword</name>
+      <default_value>referent</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>SqlPortNumber</name>
+      <default_value>1433</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>SqlUsername</name>
+      <default_value>referent</default_value>
+      <description/>
+    </parameter>
+  </parameters>
+  <actions>
+    <action>
+      <name>Start</name>
+      <description/>
+      <type>SPECIAL</type>
+      <attributes/>
+      <DayOfMonth>1</DayOfMonth>
+      <hour>12</hour>
+      <intervalMinutes>60</intervalMinutes>
+      <intervalSeconds>0</intervalSeconds>
+      <minutes>0</minutes>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
+      <weekDay>1</weekDay>
+      <parallel>N</parallel>
+      <xloc>144</xloc>
+      <yloc>96</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>SQL Create Table</name>
+      <description/>
+      <type>SQL</type>
+      <attributes/>
+      <connection>POSTGRESQL Connection</connection>
+      <sendOneStatement>N</sendOneStatement>
+      <sql>BEGIN;
+
+
+CREATE TABLE "public"."assignments"( 
+	"id" int NOT NULL,
+	"idsocialworker" int NOT NULL,
+	"idbeneficiarycitizen" int NOT NULL,
+	"startdate" timestamp(7) NOT NULL,
+	"enddate" timestamp(7));
+
+CREATE TABLE "public"."beneficiarycitizens"( 
+	"id" int NOT NULL,
+	"dossiernumber" varchar NOT NULL,
+	"nationalregisternumber" varchar NOT NULL,
+	"firstname" varchar NOT NULL,
+	"lastname" varchar NOT NULL,
+	"sex" varchar NOT NULL,
+	"gsm" varchar);
+
+CREATE TABLE "public"."socialworkers"( 
+	"id" int NOT NULL,
+	"firstname" varchar NOT NULL,
+	"lastname" varchar NOT NULL,
+	"sex" varchar NOT NULL,
+	"samaccountname" varchar,
+	"startdate" timestamp(7) NOT NULL,
+	"enddate" timestamp(7),
+	"teamid" int NOT NULL);
+
+CREATE TABLE "public"."teams"( 
+	"id" int NOT NULL,
+	"startname" varchar NOT NULL,
+	"Name" varchar NOT NULL);
+
+CREATE TABLE "public"."__efmigrationshistory"( 
+	"migrationid" varchar(150) NOT NULL,
+	"productversion" varchar(32) NOT NULL);
+
+COMMIT;
+
+</sql>
+      <sqlfromfile>N</sqlfromfile>
+      <useVariableSubstitution>N</useVariableSubstitution>
+      <parallel>N</parallel>
+      <xloc>352</xloc>
+      <yloc>96</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>SQL Update Link</name>
+      <description/>
+      <type>SQL</type>
+      <attributes/>
+      <connection>POSTGRESQL Connection</connection>
+      <sendOneStatement>N</sendOneStatement>
+      <sql>BEGIN;
+CREATE SEQUENCE "public"."assignments_id_seq" INCREMENT BY 1 START WITH 1 OWNED BY "public"."Assignments"."Id";
+CREATE SEQUENCE "public"."beneficiarycitizens_id_seq" INCREMENT BY 1 START WITH 1 OWNED BY "public"."BeneficiaryCitizens"."Id";
+CREATE SEQUENCE "public"."socialworkers_id_seq" INCREMENT BY 1 START WITH 1 OWNED BY "public"."SocialWorkers"."Id";
+CREATE SEQUENCE "public"."teams_id_seq" INCREMENT BY 1 START WITH 1 OWNED BY "public"."Teams"."Id";
+ALTER TABLE "public"."Assignments" ADD CONSTRAINT "PK_Assignments" PRIMARY KEY ("Id");
+ALTER TABLE "public"."BeneficiaryCitizens" ADD CONSTRAINT "PK_BeneficiaryCitizens" PRIMARY KEY ("Id");
+ALTER TABLE "public"."SocialWorkers" ADD CONSTRAINT "PK_SocialWorkers" PRIMARY KEY ("Id");
+ALTER TABLE "public"."Teams" ADD CONSTRAINT "PK_Teams" PRIMARY KEY ("Id");
+ALTER TABLE "public"."__EFMigrationsHistory" ADD CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId");
+ALTER TABLE "public"."Assignments" ADD CONSTRAINT "FK_Assignments_BeneficiaryCitizens_IdBeneficiaryCitizen" FOREIGN KEY ("IdBeneficiaryCitizen") REFERENCES "public"."BeneficiaryCitizens" ( "Id") ON DELETE CASCADE;
+ALTER TABLE "public"."Assignments" ADD CONSTRAINT "FK_Assignments_SocialWorkers_IdSocialWorker" FOREIGN KEY ("IdSocialWorker") REFERENCES "public"."SocialWorkers" ( "Id") ON DELETE CASCADE;
+ALTER TABLE "public"."SocialWorkers" ADD CONSTRAINT "FK_SocialWorkers_Teams_TeamId" FOREIGN KEY ("TeamId") REFERENCES "public"."Teams" ( "Id") ON DELETE CASCADE;
+ALTER TABLE "public"."Assignments" ALTER COLUMN "Id" SET DEFAULT nextval('"public"."assignments_id_seq"');
+ALTER TABLE "public"."BeneficiaryCitizens" ALTER COLUMN "Id" SET DEFAULT nextval('"public"."beneficiarycitizens_id_seq"');
+ALTER TABLE "public"."SocialWorkers" ALTER COLUMN "Id" SET DEFAULT nextval('"public"."socialworkers_id_seq"');
+ALTER TABLE "public"."Teams" ALTER COLUMN "Id" SET DEFAULT nextval('"public"."teams_id_seq"');
+COMMIT;</sql>
+      <sqlfromfile>N</sqlfromfile>
+      <useVariableSubstitution>N</useVariableSubstitution>
+      <parallel>N</parallel>
+      <xloc>224</xloc>
+      <yloc>368</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>copy_sql_reference__efmigrationshistory</name>
+      <description/>
+      <type>PIPELINE</type>
+      <attributes/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <clear_files>N</clear_files>
+      <clear_rows>N</clear_rows>
+      <create_parent_folder>N</create_parent_folder>
+      <exec_per_row>N</exec_per_row>
+      <filename>${Internal.Entry.Current.Folder}/copy_sql_reference__efmigrationshistory_to_post_reference.hpl</filename>
+      <loglevel>Basic</loglevel>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <params_from_previous>N</params_from_previous>
+      <run_configuration>local</run_configuration>
+      <set_append_logfile>N</set_append_logfile>
+      <set_logfile>N</set_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <parallel>N</parallel>
+      <xloc>576</xloc>
+      <yloc>96</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>copy_sql_referencebeneficiarycitizens</name>
+      <description/>
+      <type>PIPELINE</type>
+      <attributes/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <clear_files>N</clear_files>
+      <clear_rows>N</clear_rows>
+      <create_parent_folder>N</create_parent_folder>
+      <exec_per_row>N</exec_per_row>
+      <filename>${Internal.Entry.Current.Folder}/copy_sql_referencebeneficiarycitizens_to_post_reference.hpl</filename>
+      <loglevel>Basic</loglevel>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <params_from_previous>N</params_from_previous>
+      <run_configuration>local</run_configuration>
+      <set_append_logfile>N</set_append_logfile>
+      <set_logfile>N</set_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <parallel>N</parallel>
+      <xloc>656</xloc>
+      <yloc>192</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>copy_sql_referenceteams</name>
+      <description/>
+      <type>PIPELINE</type>
+      <attributes/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <clear_files>N</clear_files>
+      <clear_rows>N</clear_rows>
+      <create_parent_folder>N</create_parent_folder>
+      <exec_per_row>N</exec_per_row>
+      <filename>${Internal.Entry.Current.Folder}/copy_sql_referenceteams_to_post_reference.hpl</filename>
+      <loglevel>Basic</loglevel>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <params_from_previous>N</params_from_previous>
+      <run_configuration>local</run_configuration>
+      <set_append_logfile>N</set_append_logfile>
+      <set_logfile>N</set_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <parallel>N</parallel>
+      <xloc>624</xloc>
+      <yloc>288</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>Copy Special Taales</name>
+      <description/>
+      <type>PIPELINE</type>
+      <attributes/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <clear_files>N</clear_files>
+      <clear_rows>N</clear_rows>
+      <create_parent_folder>N</create_parent_folder>
+      <exec_per_row>N</exec_per_row>
+      <filename>${Internal.Entry.Current.Folder}/Special Copies.hpl</filename>
+      <loglevel>Basic</loglevel>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <params_from_previous>N</params_from_previous>
+      <run_configuration>local</run_configuration>
+      <set_append_logfile>N</set_append_logfile>
+      <set_logfile>N</set_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <parallel>N</parallel>
+      <xloc>528</xloc>
+      <yloc>384</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>SQL Update SEQ</name>
+      <description/>
+      <type>SQL</type>
+      <attributes/>
+      <connection>POSTGRESQL Connection</connection>
+      <sendOneStatement>N</sendOneStatement>
+      <sql>
+SELECT setval('"public"."assignments_id_seq"', (SELECT MAX("Id") FROM public."Assignments") + 1);
+SELECT setval('"public"."beneficiarycitizens_id_seq"', (SELECT MAX("Id") FROM public."BeneficiaryCitizens") + 1);
+SELECT setval('"public"."socialworkers_id_seq"', (SELECT MAX("Id") FROM public."SocialWorkers") + 1);
+SELECT setval('"public"."teams_id_seq"', (SELECT MAX("Id") FROM public."Teams") + 1);
+</sql>
+      <sqlfromfile>N</sqlfromfile>
+      <useVariableSubstitution>N</useVariableSubstitution>
+      <parallel>N</parallel>
+      <xloc>128</xloc>
+      <yloc>272</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>Adjust table name</name>
+      <description/>
+      <type>SQL</type>
+      <attributes/>
+      <connection>POSTGRESQL Connection</connection>
+      <sendOneStatement>N</sendOneStatement>
+      <sql>ALTER TABLE "public"."socialworkers" RENAME id TO "Id";
+ALTER TABLE "public"."socialworkers" RENAME firstname TO "FirstName";
+ALTER TABLE "public"."socialworkers" RENAME lastname TO "LastName";
+ALTER TABLE "public"."socialworkers" RENAME sex TO "Sex";
+ALTER TABLE "public"."socialworkers" RENAME samaccountname TO "SamAccountName";
+ALTER TABLE "public"."socialworkers" RENAME startdate TO "StartDate";
+ALTER TABLE "public"."socialworkers" RENAME enddate TO "EndDate";
+ALTER TABLE "public"."socialworkers" RENAME teamid TO "TeamId";
+
+ALTER TABLE "public"."beneficiarycitizens" RENAME id TO "Id";
+ALTER TABLE "public"."beneficiarycitizens" RENAME dossiernumber TO "DossierNumber";
+ALTER TABLE "public"."beneficiarycitizens" RENAME nationalregisternumber TO "NationalRegisterNumber";
+ALTER TABLE "public"."beneficiarycitizens" RENAME firstname TO "FirstName";
+ALTER TABLE "public"."beneficiarycitizens" RENAME lastname TO "LastName";
+ALTER TABLE "public"."beneficiarycitizens" RENAME sex TO "Sex";
+ALTER TABLE "public"."beneficiarycitizens" RENAME gsm TO "Gsm";
+
+ALTER TABLE "public"."teams" RENAME id TO "Id";
+ALTER TABLE "public"."teams" RENAME startname TO "StartName";
+
+ALTER TABLE "public"."__efmigrationshistory" RENAME migrationId TO "MigrationId";
+ALTER TABLE "public"."__efmigrationshistory" RENAME productVersion TO "ProductVersion";
+
+ALTER TABLE "public"."assignments" RENAME id TO "Id";
+ALTER TABLE "public"."assignments" RENAME idsocialworker TO "IdSocialWorker";
+ALTER TABLE "public"."assignments" RENAME idbeneficiarycitizen TO "IdBeneficiaryCitizen";
+ALTER TABLE "public"."assignments" RENAME startdate TO "StartDate";
+ALTER TABLE "public"."assignments" RENAME enddate TO "EndDate";
+
+ALTER TABLE "public"."assignments" RENAME TO "Assignments";
+ALTER TABLE "public"."beneficiarycitizens" RENAME TO "BeneficiaryCitizens";
+ALTER TABLE "public"."socialworkers" RENAME TO "SocialWorkers";
+ALTER TABLE "public"."teams" RENAME TO "Teams";
+ALTER TABLE "public"."__efmigrationshistory" RENAME TO "__EFMigrationsHistory";
+
+COMMIT;</sql>
+      <sqlfromfile>N</sqlfromfile>
+      <useVariableSubstitution>N</useVariableSubstitution>
+      <parallel>N</parallel>
+      <xloc>384</xloc>
+      <yloc>400</yloc>
+      <attributes_hac/>
+    </action>
+  </actions>
+  <hops>
+    <hop>
+      <from>copy_sql_reference__efmigrationshistory</from>
+      <to>copy_sql_referencebeneficiarycitizens</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>copy_sql_referencebeneficiarycitizens</from>
+      <to>copy_sql_referenceteams</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>copy_sql_referenceteams</from>
+      <to>Copy Special Taales</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL Create Table</from>
+      <to>copy_sql_reference__efmigrationshistory</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Start</from>
+      <to>SQL Create Table</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>SQL Update Link</from>
+      <to>SQL Update SEQ</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Copy Special Taales</from>
+      <to>Adjust table name</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Adjust table name</from>
+      <to>SQL Update Link</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+  </hops>
+  <notepads>
+  </notepads>
+  <attributes>
+    <group>
+      <name>METASTORE.pentaho</name>
+      <attribute>
+        <key>Default Run Configuration</key>
+        <value>{"namespace":"pentaho","id":"Default Run Configuration","name":"Default Run Configuration","description":"Defines a default run configuration","metaStoreName":null}</value>
+      </attribute>
+    </group>
+    <group>
+      <name>{"_":"Embedded MetaStore Elements","namespace":"pentaho","type":"Default Run Configuration"}</name>
+      <attribute>
+        <key>Pentaho local</key>
+        <value>{"children":[{"children":[],"id":"server","value":null},{"children":[],"id":"clustered","value":"N"},{"children":[],"id":"name","value":"Pentaho local"},{"children":[],"id":"description","value":null},{"children":[],"id":"readOnly","value":"Y"},{"children":[],"id":"sendResources","value":"N"},{"children":[],"id":"logRemoteExecutionLocally","value":"N"},{"children":[],"id":"remote","value":"N"},{"children":[],"id":"local","value":"Y"},{"children":[],"id":"showTransformations","value":"N"}],"id":"Pentaho local","value":null,"name":"Pentaho local","owner":null,"ownerPermissionsList":[]}</value>
+      </attribute>
+    </group>
+  </attributes>
+</workflow>

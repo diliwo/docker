@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :						TaxAssessmentDataV2.xsd
+         * Author :								Cerberus Team
+         * Owner :								KSZ / CBSS
+         * Creation date :					2015-12-15
+         * Last revision date :				
+         * Status :								Concept
+         * Description :						Service for consulting the Tas Assessment Notice data at PFS Finance
+         * Current version :					0.1
+         * Revision History :				2015-12-15 Initial Version
+============================================================================================================= -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v2" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:tadv2="http://kszbcss.fgov.be/types/TaxAssessmentData/v2" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://kszbcss.fgov.be/types/TaxAssessmentData/v2" targetNamespace="http://kszbcss.fgov.be/intf/TaxAssessmentDataService/v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2015-12-15">
+	<xs:import namespace="http://kszbcss.fgov.be/types/TaxAssessmentData/v2" schemaLocation="TaxAssessmentDataTypesV2.xsd"/>
+	<xs:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="CommonV3.xsd"/>
+	<xs:element name="consultTaxAssessmentDataRequest" type="tadv2:ConsultTaxAssessmentDataRequestType"/>
+	<xs:element name="consultTaxAssessmentDataResponse" type="tadv2:ConsultTaxAssessmentDataResponseType"/>
+	<xs:element name="consultTaxAssessmentDataFault" type="common:CBSSFaultType"/>
+</xs:schema>

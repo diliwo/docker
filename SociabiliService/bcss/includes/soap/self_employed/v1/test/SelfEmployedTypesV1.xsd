@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!-- ============================================================================================================
+         * File Name :             SelfEmployedTypeV1.xsd
+         * Author :                  Cerberus Team
+         * Owner :                   KSZ / CBSS
+         * Creation date :           2015-04-27
+         * Last revision date :     2015-06-15
+         * Status :                  Planned
+         * Description :           This service aggregates and supplies the information for a self employed
+         * Current version :         0.1
+         * Revision History :   Updated maxOccurs to 100 for membership and careerComponent + changed name 'startQuarter' by 'beginQuarter'
+		 * Revision History :   2015-06-15 : Change LegalContextType enumeration: "SIGEDIS:PENSION_ACCOUNT" -> "SIGEDIS:CAREER_ACCOUNT"
+============================================================================================================= -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kszbcss.fgov.be/types/SelfEmployed/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns="http://kszbcss.fgov.be/types/SelfEmployed/v1" targetNamespace="http://kszbcss.fgov.be/types/SelfEmployed/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2015-06-15">
+	<xs:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="CommonV3.xsd"/>
+	<!-- ============================================================================================================
+	===																																																					===
+	===	OPERATIONS																							===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultCareerRequestType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xs:element name="legalContext">
+				<xs:simpleType>
+					<xs:restriction base="common:LegalContextType">
+						<xs:enumeration value="PCSA:SOCIAL_INQUIRY"/>
+						<xs:enumeration value="PCSA:DEBT_RECOVERY"/>
+						<xs:enumeration value="PPSSI:SOCIAL_FRAUD"/>
+						<xs:enumeration value="SIGEDIS:CAREER_ACCOUNT"/>
+						<xs:enumeration value="FPSECO:ACTIVITY_PROOF_AS_SELF_EMPLOYED"/>
+						<xs:enumeration value="FPSSS:CONTROLE_INCOME_AGAINST_FRAUD"/>
+						<xs:enumeration value="DGO6:PROFESIONAL_CARD"/>
+						<xs:enumeration value="INTERNAL_USE_CBSS"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="criteria" type="tns:ConsultCareerCriteriaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCareerResponseType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xs:element name="legalContext" type="common:LegalContextType"/>
+			<xs:element name="criteria" type="tns:ConsultCareerCriteriaType"/>
+			<xs:element name="status" type="common:StatusType"/>
+			<xs:element name="result" type="tns:ConsultCareerResultType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultContributionsRequestType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xs:element name="legalContext" type="common:LegalContextType"/>
+			<xs:element name="criteria" type="tns:ConsultContributionsCriteriaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultContributionsResponseType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xs:element name="legalContext" type="common:LegalContextType"/>
+			<xs:element name="criteria" type="tns:ConsultContributionsCriteriaType"/>
+			<xs:element name="status" type="common:StatusType"/>
+			<xs:element name="result" type="tns:ConsultContributionsResultType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCareerAndContributionsRequestType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType" minOccurs="0"/>
+			<xs:element name="legalContext" type="common:LegalContextType"/>
+			<xs:element name="criteria" type="tns:ConsultCareerAndContributionsCriteriaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCareerAndContributionsResponseType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="common:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="common:InformationCBSSType"/>
+			<xs:element name="legalContext" type="common:LegalContextType"/>
+			<xs:element name="criteria" type="tns:ConsultCareerAndContributionsCriteriaType"/>
+			<xs:element name="status" type="common:StatusType"/>
+			<xs:element name="results" type="tns:ConsultCareerAndContributionsResultType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																									CRITERIA																									===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultCareerCriteriaType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="period" type="common:OpenPeriodType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultContributionsCriteriaType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="period" type="tns:QuarterPeriodType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultCareerAndContributionsCriteriaType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="careerPeriod" type="common:OpenPeriodType"/>
+			<xs:element name="contributionPeriod" type="tns:QuarterPeriodType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																							RESPONSE CAREER																						===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultCareerResultType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:group ref="tns:CareerDataGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SimpleCareerDataType">
+		<xs:sequence>
+			<xs:group ref="tns:CareerDataGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="CareerDataGroup">
+		<xs:sequence>
+			<xs:element name="selfEmployedCbeNumber" type="common:CbeNumberType" minOccurs="0"/>
+			<xs:element name="membership" type="tns:MembershipType" maxOccurs="100"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																							RESPONSE CONTRIBUTION																				===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultContributionsResultType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:group ref="tns:ContributionsDataGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SimpleContributionsDataType">
+		<xs:group ref="tns:ContributionsDataGroup"/>
+	</xs:complexType>
+	<xs:group name="ContributionsDataGroup">
+		<xs:sequence>
+			<xs:element name="quarterContribution" type="tns:QuarterContributionType" maxOccurs="20"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																					RESPONSE CONTRIBUTION AND CAREER																===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="ConsultCareerAndContributionsResultType">
+		<xs:sequence>
+			<xs:element name="ssin" type="common:SsinType"/>
+			<xs:element name="careerData" type="tns:CareerDataOrFeedbackType"/>
+			<xs:element name="contributionsData" type="tns:ContributionsDataOrFeedbackType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CareerDataOrFeedbackType">
+		<xs:choice>
+			<xs:element name="result" type="tns:SimpleCareerDataType"/>
+			<xs:element name="feedback" type="common:StatusType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ContributionsDataOrFeedbackType">
+		<xs:choice>
+			<xs:element name="result" type="tns:SimpleContributionsDataType"/>
+			<xs:element name="feedback" type="common:StatusType"/>
+		</xs:choice>
+	</xs:complexType>
+	<!-- ============================================================================================================
+	===																																																					===
+	===																									DATA TYPES																							===
+	===																																																					===
+	============================================================================================================= -->
+	<xs:complexType name="SocialInsuranceFundType">
+		<xs:sequence>
+			<xs:element name="cbeNumber" type="common:CbeNumberType"/>
+			<xs:element name="code" type="tns:SocialInsuranceFundCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MembershipType">
+		<xs:sequence>
+			<xs:element name="socialInsuranceFund" type="tns:SocialInsuranceFundType"/>
+			<xs:element name="careerComponent" type="tns:CareerComponentType" maxOccurs="100"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CareerComponentType">
+		<xs:sequence>
+			<xs:element name="period" type="common:OpenPeriodType"/>
+			<xs:element name="contributionCode" type="tns:ContributionCodeType"/>
+			<xs:element name="nisseEqualizedCode" type="tns:NISSEEqualizedCodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuarterPeriodType">
+		<xs:sequence>
+			<xs:element name="beginQuarter" type="tns:QuarterType"/>
+			<xs:element name="endQuarter" type="tns:QuarterType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuarterType">
+		<xs:sequence>
+			<xs:element name="year" type="xs:gYear"/>
+			<xs:element name="quarter">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:pattern value="[1-4]{1}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuarterContributionType">
+		<xs:sequence>
+			<xs:element name="quarter" type="tns:QuarterType"/>
+			<xs:element name="contributionSituation" type="tns:ContributionSituationType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The situation of the contribution. Either the self-employed has paid (PAYED), is exempted by the Commision for Exemptions From Contribution (EXEMPTION) or the payment is not done (NOT_PAYED)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastPayment" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Last quarter for which the self-employed has paid the contribution, of for which the payment is exempted. All the more recent quarters have as value 'NOT_PAYED'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NISSEEqualizedCodeType">
+		<xs:annotation>
+			<xs:documentation>Code decision periode assimilee</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+			<xs:pattern value="[3]{1}[0-4 CE]{1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContributionCodeType">
+		<xs:annotation>
+			<xs:documentation>Code contribution</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[A-Z]{1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SocialInsuranceFundCodeType">
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:pattern value="[0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContributionSituationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NOT_PAYED"/>
+			<xs:enumeration value="PAYED"/>
+			<xs:enumeration value="EXEMPTION"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

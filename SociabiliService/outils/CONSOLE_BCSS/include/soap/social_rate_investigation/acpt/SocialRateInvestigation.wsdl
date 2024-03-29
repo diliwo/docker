@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================-->
+<!--=   Service : SocialRateInvestigation                      -->
+<!--=   Filename : SocialRateInvestigation.wsdl                      -->
+<!--=   Author : Alain Tilmant                      -->
+<!--=   Owner : BCSS                      -->
+<!--=   Date : 2013-05-06                      -->
+<!--=  Status : Planned                       -->
+<!--=   Description :Service Front-End de la BCSS rassemblant info Tarif Social BCSS et SPF Economie                      -->
+<!--=  Current Version : 1.0                      -->
+<!--=   Revision History :                      -->
+<!--  *                      -->
+<!--
+enlever l'attribut version de l'élément wsdl:definitions
+
+<-->
+<!--=============================================-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SocialRateInvestigationService" targetNamespace="http://kszbcss.fgov.be/intf/SocialRateInvestigationService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:puo="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1" xmlns:tns="http://kszbcss.fgov.be/intf/SocialRateInvestigationService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!--========= wsdl:types ===========-->
+	<wsdl:types>
+		<!--xmlns:common="http://kszbcss.fgov.be/types/common/v3"  xmlns:puo="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1"  xmlns:tns="http://kszbcss.fgov.be/intf/SocialRateInvestigationService/v1"  	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"-->
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://kszbcss.fgov.be/intf/SocialRateInvestigationService/v1" xmlns:common="http://kszbcss.fgov.be/types/common/v3" xmlns:puo="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1" xmlns:tns="http://kszbcss.fgov.be/intf/SocialRateInvestigationService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" version="2013-09-05">
+			<xsd:import schemaLocation="SocialRateInvestigationTypesV1.xsd" namespace="http://kszbcss.fgov.be/types/SocialRateInvestigation/v1"/>
+			<xsd:import schemaLocation="CommonV3.xsd" namespace="http://kszbcss.fgov.be/types/common/v3"/>
+			<!--========= xsd element ===========-->
+			<xsd:element name="consultExchangedDataRequest" type="puo:ConsultExchangedDataRequestType"/>
+			<xsd:element name="consultExchangedDataResponse" type="puo:ConsultExchangedDataResponseType"/>
+			<xsd:element name="consultExchangedDataFault" type="common:CBSSFaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!--========= wsdl:message ===========-->
+	<wsdl:message name="consultExchangedDataRequestMsg">
+		<wsdl:part name="consultExchangedDataRequestParameters" element="tns:consultExchangedDataRequest"/>
+	</wsdl:message>
+	<wsdl:message name="consultExchangedDataResponseMsg">
+		<wsdl:part name="consultExchangedDataResponseParameters" element="tns:consultExchangedDataResponse"/>
+	</wsdl:message>
+	<wsdl:message name="consultExchangedDataFaultMsg">
+		<wsdl:part name="consultExchangedDataFaultParameters" element="tns:consultExchangedDataFault"/>
+	</wsdl:message>
+	<!--========= wsdl:portType ===========-->
+	<wsdl:portType name="SocialRateInvestigationPortType">
+		<wsdl:operation name="consultExchangedData">
+			<wsdl:input name="consultExchangedDataRequest" message="tns:consultExchangedDataRequestMsg"/>
+			<wsdl:output name="consultExchangedDataResponse" message="tns:consultExchangedDataResponseMsg"/>
+			<wsdl:fault name="consultExchangedDataFault" message="tns:consultExchangedDataFaultMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<!--========= wsdl:binding ===========-->
+	<wsdl:binding name="SocialRateInvestigationHTTPBinding" type="tns:SocialRateInvestigationPortType">
+		<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultExchangedData">
+			<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://kszbcss.fgov.be/SocialRateInvestigationService/consultExchangedData"/>
+			<wsdl:input>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="consultExchangedDataFault">
+				<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="consultExchangedDataFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!--========= wsdl:service ===========-->
+	<wsdl:service name="SocialRateInvestigationService">
+		<wsdl:port name="SocialRateInvestigationConsult_01" binding="tns:SocialRateInvestigationHTTPBinding">
+			<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="https://bcssksz-services-acpt.smals.be:443/SOA4520/SocialRateInvestigationService/consult_01"/>
+			<!--Environnement de developpement : https://b2b-test.ksz-bcss.fgov.be:4520/SocialRateInvestigationService/consult_01-->
+			<!--Environnement d'acceptation : https://b2b-acpt.ksz-bcss.fgov.be:4520/SocialRateInvestigationService/consult_01-->
+			<!--Environnement de production : https://b2b.ksz-bcss.fgov.be:4520/SocialRateInvestigationService/consult_01-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

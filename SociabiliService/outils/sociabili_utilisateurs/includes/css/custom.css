@@ -1,0 +1,133 @@
+@CHARSET "UTF-8";
+
+.lister
+{
+	background-image: url('../images/lister.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+
+.valider
+{
+	background-image: url('../images/valider.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+
+.nonvalider
+{
+	background-image: url('../images/nonvalider.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+
+.attention
+{
+	background-image: url('../images/attention.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+
+.ajouter
+{
+	background-image: url('../images/ajouter.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+a.ajouter
+{
+	padding: 6px 0 0 30px;
+	margin: 17px 0 0 0;
+	text-decoration: none;
+	color: #540D91;
+}
+a:hover.ajouter
+{
+	color: #379620;
+}
+
+.supprimer
+{
+	background-image: url('../images/supprimer.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+
+.modifier
+{
+	background-image: url('../images/modifier.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+
+.importer
+{
+	background-image: url('../images/importer.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+a.importer
+{
+	padding: 6px 0 0 30px;
+	margin: 17px 0 0 0;
+	text-decoration: none;
+	color: #540D91;
+}
+a:hover.importer
+{
+	color: #379620;
+}
+
+.exporter
+{
+	background-image: url('../images/exporter.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+a.exporter
+{
+	padding: 6px 0 0 30px;
+	margin: 17px 0 0 0;
+	text-decoration: none;
+	color: #540D91;
+}
+a:hover.exporter
+{
+	color: #379620;
+}
+
+.connexion
+{
+	background-image:url("../images/connexion.gif");
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}
+a.connexion
+{
+	padding: 6px 0 0 30px;
+	margin: 17px 0 0 0;
+	text-decoration: none;
+	color: #444;
+}
+a:hover.connexion
+{
+	color: #00036D;
+}
+
+.membres
+{
+	background-image: url('../images/membres.png');
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-attachment: scroll;
+}

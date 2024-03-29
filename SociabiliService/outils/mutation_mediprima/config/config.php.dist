@@ -1,0 +1,10 @@
+<?php
+    define("ORACLE_LOGIN","CPASPRODUCTION");
+    define("ORACLE_PASSWORD","XYU!z1125$485");
+    define("ORACLE_SERVER","CPASPROD.WORLD");
+    
+    define("MYSQL_LOGIN","cpas");
+    define("MYSQL_PASSWORD","Cp@sPas$1");
+    define("MYSQL_SERVER","IISFILES.cpas.intra");
+    define("MYSQL_DB","mut_med");
+?>

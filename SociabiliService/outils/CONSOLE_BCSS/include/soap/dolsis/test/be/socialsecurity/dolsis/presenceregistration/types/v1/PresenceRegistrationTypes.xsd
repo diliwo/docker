@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===================================================================== -->
+<!-- * File Name : PresenceRegistrationTypes.xsd -->
+<!-- * Author : Evert D'Hooghe, Willem Salembier -->
+<!-- * Owner : Smals -->
+<!-- * Domain : -->
+<!-- * Creation date : 17/03/2015 -->
+<!-- * Last revision date : 17/03/2015 -->
+<!-- * Description : Dolsis PresenceRegistration types -->
+<!-- * Status : Model -->
+<!-- * Current Version : 1.7 -->
+<!-- ===================================================================== -->
+<xsd:schema version="1.7" targetNamespace="http://socialsecurity.be/dolsis/presenceregistration/types/v1" xmlns="http://socialsecurity.be/dolsis/presenceregistration/types/v1" attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:cbss="http://kszbcss.fgov.be/types/common/v3" xmlns:common="http://socialsecurity.be/dolsis/types/v1" xmlns:crr="http://socialsecurity.be/dolsis/contractualrelationshipregistry/types/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../../../../../fgov/kszbcss/types/common/v3/CommonV3.xsd"/>
+  <xsd:import namespace="http://socialsecurity.be/dolsis/types/v1" schemaLocation="../../../types/v1/DolsisTypes.xsd"/>
+  <xsd:import namespace="http://socialsecurity.be/dolsis/contractualrelationshipregistry/types/v1" schemaLocation="../../../contractualrelationshipregistry/types/v1/ContractualRelationshipRegistryTypes.xsd"/>
+  <xsd:complexType name="PresenceRegistration">
+    <xsd:annotation>
+      <xsd:documentation>Presence Registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="presenceRegistrationSubmitted" type="PresenceRegistrationSubmitted">
+        <xsd:annotation>
+          <xsd:documentation>The content of the original presenceRegistrationSubmitted for consultation</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="workSectorCode" type="common:WorkSectorCode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Work sector of the presence registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="worker" type="common:PersonSummary" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>SSIN, first name and last name of the worker.
+          The SSIN is the last SSIN known for the worker. It's the same as in the submitted declaration if the inss has never changed. It can be not present in case of a presence registration with LimosaId.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="presenceRegistrationId" type="PresenceRegistrationId">
+        <xsd:annotation>
+          <xsd:documentation>Reference Number of Presence Registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="creationDate" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Creation date and time of Presence Registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="sender" type="Sender" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Contains the sender information of the Presence Registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="channel" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Channel of submitted Presence Registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="currentState" type="PresenceRegistrationState">
+        <xsd:annotation>
+          <xsd:documentation>Current state of submitted presence registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="stateHistory" type="PresenceRegistrationStateHistory" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>List of presence registration states for the presence registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PresenceRegistrationId">
+    <xsd:annotation>
+      <xsd:documentation>ID of presence registration to search</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:long">
+      <xsd:totalDigits value="9"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="PresenceRegistrationSubmitted">
+    <xsd:annotation>
+      <xsd:appinfo>v1.7: complexType changed</xsd:appinfo>
+      <xsd:documentation>Definition of the Presence Registration Submitted for consultation</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:annotation>
+        <xsd:appinfo>v1.7: choice removed</xsd:appinfo>
+      </xsd:annotation>
+      <xsd:element name="registrationDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date for which you make the (planned) registration. Only date of today and tomorrow are accepted. If omitted it will default to today</xsd:documentation>
+          <xsd:documentation>Date for which you register. Can only be today or tomorrow. Optional, if left out it will consider the registration is for today.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ssin" type="cbss:SsinType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.7: element added</xsd:appinfo>
+          <xsd:documentation>Social Security Number</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.7: element added</xsd:appinfo>
+          <xsd:documentation>KBO/BCE number of the employer</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="postingDocumentNbr" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>v1.7: element added</xsd:appinfo>
+          <xsd:documentation>Limosa declaration number defining the workrelation between a foreign employee, a foreign company and a potential belgian client</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="contractualRelationshipDeclarationId" type="crr:DeclarationId">
+        <xsd:annotation>
+          <xsd:documentation>Identification number of the site as defined in Declaration of Works (DDT/AVW)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="clientReference" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Optionally you can supply your own Client Presence Registration Reference</xsd:documentation>
+          <xsd:documentation>Custom Reference you may send with your registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Sender">
+    <xsd:annotation>
+      <xsd:documentation>Block containing information about the sender of the registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="userId" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>User id (UMan)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="cbeNumber" type="cbss:CbeNumberType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>CBE number of the sender</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="userQuality" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>User quality like employer NSSO, professional, etc. (UMan)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresenceRegistrationState">
+    <xsd:annotation>
+      <xsd:documentation>State of submitted presence registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="status" type="PresenceRegistrationStatus">
+        <xsd:annotation>
+          <xsd:documentation>Status of the presence registration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="date" type="xsd:dateTime" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Date and time of the presence registration state: 
+          Creation date if status = "registered"
+          Validation date if status = "validated" or "validated_with_remarks"
+          Cancellation date if status = "cancelled"</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="validationRemarks" type="ValidationRemarks" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>List of validation remarks if the presence registration has been treated</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PresenceRegistrationStatus">
+    <xsd:annotation>
+      <xsd:documentation>Status of the presence registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="registered">
+        <xsd:annotation>
+          <xsd:documentation>Registered but not yet validated</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="cancelled">
+        <xsd:annotation>
+          <xsd:documentation>Cancelled</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="validated">
+        <xsd:annotation>
+          <xsd:documentation>Registered and validated without remarks</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="validated_with_remarks">
+        <xsd:annotation>
+          <xsd:documentation>Registered and validated with remarks</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="ValidationRemarks">
+    <xsd:annotation>
+      <xsd:documentation>The remarks generated during the validation of submitted presence registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="remarkCode" type="ValidationRemarkCode" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Remark Code</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ValidationRemarkCode">
+    <xsd:annotation>
+      <xsd:documentation>Remark Type for a PresenceRegistration</xsd:documentation>
+      <xsd:documentation>1 = The employer hasn't submitted a Dimona declaration for this worker
+        2 = No Dimona declaration exists for this worker
+        3 = The company is not an employer or a self-employed person
+        4 = No company exists with this company number
+        5 = The self-employed person is not the founder of the company
+        6 = The Limosa declaration with this L1 number doesn't exist or it is recent (less than 48 hours) and being processed.
+        7 = The Limosa declaration exists but is not active
+        8 = No Limosa declaration exists for this SSIN/BIS
+        9 = No active Limosa declaration exists for this SSIN/BIS
+        10 = No declaration of works exists with this declaration number
+        11 = The declaration of works exists but is not active
+        12 = No declaration of works exists for this company
+        13 = The declaration of works is not subject to the presence registration
+        14 = A similar presence registration already exists
+        15 = This SSIN doesn't exist or is not yet known by the CheckInAtWork system
+        16 = The employer is not known in the employer repertory or is not actif
+        17 = The contract of the declaration of works is not active</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:complexType name="PresenceRegistrationStateHistory">
+    <xsd:annotation>
+      <xsd:documentation>State history of submitted presence registration</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="state" type="PresenceRegistrationState" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,176 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #444;
+	background: #ccc;
+	background-repeat: repeat-x;
+	margin: 0;
+	padding: 0;
+}
+img {
+	border: none;
+}
+p {
+	margin:0;
+	padding: 0;
+}
+h1 {
+	text-align: center;
+	padding: 5px 0 10px 0;
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+h2 {
+	color: #444450;
+	text-align: center;
+	text-decoration: underline;
+	font-size: 18px;
+	font-style: italic;
+}
+
+/**
+ * Inputs
+ **/
+ form {
+
+    text-align: left;
+}
+form h1 {
+	text-align: center;
+	color: #777777;
+	border-bottom: 1px dashed #777777;
+	font-size: 16px;
+}
+form p {
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 20px;
+}
+form label {
+    display: block;
+    float: left;
+    width: 200px;
+}
+
+input[type=text], input[type=password] {
+	width: 200px;
+}
+
+fieldset {
+	width: 96%;
+	margin-bottom: 20px;
+	padding: 15px;
+	border: 1px solid black;
+}
+fieldset legend {
+	padding: 10px;
+	width: 80%;
+	margin-left: 10%;
+	border: 2px dotted black;
+	text-align: center;
+	font-weight: bold;
+}
+fieldset p {
+	text-align: center;
+	padding-bottom: 5px;
+}
+table {
+	width: 100%;
+}
+table th {
+	width: 300px;
+	text-align: left;
+}
+
+table th,
+table td {
+	vertical-align: top;
+}
+
+/**
+ * Parties de la page
+ **/
+#banner {
+	height: 120px;
+	width: 980px;
+	background: url('../images/banner.png') no-repeat;
+}
+#container {
+	width: 980px;
+	margin: auto;
+	background-color: #FFF;
+}
+#content {
+	padding: 5px;
+	text-align: left;
+}
+#footer {
+	padding-top: 20px;
+	font-weight: bold;
+	height: 80px;
+	background-repeat: no-repeat;
+	text-align: center;
+}
+#footer hr {
+	height: 10px;
+	border: 1px solid #D84545;
+	background-color: #CA0000;
+}
+
+/**
+ * DIVERS
+ **/
+
+.error {
+	text-align: center;
+	color: red;
+	font-size: 2em;
+}
+.info {
+	text-align: center;
+	color: blue;
+	font-size: 2em;
+}
+.infobulle {
+	cursor: help;
+}
+
+img.ui-datepicker-trigger {
+	cursor: pointer;
+}
+#impression {
+	text-align: right;
+	margin-right: 20px;
+	margin-top: 5px;
+}
+div.fieldset {
+	width: 96%;
+	margin-bottom: 20px;
+	padding: 15px;
+	border: 1px solid black;
+	margin-top: 33px;
+}
+div.fieldset>h1 {
+	padding: 10px;
+	width: 80%;
+	margin-left: 10%;
+	margin-top: -33px;
+	margin-bottom: 10px;
+	border: 2px dotted black;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 1em;
+	background-color: white;
+}
+div.fieldset>p {
+	text-align: center;
+}
+div.tab-t25 {
+	margin-top: 20px;
+}
+

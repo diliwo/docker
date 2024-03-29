@@ -1,0 +1,1845 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by USER (KSZ-BCSS) -->
+<!--
+ * File : PatrimonyServiceTypes.xsd
+ * Author : Groenveldt Choukri
+ * Creation date :  21/06/2016 
+ * History : 
+	* 21/06/2016 - Initiation XSD
+
+ -->
+<xs:schema xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:com="http://kszbcss.fgov.be/types/common/v3" xmlns:tns="http://kszbcss.fgov.be/types/PatrimonyService/v1" targetNamespace="http://kszbcss.fgov.be/types/PatrimonyService/v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2016-11-09">
+	<xs:import namespace="http://kszbcss.fgov.be/types/common/v3" schemaLocation="../common/CommonV3.xsd"/>
+	<!--==================   Abstract Request types   =======================-->
+	<xs:complexType name="AbstractRequestCustomerType">
+		<xs:sequence>
+			<xs:element name="informationCustomer" type="com:InformationCustomerType"/>
+			<xs:element name="informationCBSS" type="com:InformationCBSSType" minOccurs="0"/>
+			<xs:element name="legalContext" type="tns:LegalContextType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AbstractResponseCustomerType">
+		<xs:complexContent>
+			<xs:extension base="tns:AbstractRequestCustomerType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--======================= Operations ===========================-->
+	<!--======================= ConsultImmovable ======================-->
+	<xs:complexType name="ConsultImmovablePropertiesRequestType">
+		<xs:complexContent>
+			<xs:extension base="tns:AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="searchCriteria" type="tns:SearchCriteriaType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConsultImmovablePropertiesResponseType">
+		<xs:complexContent>
+			<xs:extension base="tns:AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="searchCriteria" type="tns:SearchCriteriaType"/>
+					<xs:element name="status" type="com:StatusType"/>
+					<xs:element name="properties" type="tns:PropertiesType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--======================= ConsultEnterpriseImmovableProperties ============================-->
+	<xs:complexType name="ConsultEnterpriseImmovablePropertiesRequestType">
+		<xs:complexContent>
+			<xs:extension base="tns:AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="searchCriteria" type="tns:SearchCriteriaForEnterpriseType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConsultEnterpriseImmovablePropertiesResponseType">
+		<xs:complexContent>
+			<xs:extension base="tns:AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="searchCriteria" type="tns:SearchCriteriaForEnterpriseType"/>
+					<xs:element name="status" type="com:StatusType"/>
+					<xs:element name="properties" type="tns:PropertiesType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--====================== FindDivision ===========================-->
+	<xs:complexType name="FindDivisionByEnterpriseNumberRequestType">
+		<xs:complexContent>
+			<xs:extension base="tns:AbstractRequestCustomerType">
+				<xs:sequence>
+					<xs:element name="searchCriteria" type="tns:SearchCriteriaForDivisionType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FindDivisionByEnterpriseNumberResponseType">
+		<xs:complexContent>
+			<xs:extension base="tns:AbstractResponseCustomerType">
+				<xs:sequence>
+					<xs:element name="searchCriteria" type="tns:SearchCriteriaForDivisionType"/>
+					<xs:element name="status" type="com:StatusType"/>
+					<xs:element name="divisions" type="tns:DivisionsType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--===================== Search criteria ====================-->
+	<xs:complexType name="SearchCriteriaType">
+		<xs:sequence>
+			<xs:element name="ssin" type="com:SsinType"/>
+			<xs:element name="withCoOwners" type="xs:boolean" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="fullHistory" type="xs:boolean"/>
+				<xs:element name="period" type="tns:PeriodType"/>
+			</xs:choice>
+			<xs:element name="language" type="com:LanguageType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnterpriseCriteriaType">
+		<xs:sequence>
+			<xs:element name="entepriseNumber" type="com:CbeNumberType"/>
+			<xs:element name="division" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PeriodType">
+		<xs:sequence>
+			<xs:element name="beginDate" type="xs:date"/>
+			<xs:element name="endDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OptionsType">
+		<xs:sequence>
+			<xs:element name="option" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LegalContextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--===================== Response ====================-->
+	<xs:complexType name="ResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="PropertiesType">
+		<xs:sequence>
+			<xs:element name="property" type="tns:PropertyType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Properties ====================-->
+	<xs:complexType name="PropertyType">
+		<xs:sequence>
+			<xs:element name="parcel" type="tns:ParcelType"/>
+			<xs:element name="state" type="tns:ParcelStateType"/>
+			<xs:element name="parties" type="tns:PartiestType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Property ====================-->
+	<xs:complexType name="PartyType">
+		<xs:sequence>
+			<xs:element name="owners" type="tns:OwnersType"/>
+			<xs:element name="rights" type="tns:RightsType"/>
+			<xs:element name="otherCoOwner" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="managedBy" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+PersIdf manager service
+PersIdf service gestionnaire
+PersIdf beherende dienst
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParcelType">
+		<xs:sequence>
+			<xs:element name="identification" type="tns:ParcelIdentificationType"/>
+			<xs:element name="numberOfElevator" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+the amount of elevators
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bassin" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the second nature bassin.
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="built" type="tns:BuiltType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="dateEpc" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+date when the EPC certificate was given.
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="detail" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+detailcode of the patrimonial parcel in CADNET
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="dhm" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+The dhm codedescription.
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="energyCertificate" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+The energyCertificate codedescription.
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="energyHouse" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+amount of energy used in the house
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="informations" type="tns:InformationsType" minOccurs="0"/>
+			<xs:element name="isolationHouse" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+isolation value of the house
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="klaarpan" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the second nature klaarpan.
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="maxThermCoef" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+The maximal thermical conductivity of the building
+                        elements
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="matUtil" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the second nature material and utilities
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="notBuilt" type="tns:NotBuiltType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="notTaxedMatUtil" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+not taxable mat/out
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="parcelNature" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+codedescription of the nature of the cadastral parcel
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="parcelStatus" type="tns:ParcelStatusType" minOccurs="0"/>
+			<xs:element name="parcelWidthMain" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+width of the main building
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="parcelWidthStreet" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+width of the parcel at the street
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="passiveHouse" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+house with low energy usage
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="privativeDescription" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the private part.
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="rootput" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the second nature rootput.
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="sketch" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+number of the sketch at creation or mutation.
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="threshold" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+taxable threshold for the mat/out
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParcelStateType">
+		<xs:sequence>
+			<xs:element name="situation" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description status propertystate(active/passive)
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="doubtfulRight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+indication for the propertystate which has doubtfull
+                        ownerrights
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="calculatedMarketValue" type="tns:CalculatedMarketValueType" minOccurs="0"/>
+			<xs:element name="fiscalDate" type="tns:FiscalDateType" minOccurs="0"/>
+			<xs:element name="identifiers" type="tns:SituationIdentifierType"/>
+			<xs:element name="legalDate" type="tns:LegalDateType" minOccurs="0"/>
+			<xs:element name="versionDate" type="tns:VersionDateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Identity ====================-->
+	<xs:complexType name="PersonType">
+		<xs:sequence>
+			<xs:element name="ssin">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CoOwnersType">
+		<xs:sequence>
+			<xs:element name="owner" type="tns:IdentityType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnterpriseType">
+		<xs:sequence>
+			<xs:element name="cbeNumber" type="com:CbeNumberType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FinancialIDType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--===================== Parcel  ====================-->
+	<xs:complexType name="ParcelInformationType">
+		<xs:sequence>
+			<xs:element name="cadastralIncome" type="tns:CadastralIncomeType" minOccurs="0"/>
+			<xs:element name="location" type="tns:LocationType" minOccurs="0"/>
+			<xs:element name="notAppl" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+share not marked
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="numberCommonPart" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+To verify with Finances ? (numerator)
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="order" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+order of the parts according the income en reglements
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="polWa" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description the code in tag 'codePolWaId'
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="soilIndex" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description the code in tag 'codeSoilIndex'
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="soilRent" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description the code in tag 'soilRent'
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="surface" type="tns:ParcelSurfaceType" minOccurs="0"/>
+			<xs:element name="versionPurId" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+technical key for the pursituation in this version
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="19"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParcelIdentificationType">
+		<xs:sequence>
+			<xs:element name="bisNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+bisnumber
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cadastralDivision" type="tns:CodeDescriptionType">
+				<xs:annotation>
+					<xs:documentation>
+description the cadastral division
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="exponentLetter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+exponentletter
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="exponentNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+exponentnumber
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="fractionDenominator" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Denominator for the common parts
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="partNumber">
+				<xs:annotation>
+					<xs:documentation>
+partnumber (P0000 -&gt; P9999)
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="5"/>
+						<xs:pattern value="(P[0-9][0-9][0-9][0-9])"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="primaryNumber">
+				<xs:annotation>
+					<xs:documentation>
+primary number (grondnummer)
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="section">
+				<xs:annotation>
+					<xs:documentation>
+section
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="precad" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+precad
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+						<xs:pattern value="([s,r,S,R])"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParcelSurfaceType">
+		<xs:sequence>
+			<xs:element name="surfaceVerif" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description the code in tag 'surfaceVerif'
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="notTaxable" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Surface not taxable
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="taxable" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Surface taxable
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EcologicalTopicType">
+		<xs:sequence>
+			<xs:element name="centralHeating" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+central heating: yes / no
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="solarPanel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the solar panels used.
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="airco" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the code airco
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pool" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the pool
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParcelStatusType">
+		<xs:sequence>
+			<xs:element name="parcelSituationId">
+				<xs:annotation>
+					<xs:documentation>
+IdfTech SitParcelle.OIdfTech
+                        The technical identifier of a situation of the cadastral parcel
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:long">
+						<xs:totalDigits value="19"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="description" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="dateBegin" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Validitydate of the parcel
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateBeginYear" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+year of the start date
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="dateEnd" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+end date
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateEndYear" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+year of the end date
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Parcel information ====================-->
+	<xs:complexType name="CadastralIncomeType">
+		<xs:sequence>
+			<xs:element name="amount">
+				<xs:annotation>
+					<xs:documentation>
+cadastral income
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="character" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the charactercode of the cadastral income
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="exonerationEndDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+date for the end of the exoneration
+                        (vrijstelling)
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decretes" type="tns:DecretesType" minOccurs="0"/>
+			<xs:element name="motif" type="tns:MotifType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+explanation about the cadastralIncome amount
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="number" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the numberCadastralIncome (goods gender e.g)
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="perSurface" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Cadastral income per surface
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationType">
+		<xs:sequence>
+			<xs:element name="yCoordinate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Y coordinate
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="xCoordinate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+X coordinate
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="nisCom" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+The community codedescription.
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Built====================-->
+	<xs:complexType name="BuiltType">
+		<xs:sequence>
+			<xs:element name="addressState" type="tns:AddressType" minOccurs="0"/>
+			<xs:element name="acteDescription" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Nature of the building in the act.
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="blockNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+blocknumber
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="construction" type="tns:ConstructionType" minOccurs="0"/>
+			<xs:element name="crossDetail" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Building situated on multiple parcels
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="detail" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+detailcode Cadnet
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="description" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+unknown, this field is not documented
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="denomination" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Denomination
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="domotica" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the domotica code
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ecologicalTopic" type="tns:EcologicalTopicType" minOccurs="0"/>
+			<xs:element name="floor" type="tns:FloorDetailType" minOccurs="0"/>
+			<xs:element name="garret" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+garret: yes / no (mansarde)(dakverdieping)
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="housingUnitNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+housing units
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="mainCommon" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+unknown, this field is not documented
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="physModYear" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+the year of physical modification
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="pur" type="tns:PurType" minOccurs="0"/>
+			<xs:element name="renovation" type="tns:RenovationType" minOccurs="0"/>
+			<xs:element name="roomsDetails" type="tns:RoomAmountType" minOccurs="0"/>
+			<xs:element name="surface" type="tns:SurfaceType" minOccurs="0"/>
+			<xs:element name="text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+free text
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="512"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConstructionType">
+		<xs:sequence>
+			<xs:element name="indication" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the indication of the building
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quality" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the construction quality
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the construction type
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="descr" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the private part(privatief deel)
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="buildingBeginYear" type="xs:gYear" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Year when begin the constuctrion of the building
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="buildingEndYear" type="xs:gYear" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Year when begin the constuctrion of the building
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="year" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the construction year
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SurfaceType">
+		<xs:sequence>
+			<xs:element name="total" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+total surface
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="floor" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+total amount of Surface of the floor
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="heatedPercent" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+percent of the heated surface
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="built" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Total built surface
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="used" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+used surface
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RoomAmountType">
+		<xs:sequence>
+			<xs:element name="place" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+total amount of places
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="terrace" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+number of terraces
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="other" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+unknown, this field is not documented
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bedroom" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Total amount of bedrooms
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="bathroom" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Total amount of bathrooms
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="basement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Total amount of basements
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="coveredParkingLot" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+amount of covered parkinglots
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="garage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+amount of garages
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="lift" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+total amount of lifts
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RenovationType">
+		<xs:sequence>
+			<xs:element name="year" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+year of the renovation
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="surface" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+amount of renovated surface
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="type" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the type of renovation
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Pur number
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the type of the pur
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nature" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the nature of the pur
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mainCommon" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+part considered as main PUR
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="specificCommon" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Pur specifiq common parts
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Not built====================-->
+	<xs:complexType name="NotBuiltType">
+		<xs:sequence>
+			<xs:element name="location" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Situation not built (place names)
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="pur" type="tns:NotBuiltPurType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NotBuiltPurType">
+		<xs:sequence>
+			<xs:element name="id" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+unknown, this field is not documented
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="nature" type="tns:CodeDescriptionType">
+				<xs:annotation>
+					<xs:documentation>
+description the nature of the PUR
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="tns:CodeDescriptionType">
+				<xs:annotation>
+					<xs:documentation>
+description the type of the PUR
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mainCommon" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Information about common part
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="specificCommon" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Information about specific common part
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Rights ====================-->
+	<xs:complexType name="PartiestType">
+		<xs:sequence>
+			<xs:element name="party" type="tns:PartyType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RightType">
+		<xs:sequence>
+			<xs:element name="type" type="tns:CodeDescriptionType">
+				<xs:annotation>
+					<xs:documentation>
+description for the type of the businessright
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fractNum">
+				<xs:annotation>
+					<xs:documentation>
+Enominator of the shares of a normalised business right
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:long">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="fractDenom">
+				<xs:annotation>
+					<xs:documentation>
+Denominator of the shares of a normalised business right
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:long">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="part" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+part not specified
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partSurface" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+No demarcation
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="surface" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+surface
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:long">
+						<xs:totalDigits value="19"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="expiredDate" type="tns:YearOrDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+expiredate of the businessright
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OwnersType">
+		<xs:choice>
+			<xs:element name="individual" type="com:SsinType"/>
+			<xs:element name="community" type="tns:CommunityType"/>
+			<xs:element name="business" type="com:EnterpriseNumberType"/>
+			<xs:element name="association" type="tns:AssociationType"/>
+			<xs:element name="anonymous">
+				<xs:annotation>
+					<xs:documentation>
+String of the anonymous owners and their businessrights
+                        (# en 2 rechthebbenden -BE 1/4- #)
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="IndividualType"/>
+	<xs:complexType name="CommunityType">
+		<xs:sequence>
+			<xs:element name="ssin" type="com:SsinType" minOccurs="2" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AssociationType">
+		<xs:sequence>
+			<xs:element name="ssin" type="com:SsinType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdentifierType">
+		<xs:choice/>
+	</xs:complexType>
+	<!--===================== Parcel state ====================-->
+	<xs:complexType name="SituationIdType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SituationIdentifierType">
+		<xs:sequence>
+			<xs:element name="current" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+SitPatrimoniale.oIdfTech =&gt; input voor
+                        getPropertyByPropertyId
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="previous" type="tns:SituationIdType" minOccurs="0"/>
+			<xs:element name="next" type="tns:SituationIdType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CalculatedMarketValueType">
+		<xs:sequence>
+			<xs:element name="date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Date when the market value was calculated
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="min" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+Calculated minimal market value for sale
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="max" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+calculated maximal market value for sale
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="average" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+The calculated market value of the propertystate.
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FiscalDateType">
+		<xs:sequence>
+			<xs:element name="begin" type="tns:YearOrDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+fiscal startdate of the propertystate
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end" type="tns:YearOrDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+fiscal enddate of the propertystate
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LegalDateType">
+		<xs:sequence>
+			<xs:element name="begin" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+juridical begindate of the propertystate
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+juridacal enddate of the propertystate
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VersionDateType">
+		<xs:sequence>
+			<xs:element name="begin" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+timestamp for the validation of the creation of the
+                        dossier
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+timestamp for the validation of the mutation of the
+                        dossier
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cancel" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+timestamp for the validation of the canceling of the
+                        dossier
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Complex types ====================-->
+	<xs:complexType name="CodeDescriptionType">
+		<xs:sequence>
+			<xs:element name="code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="description" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="abbreviation" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="zipCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cityCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cityName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="street" type="tns:CodeDescriptionType"/>
+			<xs:element name="number" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===================== Simple types ====================-->
+	<xs:complexType name="IdentityType">
+		<xs:choice>
+			<xs:element name="person" type="tns:PersonType"/>
+			<xs:element name="enterprise" type="tns:EnterpriseType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="RightsType">
+		<xs:sequence>
+			<xs:element name="right" type="tns:RightType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DivisionsType">
+		<xs:sequence>
+			<xs:element name="division" type="tns:DivisionType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DivisionType">
+		<xs:sequence>
+			<xs:element name="number" type="xs:string"/>
+			<xs:element name="location" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SearchCriteriaForDivisionType">
+		<xs:sequence>
+			<xs:element name="enterpriseNumber" type="com:EnterpriseNumberType"/>
+			<xs:element name="history" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="language" type="com:LanguageType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SearchCriteriaForEnterpriseType">
+		<xs:sequence>
+			<xs:element name="enterpriseNumber" type="com:EnterpriseNumberType"/>
+			<xs:element name="division" type="xs:integer"/>
+			<xs:element name="withCoOwners" type="xs:boolean" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="fullHistory" type="xs:boolean"/>
+				<xs:element name="period" type="tns:PeriodType"/>
+			</xs:choice>
+			<xs:element name="language" type="com:LanguageType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="YearOrDateType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-2][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])"/>
+			<xs:pattern value="[1-2][0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DecretesType">
+		<xs:sequence>
+			<xs:element name="decrete" type="tns:CodeDescriptionType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+description for the cadastral income decrete
+                        </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MotifType">
+		<xs:sequence>
+			<xs:element name="description"/>
+			<xs:element name="notification" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>
+description of the motivNotif1
+               </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:CodeDescriptionType">
+							<xs:attribute name="order">
+								<xs:simpleType>
+									<xs:restriction base="xs:short">
+										<xs:minInclusive value="1"/>
+										<xs:maxInclusive value="3"/>
+										<xs:totalDigits value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FloorDetailType">
+		<xs:sequence>
+			<xs:element name="floorTo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+specifications of property in a building without a base
+                        act/deed
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="floorNumberUndergrond" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+amount of floors underground
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="floorNumberAboveground" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+amount of floors above ground
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="floorFrom" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+specifications of property in a building without a base
+                        act/deed
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="floor" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+floor
+               </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="floorSituation" type="tns:CodeDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+description of the floor situation
+               </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformationsType">
+		<xs:sequence>
+			<xs:element name="information" type="tns:ParcelInformationType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
